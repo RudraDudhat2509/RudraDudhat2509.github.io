@@ -737,11 +737,11 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
       </div>
       <form class="cform" action="https://formspree.io/f/xreakrgk" method="POST">
         <div class="frow">
-          <div class="fgrp"><label class="flabel">Name</label><input type="text" class="finput" placeholder="Your name" required/></div>
-          <div class="fgrp"><label class="flabel">Email</label><input type="email" class="finput" placeholder="your@email.com" required/></div>
+          <div class="fgrp"><label class="flabel">Name</label><input type="text" name="name" class="finput" placeholder="Your name" required/></div>
+          <div class="fgrp"><label class="flabel">Email</label><input type="email" name="email" class="finput" placeholder="your@email.com" required/></div>
         </div>
-        <div class="fgrp"><label class="flabel">Subject</label><input type="text" class="finput" placeholder="Internship / Collaboration / Other"/></div>
-        <div class="fgrp"><label class="flabel">Message</label><textarea class="ftarea" placeholder="Tell me about the expedition..."></textarea></div>
+        <div class="fgrp"><label class="flabel">Subject</label><input type="text" name="subject" class="finput" placeholder="Internship / Collaboration / Other"/></div>
+        <div class="fgrp"><label class="flabel">Message</label><textarea name="message" class="ftarea" placeholder="Tell me about the expedition..."></textarea></div>
         <button type="submit" class="fsubmit">Send Dispatch</button>
       </form>
     </div>
