@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- void background -->
+  <rect width="32" height="32" fill="#050301"/>
+
+  <!-- subtle amber border -->
+  <rect width="32" height="32" fill="none" stroke="#c47a1a" stroke-width=".6" stroke-opacity=".5"/>
+
+  <!-- Aegishjalmur — 8 arms from center, scaled to 32x32 -->
+  <g transform="translate(16,16)" stroke="#c47a1a" fill="none">
+
+    <!-- center ring -->
+    <circle r="2.2" stroke-width="1.2" fill="#c47a1a" fill-opacity=".9"/>
+
+    <!-- 8 main arms -->
+    <g stroke-width="1.1">
+      <line x1="0" y1="-2.5"  x2="0"    y2="-9.5"/>
+      <line x1="0" y1="2.5"   x2="0"    y2="9.5"/>
+      <line x1="-2.5" y1="0"  x2="-9.5" y2="0"/>
+      <line x1="2.5" y1="0"   x2="9.5"  y2="0"/>
+      <line x1="-1.8" y1="-1.8" x2="-6.7" y2="-6.7"/>
+      <line x1="1.8"  y1="1.8"  x2="6.7"  y2="6.7"/>
+      <line x1="1.8"  y1="-1.8" x2="6.7"  y2="-6.7"/>
+      <line x1="-1.8" y1="1.8"  x2="-6.7" y2="6.7"/>
+    </g>
+
+    <!-- fork tips — cardinal arms -->
+    <g stroke-width=".9">
+      <!-- top -->
+      <path d="M0,-9.5 L-1.8,-7.8 M0,-9.5 L1.8,-7.8"/>
+      <!-- bottom -->
+      <path d="M0,9.5 L-1.8,7.8 M0,9.5 L1.8,7.8"/>
+      <!-- left -->
+      <path d="M-9.5,0 L-7.8,-1.8 M-9.5,0 L-7.8,1.8"/>
+      <!-- right -->
+      <path d="M9.5,0 L7.8,-1.8 M9.5,0 L7.8,1.8"/>
+    </g>
+
+    <!-- fork tips — diagonal arms -->
+    <g stroke-width=".8" stroke-opacity=".85">
+      <!-- top-left -->
+      <path d="M-6.7,-6.7 L-7.8,-5.2 M-6.7,-6.7 L-5.2,-7.8"/>
+      <!-- bottom-right -->
+      <path d="M6.7,6.7 L7.8,5.2 M6.7,6.7 L5.2,7.8"/>
+      <!-- top-right -->
+      <path d="M6.7,-6.7 L5.2,-7.8 M6.7,-6.7 L7.8,-5.2"/>
+      <!-- bottom-left -->
+      <path d="M-6.7,6.7 L-7.8,5.2 M-6.7,6.7 L-5.2,7.8"/>
+    </g>
+
+    <!-- mid-arm secondary forks -->
+    <g stroke-width=".65" stroke-opacity=".6">
+      <path d="M0,-6 L-1.1,-4.8 M0,-6 L1.1,-4.8"/>
+      <path d="M0,6 L-1.1,4.8 M0,6 L1.1,4.8"/>
+      <path d="M-6,0 L-4.8,-1.1 M-6,0 L-4.8,1.1"/>
+      <path d="M6,0 L4.8,-1.1 M6,0 L4.8,1.1"/>
+    </g>
+
+    <!-- outer ring -->
+    <circle r="11.5" stroke-width=".5" stroke-opacity=".3"/>
+
+  </g>
+</svg>
