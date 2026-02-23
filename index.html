@@ -46,45 +46,30 @@ nav a:hover::after{transform:scaleX(1);}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(196,122,26,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(196,122,26,.035) 1px,transparent 1px);background-size:70px 70px;}
 .lbox{position:absolute;left:0;right:0;height:5px;background:linear-gradient(to right,transparent,rgba(196,122,26,.55),var(--amber),rgba(196,122,26,.55),transparent);z-index:2;}
 .lbox.t{top:0;}.lbox.b{bottom:0;}
-
-/* SVG compass bg */
 .compass-bg{position:absolute;right:6vw;top:50%;transform:translateY(-50%);width:min(42vw,540px);opacity:.05;animation:cspin 100s linear infinite;}
 @keyframes cspin{to{transform:translateY(-50%) rotate(360deg);}}
-
-/* ink splatters */
 .splat{position:absolute;pointer-events:none;opacity:.055;}
 .splat-a{top:12%;left:4%;width:160px;transform:rotate(8deg);}
 .splat-b{bottom:18%;right:8%;width:110px;transform:rotate(-18deg) scaleX(-1);}
-
-/* Helheim skeleton cage */
 .bone-cage{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,1300px);height:90vh;opacity:.08;pointer-events:none;z-index:1;}
-
-/* Game emblems */
 .emblem{position:absolute;pointer-events:none;}
 .emblem-norse-1{top:13%;left:4%;width:min(13vw,120px);opacity:.1;animation:emFloat 8s ease-in-out infinite;}
 .emblem-norse-2{bottom:17%;left:6%;width:min(9vw,85px);opacity:.085;animation:emFloat 10s ease-in-out infinite reverse;}
 .emblem-jp-1{top:11%;right:4%;width:min(9vw,82px);opacity:.09;animation:emFloat 9s 1s ease-in-out infinite;}
 .emblem-jp-2{bottom:14%;right:5%;width:min(12vw,105px);opacity:.085;animation:emFloat 11s 2s ease-in-out infinite reverse;}
 @keyframes emFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
-
-
 .hero-inner{position:relative;z-index:3;padding:2rem;max-width:800px;}
-
 .chap-tag{display:inline-flex;align-items:center;gap:.8rem;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.55em;text-transform:uppercase;color:var(--amber);margin-bottom:1.8rem;opacity:0;animation:rise .8s .4s ease forwards;}
 .chap-tag .hl{flex:1;height:1px;max-width:50px;}
 .hl-l{background:linear-gradient(to left,transparent,var(--amber));}
 .hl-r{background:linear-gradient(to right,transparent,var(--amber));}
-
 .hero-name{font-family:'Cinzel Decorative',serif;font-size:clamp(3.2rem,8.5vw,7rem);color:var(--cream);line-height:.95;opacity:0;animation:rise 1s .6s ease forwards;text-shadow:0 0 80px rgba(196,122,26,.16),0 2px 0 rgba(0,0,0,.85),0 4px 24px rgba(0,0,0,.55);margin-bottom:1rem;}
 .hero-name em{display:block;font-style:normal;color:var(--amber);font-size:.38em;letter-spacing:.14em;font-family:'Cinzel',serif;font-weight:400;margin-top:.35em;}
-
 .rope-div{display:flex;align-items:center;gap:.8rem;margin:1.6rem 0;opacity:0;animation:rise .8s .9s ease forwards;}
 .rope{flex:1;height:2px;max-width:200px;background:repeating-linear-gradient(90deg,var(--sepia) 0,var(--sepia) 4px,transparent 4px,transparent 6px,rgba(139,53,16,.4) 6px,rgba(139,53,16,.4) 8px);}
 .rope-knot{font-family:'Cinzel',serif;font-size:.75rem;color:var(--amber);letter-spacing:.2em;}
-
 .hero-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(1.05rem,2vw,1.28rem);color:rgba(232,217,188,.68);line-height:1.78;max-width:530px;opacity:0;animation:rise .9s 1.1s ease forwards;margin-bottom:2.5rem;}
 .hero-acts{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:rise .8s 1.3s ease forwards;}
-
 .btn{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;padding:.85rem 2.1rem;position:relative;display:inline-block;transition:all .3s;}
 .btn::before,.btn::after{content:'';position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(212,168,67,.55);}
 .btn::before{top:4px;left:4px;}.btn::after{bottom:4px;right:4px;}
@@ -92,20 +77,17 @@ nav a:hover::after{transform:scaleX(1);}
 .btn-gold:hover{background:var(--gold);box-shadow:0 0 28px rgba(212,168,67,.3);transform:translateY(-2px);}
 .btn-line{color:rgba(232,217,188,.7);background:transparent;border:1px solid rgba(196,122,26,.38);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
 .btn-line:hover{color:var(--gold);border-color:var(--amber);background:rgba(196,122,26,.06);transform:translateY(-2px);}
-
 .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(196,122,26,.38);animation:pulse 3s ease-in-out infinite;}
 @keyframes pulse{0%,100%{transform:translateX(-50%) translateY(0);opacity:.38;}50%{transform:translateX(-50%) translateY(7px);opacity:.75;}}
 @keyframes rise{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
 
-/* CHAPTER CARD DIVIDERS */
+/* CHAPTER DIVIDERS */
 .chap-div{position:relative;padding:3rem 0;background:var(--void);overflow:hidden;}
 .chap-div-inner{max-width:1080px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2.5rem;}
 .chap-num{font-family:'Cinzel Decorative',serif;font-size:4.5rem;line-height:1;color:rgba(196,122,26,.1);white-space:nowrap;flex-shrink:0;}
 .chap-line{flex:1;height:1px;background:linear-gradient(to right,rgba(196,122,26,.5),transparent);}
 .chap-sub{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.5em;color:var(--amber);text-transform:uppercase;margin-bottom:.35rem;}
 .chap-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.5rem,3vw,2.3rem);color:var(--cream);line-height:1.1;}
-
-/* SHARED */
 .container{max-width:1080px;margin:0 auto;padding:0 2rem;}
 .sec-body{padding:4.5rem 2rem;}
 
@@ -133,7 +115,6 @@ nav a:hover::after{transform:scaleX(1);}
 /* PROJECTS */
 #projects{background:var(--void);padding:4rem 0 5rem;}
 .proj-intro{font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;color:rgba(232,217,188,.4);text-align:center;margin-bottom:2.8rem;letter-spacing:.02em;}
-
 .proj-featured{position:relative;border:1px solid rgba(196,122,26,.32);padding:2.4rem;margin-bottom:1.4rem;overflow:hidden;background:linear-gradient(135deg,rgba(196,122,26,.07),rgba(139,53,16,.05),rgba(10,7,2,.88));transition:all .4s;}
 .proj-featured::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 45% 70% at 0% 50%,rgba(196,122,26,.05),transparent),repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(196,122,26,.014) 28px,rgba(196,122,26,.014) 29px);}
 .proj-featured:hover{border-color:rgba(196,122,26,.65);box-shadow:0 0 50px rgba(196,122,26,.07),inset 0 0 50px rgba(196,122,26,.025);transform:translateY(-3px);}
@@ -152,6 +133,10 @@ nav a:hover::after{transform:scaleX(1);}
 .proj-link{display:inline-block;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(196,122,26,.28);padding-bottom:.1rem;position:relative;z-index:1;transition:all .3s;margin-top:1.1rem;}
 .proj-link:hover{color:var(--gold);border-color:var(--gold);}
 
+/* EXPEDITION DEBRIEF BUTTON */
+.proj-debrief-btn{display:inline-block;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(196,122,26,.6);border:1px solid rgba(196,122,26,.22);padding:.45rem 1rem;background:transparent;margin-top:1.1rem;margin-left:1rem;transition:all .3s;position:relative;z-index:1;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+.proj-debrief-btn:hover{color:var(--amber);border-color:var(--amber);background:rgba(196,122,26,.06);}
+
 .other-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(196,122,26,.4);margin:2.5rem 0 1.2rem;display:flex;align-items:center;gap:1rem;}
 .other-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(196,122,26,.3),transparent);}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:1.1rem;}
@@ -163,15 +148,45 @@ nav a:hover::after{transform:scaleX(1);}
 .proj-card .proj-desc{font-size:.9rem;margin-bottom:0;max-width:100%;}
 .lang-dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;}
 .proj-meta{margin-top:.9rem;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.12em;color:rgba(196,122,26,.42);}
-
 .gh-loading{grid-column:1/-1;text-align:center;padding:3.5rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(196,122,26,.35);animation:breathe 2s ease-in-out infinite;}
 @keyframes breathe{0%,100%{opacity:.3;}50%{opacity:.8;}}
 
-/* SKILLS */
+/* ═══════════════════════════════════════════
+   FEATURE 7 — EXPEDITION DEBRIEF MODAL
+   ═══════════════════════════════════════════ */
+.debrief-overlay{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem;background:rgba(5,3,1,.92);backdrop-filter:blur(8px);}
+.debrief-overlay.open{display:flex;}
+.debrief-modal{position:relative;max-width:860px;width:100%;max-height:88vh;overflow-y:auto;background:linear-gradient(160deg,#0e0903,#080502);border:1px solid rgba(196,122,26,.35);padding:3rem;animation:modalIn .4s cubic-bezier(.16,1,.3,1) forwards;}
+.debrief-modal::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(196,122,26,.012) 28px,rgba(196,122,26,.012) 29px);pointer-events:none;}
+.debrief-modal .corner-mark{border-color:rgba(196,122,26,.5);}
+@keyframes modalIn{from{opacity:0;transform:translateY(30px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+.debrief-close{position:absolute;top:1.2rem;right:1.5rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.3em;color:rgba(196,122,26,.45);background:none;border:none;text-transform:uppercase;transition:color .2s;}
+.debrief-close:hover{color:var(--amber);}
+.debrief-stamp{display:inline-block;font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.42em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:.2rem .8rem;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);margin-bottom:1rem;}
+.debrief-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,3vw,1.9rem);color:var(--cream);margin-bottom:.4rem;line-height:1.15;}
+.debrief-tech{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;margin-bottom:2rem;}
+.debrief-phases{display:grid;gap:1.5rem;position:relative;z-index:1;}
+.debrief-phase{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:start;}
+.phase-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);writing-mode:vertical-rl;transform:rotate(180deg);border-left:1px solid rgba(196,122,26,.3);padding-left:.5rem;white-space:nowrap;}
+.phase-content{border-left:1px solid rgba(196,122,26,.1);padding-left:1.5rem;}
+.phase-heading{font-family:'Cinzel',serif;font-size:.8rem;color:var(--cream);margin-bottom:.55rem;letter-spacing:.08em;}
+.phase-text{font-family:'IM Fell English',serif;font-size:.98rem;color:rgba(232,217,188,.58);line-height:1.8;}
+.debrief-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.8rem;margin-top:2rem;padding-top:1.8rem;border-top:1px solid rgba(196,122,26,.12);position:relative;z-index:1;}
+.dm-item{text-align:center;padding:.8rem;}
+.dm-val{font-family:'Cinzel Decorative',serif;font-size:1.6rem;color:var(--amber);display:block;line-height:1;}
+.dm-label{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;color:rgba(196,122,26,.5);text-transform:uppercase;margin-top:.3rem;display:block;}
+.debrief-links{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;position:relative;z-index:1;}
+
+/* ═══════════════════════════════════════════
+   SKILLS — existing + Feature 4 radar
+   ═══════════════════════════════════════════ */
 #skills{background:var(--paper);position:relative;overflow:hidden;}
 #skills::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 90% 20%,rgba(139,53,16,.04),transparent 55%);pointer-events:none;}
 #skills::after{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(to bottom,var(--void),transparent);}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:1.4rem;position:relative;z-index:1;}
+
+/* FEATURE 4 — SKILLS RADAR */
+.skills-layout{display:grid;grid-template-columns:1fr 380px;gap:3.5rem;align-items:start;position:relative;z-index:1;}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:1.4rem;}
 .skill-grp{padding:1.4rem;border:1px solid rgba(107,76,42,.22);background:rgba(255,255,255,.32);position:relative;transition:all .3s;}
 .skill-grp::before,.skill-grp::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(196,122,26,.3);}
 .skill-grp::before{top:5px;left:5px;}.skill-grp::after{bottom:5px;right:5px;}
@@ -180,6 +195,13 @@ nav a:hover::after{transform:scaleX(1);}
 .skill-items{display:flex;flex-wrap:wrap;gap:.35rem;}
 .skill-item{font-family:'IM Fell English',serif;font-size:.9rem;color:var(--ink-faded);padding:.18rem .5rem;border:1px solid rgba(107,76,42,.14);background:rgba(196,122,26,.03);transition:all .2s;}
 .skill-item:hover{border-color:rgba(139,53,16,.38);color:var(--ink-soft);background:rgba(196,122,26,.08);}
+.radar-panel{position:sticky;top:6rem;}
+.radar-label-top{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;color:var(--rust);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid rgba(107,76,42,.18);}
+.radar-wrap{position:relative;width:100%;aspect-ratio:1;}
+#radarCanvas{width:100%;height:100%;}
+.radar-legend{margin-top:1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+.radar-leg-item{display:flex;align-items:center;gap:.6rem;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;color:var(--ink-faded);text-transform:uppercase;}
+.radar-leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
 /* EXPERIENCE */
 #experience{background:var(--void);padding:4rem 0 5rem;}
@@ -197,14 +219,57 @@ nav a:hover::after{transform:scaleX(1);}
 .tl-pts{list-style:none;}
 .tl-pts li{font-family:'Crimson Pro',serif;font-size:.96rem;color:rgba(232,217,188,.52);line-height:1.65;padding-left:1.1rem;position:relative;margin-bottom:.22rem;}
 .tl-pts li::before{content:'/';position:absolute;left:0;color:var(--amber);font-family:'Cinzel',serif;}
+
+/* FEATURE 6 — CERTS WITH VERIFY LINKS */
 .certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:.9rem;margin-top:3rem;}
 .cert-item{border:1px solid rgba(196,122,26,.16);padding:1.1rem 1.4rem;background:rgba(196,122,26,.025);transition:all .3s;position:relative;}
 .cert-item::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber);transform:scaleY(0);transform-origin:top;transition:transform .3s;}
 .cert-item:hover{border-color:rgba(196,122,26,.38);}.cert-item:hover::after{transform:scaleY(1);}
 .cert-name{font-family:'Cinzel',serif;font-size:.8rem;color:var(--cream);line-height:1.35;margin-bottom:.3rem;}
 .cert-meta{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;}
+.cert-verify{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,122,26,.45);text-decoration:none;margin-top:.6rem;border-bottom:1px solid rgba(196,122,26,.18);padding-bottom:.1rem;transition:all .3s;}
+.cert-verify:hover{color:var(--amber);border-color:var(--amber);}
+.cert-verify svg{width:10px;height:10px;opacity:.6;}
+.cert-stamp{display:inline-block;font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink);background:rgba(196,122,26,.55);padding:.12rem .5rem;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);margin-left:.5rem;vertical-align:middle;}
 .sub-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(196,122,26,.38);margin-top:3rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;}
 .sub-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(196,122,26,.28),transparent);}
+
+/* ═══════════════════════════════════════════
+   FEATURE 3 — CAPTAIN'S LOG (BLOG)
+   ═══════════════════════════════════════════ */
+#log{background:var(--void);padding:4rem 0 5rem;}
+.log-intro{font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;color:rgba(232,217,188,.38);text-align:center;margin-bottom:3rem;}
+.log-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.4rem;}
+.log-card{border:1px solid rgba(196,122,26,.15);background:linear-gradient(160deg,rgba(196,122,26,.04),rgba(10,7,2,.9));padding:2rem;position:relative;overflow:hidden;transition:all .4s;}
+.log-card::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(196,122,26,.013) 26px,rgba(196,122,26,.013) 27px);pointer-events:none;}
+.log-card:hover{border-color:rgba(196,122,26,.42);box-shadow:0 8px 40px rgba(0,0,0,.5);transform:translateY(-4px);}
+.log-card-tag{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:.15rem .65rem;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);display:inline-block;margin-bottom:.9rem;}
+.log-card-date{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.22em;color:rgba(196,122,26,.38);text-transform:uppercase;margin-bottom:.6rem;}
+.log-card-title{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--cream);line-height:1.35;margin-bottom:.8rem;font-weight:600;}
+.log-card-excerpt{font-family:'IM Fell English',serif;font-size:.96rem;color:rgba(232,217,188,.48);line-height:1.75;}
+.log-card-footer{margin-top:1.3rem;padding-top:1rem;border-top:1px solid rgba(196,122,26,.1);display:flex;align-items:center;justify-content:space-between;}
+.log-read{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:.4rem;}
+.log-read-time{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.12em;color:rgba(196,122,26,.32);text-transform:uppercase;}
+
+/* LOG FULL-SCREEN READER */
+.log-reader{position:fixed;inset:0;z-index:2000;display:none;flex-direction:column;background:var(--paper);overflow-y:auto;}
+.log-reader.open{display:flex;}
+.log-reader-header{position:sticky;top:0;background:rgba(232,217,188,.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(107,76,42,.2);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:10;}
+.log-reader-brand{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.35em;color:var(--sepia);text-transform:uppercase;}
+.log-reader-close{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.28em;color:var(--rust);background:none;border:none;text-transform:uppercase;transition:color .2s;}
+.log-reader-close:hover{color:var(--ink);}
+.log-reader-body{max-width:680px;margin:0 auto;padding:3rem 2rem 5rem;}
+.log-reader-tag{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.42em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:.18rem .7rem;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);display:inline-block;margin-bottom:1rem;}
+.log-reader-date{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;color:var(--sepia);text-transform:uppercase;margin-bottom:1.5rem;}
+.log-reader-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.6rem,4vw,2.6rem);color:var(--ink);line-height:1.15;margin-bottom:.8rem;}
+.log-reader-subtitle{font-family:'IM Fell English',serif;font-style:italic;font-size:1.12rem;color:var(--sepia);margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(107,76,42,.2);}
+.log-reader-content p{font-family:'IM Fell English',serif;font-size:1.1rem;line-height:2;color:var(--ink-soft);margin-bottom:1.5rem;}
+.log-reader-content p:first-child::first-letter{font-family:'Cinzel Decorative',serif;font-size:4.2rem;float:left;line-height:.72;margin:.1em .1em 0 0;color:var(--rust);}
+.log-reader-content em{color:var(--rust-light);}
+.log-reader-content strong{font-weight:600;color:var(--ink);}
+.log-reader-pull{background:rgba(196,122,26,.08);border-left:3px solid var(--amber);padding:1rem 1.4rem;margin:2rem 0;font-family:'Caveat',cursive;font-size:1.12rem;color:var(--ink-faded);line-height:1.6;position:relative;}
+.log-reader-pull::before{content:'"';font-family:'Cinzel Decorative',serif;font-size:3rem;color:rgba(196,122,26,.2);position:absolute;top:-.5rem;left:.4rem;line-height:1;}
+.log-reader-h2{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--ink);margin:2.5rem 0 .8rem;letter-spacing:.04em;}
 
 /* CONTACT */
 #contact{background:var(--paper);position:relative;overflow:hidden;}
@@ -230,7 +295,6 @@ nav a:hover::after{transform:scaleX(1);}
 .fsubmit{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:var(--amber);border:1px solid var(--gold);padding:.88rem 2rem;font-weight:700;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .3s;align-self:flex-start;}
 .fsubmit:hover{background:var(--gold);box-shadow:0 4px 18px rgba(212,168,67,.28);transform:translateY(-2px);}
 
-/* FOOTER */
 footer{background:var(--void);border-top:1px solid rgba(196,122,26,.12);padding:2.2rem;text-align:center;position:relative;}
 footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(to right,transparent,var(--amber),transparent);}
 .footer-name{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:rgba(196,122,26,.28);margin-bottom:.45rem;}
@@ -240,6 +304,11 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .75s ease,transform .75s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 
+@media(max-width:900px){
+  .skills-layout{grid-template-columns:1fr;}
+  .radar-panel{position:static;}
+  .radar-wrap{max-width:340px;margin:0 auto;}
+}
 @media(max-width:768px){
   nav{padding:.8rem 1.2rem;}nav ul{gap:1.2rem;}nav a{font-size:.54rem;}
   .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem;}
@@ -248,6 +317,8 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
   .hero-name{font-size:clamp(2.6rem,11vw,4.5rem);}
   .chap-div-inner{flex-direction:column;gap:.5rem;}
   .chap-num{font-size:3rem;}
+  .debrief-phase{grid-template-columns:1fr;}
+  .phase-label{writing-mode:horizontal-tb;transform:none;border-left:none;border-bottom:1px solid rgba(196,122,26,.3);padding-left:0;padding-bottom:.4rem;margin-bottom:.4rem;}
 }
 </style>
 </head>
@@ -264,6 +335,7 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
     <li><a href="#projects">Expeditions</a></li>
     <li><a href="#skills">Arsenal</a></li>
     <li><a href="#experience">Field Log</a></li>
+    <li><a href="#log">Dispatches</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -305,7 +377,6 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
     <line x1="305" y1="95"  x2="95"  y2="305" stroke="#c47a1a" stroke-width=".2" opacity=".15"/>
   </svg>
 
-  <!-- Ink splatters -->
   <svg class="splat splat-a" viewBox="0 0 200 200" fill="#5a3010">
     <ellipse cx="100" cy="88" rx="42" ry="14" transform="rotate(-14 100 88)"/>
     <ellipse cx="58"  cy="122" rx="7" ry="22" transform="rotate(18 58 122)"/>
@@ -320,36 +391,23 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
     <ellipse cx="102" cy="48" rx="13" ry="4" transform="rotate(24 102 48)"/>
   </svg>
 
-
-  <!-- ═══ HELHEIM SKELETON CAGE ═══ -->
-  <svg class="bone-cage" viewBox="0 0 1300 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="bone-cage" viewBox="0 0 1300 900" fill="none">
     <g stroke="#c8a060" stroke-width="1.2" fill="none">
-      <!-- Central spine column -->
       <line x1="650" y1="0" x2="650" y2="900"/>
-      <!-- Main rib arches — left side, mirrored right -->
-      <!-- Rib 1 — topmost, widest -->
       <path d="M650,120 C580,80 420,60 280,95 C200,115 140,155 100,200" stroke-width="2"/>
       <path d="M650,120 C720,80 880,60 1020,95 C1100,115 1160,155 1200,200" stroke-width="2"/>
-      <!-- Rib 2 -->
       <path d="M650,210 C570,175 400,162 250,200 C170,220 110,265 75,310"/>
       <path d="M650,210 C730,175 900,162 1050,200 C1130,220 1190,265 1225,310"/>
-      <!-- Rib 3 -->
       <path d="M650,300 C560,270 380,265 225,305 C148,328 90,375 58,425"/>
       <path d="M650,300 C740,270 920,265 1075,305 C1152,328 1210,375 1242,425"/>
-      <!-- Rib 4 -->
       <path d="M650,390 C548,368 360,368 200,410 C126,436 70,486 42,540"/>
       <path d="M650,390 C752,368 940,368 1100,410 C1174,436 1230,486 1258,540"/>
-      <!-- Rib 5 — lower -->
       <path d="M650,480 C535,465 340,472 175,515 C104,544 50,596 28,655"/>
       <path d="M650,480 C765,465 960,472 1125,515 C1196,544 1250,596 1272,655"/>
-      <!-- Rib 6 — near base -->
       <path d="M650,570 C522,562 318,578 150,622 C82,652 32,706 14,768"/>
       <path d="M650,570 C778,562 982,578 1150,622 C1218,652 1268,706 1286,768"/>
-      <!-- Rib 7 — base sweep -->
       <path d="M650,660 C505,660 295,685 122,732 C58,760 18,812 2,880" stroke-width="1.5"/>
       <path d="M650,660 C795,660 1005,685 1178,732 C1242,760 1282,812 1298,880" stroke-width="1.5"/>
-
-      <!-- Cross struts between ribs -->
       <line x1="580" y1="140" x2="540" y2="220" stroke-width=".7" opacity=".6"/>
       <line x1="720" y1="140" x2="760" y2="220" stroke-width=".7" opacity=".6"/>
       <line x1="510" y1="235" x2="458" y2="320" stroke-width=".7" opacity=".6"/>
@@ -358,61 +416,25 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
       <line x1="865" y1="332" x2="924" y2="420" stroke-width=".7" opacity=".6"/>
       <line x1="352" y1="432" x2="290" y2="520" stroke-width=".7" opacity=".6"/>
       <line x1="948" y1="432" x2="1010" y2="520" stroke-width=".7" opacity=".6"/>
-      <line x1="268" y1="530" x2="210" y2="618" stroke-width=".7" opacity=".5"/>
-      <line x1="1032" y1="530" x2="1090" y2="618" stroke-width=".7" opacity=".5"/>
-
-      <!-- Skull-like oval at crown -->
       <ellipse cx="650" cy="55" rx="38" ry="48" stroke-width="1.5"/>
       <ellipse cx="650" cy="42" rx="18" ry="14"/>
-      <!-- Eye sockets -->
       <ellipse cx="636" cy="40" rx="7" ry="8"/>
       <ellipse cx="664" cy="40" rx="7" ry="8"/>
-      <!-- Nasal -->
       <path d="M646,52 L650,58 L654,52" stroke-width=".8"/>
-      <!-- Jaw teeth suggestions -->
       <path d="M630,66 L628,74 M638,68 L636,76 M646,69 L644,77 M654,69 L652,77 M662,68 L660,76 M670,66 L668,74" stroke-width=".7"/>
-
-      <!-- Pelvis bone base structure -->
       <path d="M560,870 C590,830 620,810 650,808 C680,810 710,830 740,870" stroke-width="1.8"/>
       <ellipse cx="610" cy="855" rx="28" ry="18"/>
       <ellipse cx="690" cy="855" rx="28" ry="18"/>
-      <line x1="610" y1="840" x2="650" y2="810"/>
-      <line x1="690" y1="840" x2="650" y2="810"/>
-
-      <!-- Hanging bone chains on ribs -->
-      <g opacity=".5" stroke-width=".6">
-        <line x1="340" y1="105" x2="340" y2="145"/>
-        <ellipse cx="340" cy="152" rx="6" ry="8"/>
-        <line x1="200" y1="175" x2="200" y2="215"/>
-        <ellipse cx="200" cy="222" rx="5" ry="7"/>
-        <line x1="960" y1="105" x2="960" y2="145"/>
-        <ellipse cx="960" cy="152" rx="6" ry="8"/>
-        <line x1="1100" y1="175" x2="1100" y2="215"/>
-        <ellipse cx="1100" cy="222" rx="5" ry="7"/>
-        <line x1="155" y1="300" x2="155" y2="340"/>
-        <ellipse cx="155" cy="347" rx="5" ry="7"/>
-        <line x1="1145" y1="300" x2="1145" y2="340"/>
-        <ellipse cx="1145" cy="347" rx="5" ry="7"/>
-      </g>
     </g>
-    <!-- Subtle glow gradient at base -->
-    <defs>
-      <radialGradient id="cageGlow" cx="50%" cy="100%" r="50%">
-        <stop offset="0%" stop-color="#c47a1a" stop-opacity=".18"/>
-        <stop offset="100%" stop-color="#c47a1a" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
+    <defs><radialGradient id="cageGlow" cx="50%" cy="100%" r="50%"><stop offset="0%" stop-color="#c47a1a" stop-opacity=".18"/><stop offset="100%" stop-color="#c47a1a" stop-opacity="0"/></radialGradient></defs>
     <ellipse cx="650" cy="900" rx="500" ry="120" fill="url(#cageGlow)"/>
   </svg>
 
-  <!-- ═══ AEGISHJALMUR — Norse Helm of Awe (GoW) ═══ -->
-  <svg class="emblem emblem-norse-1" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="emblem emblem-norse-1" viewBox="0 0 200 200" fill="none">
     <g stroke="#c8a060" fill="none">
-      <!-- 8-pronged helm of awe -->
       <circle cx="100" cy="100" r="12" stroke-width="2"/>
       <circle cx="100" cy="100" r="45" stroke-width=".6" opacity=".4"/>
       <circle cx="100" cy="100" r="80" stroke-width=".5" opacity=".3"/>
-      <!-- 8 arms -->
       <g stroke-width="1.8">
         <line x1="100" y1="88" x2="100" y2="20"/>
         <line x1="100" y1="112" x2="100" y2="180"/>
@@ -423,7 +445,6 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
         <line x1="109" y1="91" x2="157" y2="43"/>
         <line x1="91" y1="109" x2="43" y2="157"/>
       </g>
-      <!-- Fork tips on each arm -->
       <g stroke-width="1.2">
         <path d="M100,30 L92,22 M100,30 L108,22"/>
         <path d="M100,170 L92,178 M100,170 L108,178"/>
@@ -434,94 +455,48 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
         <path d="M150,50 L162,42 M150,50 L158,38"/>
         <path d="M50,150 L38,158 M50,150 L42,162"/>
       </g>
-      <!-- Secondary fork midpoints -->
-      <g stroke-width=".8" opacity=".6">
-        <path d="M100,55 L94,48 M100,55 L106,48"/>
-        <path d="M100,145 L94,152 M100,145 L106,152"/>
-        <path d="M55,100 L48,94 M55,100 L48,106"/>
-        <path d="M145,100 L152,94 M145,100 L152,106"/>
-        <path d="M72,72 L66,63 M72,72 L63,66"/>
-        <path d="M128,128 L134,137 M128,128 L137,134"/>
-        <path d="M128,72 L137,66 M128,72 L134,63"/>
-        <path d="M72,128 L63,134 M72,128 L66,137"/>
-      </g>
     </g>
   </svg>
 
-  <!-- ═══ VALKNUT — GoW Norse triangle knot ═══ -->
-  <svg class="emblem emblem-norse-2" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="emblem emblem-norse-2" viewBox="0 0 160 160" fill="none">
     <g stroke="#c8a060" stroke-width="2" stroke-linejoin="round" fill="none">
-      <!-- Three interlocked triangles of the Valknut -->
-      <!-- Triangle 1 — front -->
       <polygon points="80,22 110,75 50,75" stroke-width="6" stroke="#050301"/>
       <polygon points="80,22 110,75 50,75" stroke-width="2"/>
-      <!-- Triangle 2 — rotated 120deg -->
       <polygon points="80,138 44,77 116,77" stroke-width="6" stroke="#050301"/>
       <polygon points="80,138 44,77 116,77" stroke-width="2"/>
-      <!-- Triangle 3 — small inner -->
       <polygon points="80,55 100,88 60,88" stroke-width="5" stroke="#050301"/>
       <polygon points="80,55 100,88 60,88" stroke-width="1.5"/>
-      <!-- Outer circle -->
       <circle cx="80" cy="80" r="72" stroke-width=".7" opacity=".35"/>
     </g>
   </svg>
 
-  <!-- ═══ TORII GATE — Ghost of Tsushima ═══ -->
-  <svg class="emblem emblem-jp-1" viewBox="0 0 140 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="emblem emblem-jp-1" viewBox="0 0 140 160" fill="none">
     <g stroke="#c8a060" fill="none">
-      <!-- Top curved beam (kasagi) -->
       <path d="M5,42 Q70,20 135,42" stroke-width="4" stroke-linecap="round"/>
-      <!-- Second beam (shimaki) -->
       <line x1="18" y1="58" x2="122" y2="58" stroke-width="2.5"/>
-      <!-- Central tie (nuki) -->
       <line x1="25" y1="72" x2="115" y2="72" stroke-width="1.5"/>
-      <!-- Left pillar -->
       <line x1="35" y1="55" x2="35" y2="155" stroke-width="3.5"/>
-      <!-- Right pillar -->
       <line x1="105" y1="55" x2="105" y2="155" stroke-width="3.5"/>
-      <!-- Pillar bases -->
       <line x1="20" y1="155" x2="50" y2="155" stroke-width="2.5"/>
       <line x1="90" y1="155" x2="120" y2="155" stroke-width="2.5"/>
-      <!-- Komainu (hanging cylinder decorations) -->
-      <line x1="50" y1="58" x2="50" y2="72" stroke-width="1"/>
-      <line x1="90" y1="58" x2="90" y2="72" stroke-width="1"/>
-      <!-- Top finials -->
       <circle cx="35" cy="48" r="4"/>
       <circle cx="105" cy="48" r="4"/>
-      <!-- kasagi upturned tips -->
       <path d="M5,42 Q2,36 8,32" stroke-width="2"/>
       <path d="M135,42 Q138,36 132,32" stroke-width="2"/>
     </g>
   </svg>
 
-  <!-- ═══ MON CLAN CIRCLE — Ghost of Tsushima ═══ -->
-  <svg class="emblem emblem-jp-2" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="emblem emblem-jp-2" viewBox="0 0 180 180" fill="none">
     <g stroke="#c8a060" fill="none">
-      <!-- Outer double circle (mon convention) -->
       <circle cx="90" cy="90" r="84" stroke-width="1.5"/>
       <circle cx="90" cy="90" r="78" stroke-width=".6"/>
-      <!-- Inner design: stylised kamon — 3-leaf hollyhock (Tokugawa inspired) -->
-      <!-- Central circle -->
       <circle cx="90" cy="90" r="14" stroke-width="1.5"/>
-      <!-- Three leaves arranged 120deg apart -->
-      <!-- Leaf 1 top -->
       <circle cx="90" cy="52" r="20" stroke-width="1.5"/>
       <line x1="90" y1="72" x2="90" y2="90" stroke-width="1"/>
-      <!-- Leaf 2 bottom-left -->
       <circle cx="55" cy="113" r="20" stroke-width="1.5"/>
       <line x1="73" y1="103" x2="83" y2="90" stroke-width="1"/>
-      <!-- Leaf 3 bottom-right -->
       <circle cx="125" cy="113" r="20" stroke-width="1.5"/>
       <line x1="107" y1="103" x2="97" y2="90" stroke-width="1"/>
-      <!-- Cross hatching marks between leaves (traditional mon detail) -->
-      <line x1="90" y1="6"  x2="90" y2="14" stroke-width="1"/>
-      <line x1="90" y1="166" x2="90" y2="174" stroke-width="1"/>
-      <line x1="6"  y1="90" x2="14" y2="90" stroke-width="1"/>
-      <line x1="166" y1="90" x2="174" y2="90" stroke-width="1"/>
-      <line x1="25" y1="25" x2="31" y2="31" stroke-width="1"/>
-      <line x1="149" y1="149" x2="155" y2="155" stroke-width="1"/>
-      <line x1="155" y1="25" x2="149" y2="31" stroke-width="1"/>
-      <line x1="31" y1="149" x2="25" y2="155" stroke-width="1"/>
     </g>
   </svg>
 
@@ -597,14 +572,14 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
   <div class="container">
     <p class="proj-intro">"Every system tells a story. These are mine."</p>
 
-    <!-- Cascade AI — hardcoded, always shown -->
+    <!-- Cascade AI -->
     <div class="proj-featured reveal">
       <div class="corner-mark c-tl"></div><div class="corner-mark c-tr"></div>
       <div class="corner-mark c-bl"></div><div class="corner-mark c-br"></div>
       <div class="proj-stamp">Live &mdash; Firebase Deployed</div>
       <div class="proj-name">Cascade AI &mdash; Multi-Agent Intelligence Platform</div>
       <div class="proj-tech">Python &nbsp;/&nbsp; OpenAI API &nbsp;/&nbsp; LangChain &nbsp;/&nbsp; Firebase Cloud Functions &nbsp;/&nbsp; Firestore &nbsp;/&nbsp; GCS &nbsp;/&nbsp; Node.js</div>
-      <p class="proj-desc">A production-deployed backend where an LLM planner decomposes user tasks into a coordinated pipeline of specialised agents &mdash; web search, scraper, auditor, router, and formatter &mdash; executed in sequence via Firebase Cloud Functions. Not a demo. Not an API wrapper. A real orchestration system with self-healing branching logic and private per-user memory.</p>
+      <p class="proj-desc">A production-deployed backend where an LLM planner decomposes user tasks into a coordinated pipeline of specialised agents &mdash; web search, scraper, auditor, router, and formatter &mdash; executed in sequence via Firebase Cloud Functions.</p>
       <ul class="proj-bullets">
         <li>LLM planner generates multi-step agent blueprints from plain text</li>
         <li>Parallel search pipeline with AI-powered auditing of scraped pages</li>
@@ -613,25 +588,29 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
         <li>Output formatters for Slack, PDF, and email</li>
         <li>Firebase Auth, onboarding quiz, private memory layer per user</li>
       </ul>
+      <div style="position:relative;z-index:1;margin-top:1.1rem;">
+        <button class="proj-debrief-btn" onclick="openDebrief('cascade')">&#9654; Expedition Debrief</button>
+      </div>
     </div>
 
-    <!-- OptiQuant — hardcoded -->
+    <!-- OptiQuant -->
     <div class="proj-featured reveal">
       <div class="corner-mark c-tl"></div><div class="corner-mark c-tr"></div>
       <div class="corner-mark c-bl"></div><div class="corner-mark c-br"></div>
       <div class="proj-stamp">AWS EC2 &mdash; Live Demo</div>
       <div class="proj-name"><a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank">OptiQuant &mdash; Full-Stack ML Application</a></div>
       <div class="proj-tech">Python &nbsp;/&nbsp; LightGBM &nbsp;/&nbsp; CatBoost &nbsp;/&nbsp; Random Forest &nbsp;/&nbsp; SHAP &nbsp;/&nbsp; Streamlit &nbsp;/&nbsp; Docker &nbsp;/&nbsp; AWS EC2 &nbsp;/&nbsp; GitHub Actions</div>
-      <p class="proj-desc">An end-to-end ML application from feature engineering and ensemble model training to a live Streamlit interface for generating and explaining stock alpha signals. Walk-forward backtesting prevents data leakage. SHAP explainability makes every prediction inspectable in the UI. Docker and CI/CD make every model update seamless.</p>
+      <p class="proj-desc">An end-to-end ML application from feature engineering and ensemble model training to a live Streamlit interface for generating and explaining stock alpha signals. Walk-forward backtesting prevents data leakage. SHAP explainability makes every prediction inspectable in the UI.</p>
       <ul class="proj-bullets">
         <li>Weighted ensemble of LightGBM, CatBoost and Random Forest</li>
         <li>Walk-forward validation simulating real production retraining</li>
         <li>Dockerised and deployed to AWS EC2 via GitHub Actions CI/CD</li>
         <li>SHAP attribution layer surfaced directly in the Streamlit UI</li>
-        <li>161% returns &nbsp;|&nbsp; 2.73 Sharpe &nbsp;|&nbsp; 64% win rate over 272 days</li>
+        <li>28.16% CAGR &nbsp;|&nbsp; 1.05 Sharpe &nbsp;|&nbsp; 53.92% win rate &nbsp;|&nbsp; &minus;20% max drawdown</li>
         <li>Live prediction mode and backtesting engine in one interface</li>
       </ul>
       <a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank" class="proj-link">View on GitHub &rarr;</a>
+      <button class="proj-debrief-btn" onclick="openDebrief('optiquant')">&#9654; Expedition Debrief</button>
     </div>
 
     <!-- Dynamic GitHub extras -->
@@ -642,6 +621,16 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
   </div>
 </section>
 
+<!-- EXPEDITION DEBRIEF MODALS (Feature 7) -->
+<div class="debrief-overlay" id="debrief-overlay" onclick="closeDebriefOnBg(event)">
+  <div class="debrief-modal" id="debrief-modal">
+    <div class="corner-mark c-tl"></div><div class="corner-mark c-tr"></div>
+    <div class="corner-mark c-bl"></div><div class="corner-mark c-br"></div>
+    <button class="debrief-close" onclick="closeDebrief()">&#10005; Close</button>
+    <div id="debrief-content"></div>
+  </div>
+</div>
+
 <!-- Ch03 Divider -->
 <div class="chap-div"><div class="chap-div-inner container">
   <div class="chap-num">03</div>
@@ -649,16 +638,33 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
   <div><div class="chap-sub">Equipment Manifest</div><div class="chap-title">The Arsenal</div></div>
 </div></div>
 
-<!-- SKILLS -->
+<!-- SKILLS with Radar (Feature 4) -->
 <section id="skills">
   <div class="sec-body container">
-    <div class="skills-grid reveal">
-      <div class="skill-grp"><div class="skill-group-title skill-grp-title">Languages</div><div class="skill-items"><span class="skill-item">Python</span><span class="skill-item">SQL</span><span class="skill-item">Java</span><span class="skill-item">C</span><span class="skill-item">JavaScript</span></div></div>
-      <div class="skill-grp"><div class="skill-grp-title">ML &amp; Data Science</div><div class="skill-items"><span class="skill-item">PyTorch</span><span class="skill-item">TensorFlow</span><span class="skill-item">Scikit-learn</span><span class="skill-item">LightGBM</span><span class="skill-item">CatBoost</span><span class="skill-item">SHAP</span><span class="skill-item">Pandas</span><span class="skill-item">NumPy</span></div></div>
-      <div class="skill-grp"><div class="skill-grp-title">LLM &amp; GenAI</div><div class="skill-items"><span class="skill-item">LangChain</span><span class="skill-item">OpenAI API</span><span class="skill-item">Hugging Face</span><span class="skill-item">RAG</span><span class="skill-item">Ollama</span><span class="skill-item">Prompt Engineering</span></div></div>
-      <div class="skill-grp"><div class="skill-grp-title">Infra &amp; DevOps</div><div class="skill-items"><span class="skill-item">AWS EC2</span><span class="skill-item">Firebase</span><span class="skill-item">Docker</span><span class="skill-item">GitHub Actions</span><span class="skill-item">CI/CD</span><span class="skill-item">GCS</span><span class="skill-item">Firestore</span></div></div>
-      <div class="skill-grp"><div class="skill-grp-title">Web &amp; Interfaces</div><div class="skill-items"><span class="skill-item">Streamlit</span><span class="skill-item">Flask</span><span class="skill-item">Gradio</span></div></div>
-      <div class="skill-grp"><div class="skill-grp-title">Statistics</div><div class="skill-items"><span class="skill-item">Time-Series</span><span class="skill-item">Bayesian Inference</span><span class="skill-item">Hypothesis Testing</span><span class="skill-item">PCA</span><span class="skill-item">Regularisation</span></div></div>
+    <div class="skills-layout reveal">
+      <div class="skills-grid">
+        <div class="skill-grp"><div class="skill-grp-title">Languages</div><div class="skill-items"><span class="skill-item">Python</span><span class="skill-item">SQL</span><span class="skill-item">Java</span><span class="skill-item">C</span><span class="skill-item">JavaScript</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">ML &amp; Data Science</div><div class="skill-items"><span class="skill-item">PyTorch</span><span class="skill-item">TensorFlow</span><span class="skill-item">Scikit-learn</span><span class="skill-item">LightGBM</span><span class="skill-item">CatBoost</span><span class="skill-item">SHAP</span><span class="skill-item">Pandas</span><span class="skill-item">NumPy</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">LLM &amp; GenAI</div><div class="skill-items"><span class="skill-item">LangChain</span><span class="skill-item">OpenAI API</span><span class="skill-item">Hugging Face</span><span class="skill-item">RAG</span><span class="skill-item">Ollama</span><span class="skill-item">Prompt Engineering</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">Infra &amp; DevOps</div><div class="skill-items"><span class="skill-item">AWS EC2</span><span class="skill-item">Firebase</span><span class="skill-item">Docker</span><span class="skill-item">GitHub Actions</span><span class="skill-item">CI/CD</span><span class="skill-item">GCS</span><span class="skill-item">Firestore</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">Web &amp; Interfaces</div><div class="skill-items"><span class="skill-item">Streamlit</span><span class="skill-item">Flask</span><span class="skill-item">Gradio</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">Statistics</div><div class="skill-items"><span class="skill-item">Time-Series</span><span class="skill-item">Bayesian Inference</span><span class="skill-item">Hypothesis Testing</span><span class="skill-item">PCA</span><span class="skill-item">Regularisation</span></div></div>
+      </div>
+
+      <!-- RADAR PANEL -->
+      <div class="radar-panel">
+        <div class="radar-label-top">Arsenal Map</div>
+        <div class="radar-wrap">
+          <canvas id="radarCanvas"></canvas>
+        </div>
+        <div class="radar-legend">
+          <div class="radar-leg-item"><span class="radar-leg-dot" style="background:#c47a1a"></span>LLM Engineering</div>
+          <div class="radar-leg-item"><span class="radar-leg-dot" style="background:#8b3510"></span>ML / Data Science</div>
+          <div class="radar-leg-item"><span class="radar-leg-dot" style="background:#d4a843"></span>MLOps / Infra</div>
+          <div class="radar-leg-item"><span class="radar-leg-dot" style="background:#6b4c2a"></span>Systems / Web</div>
+          <div class="radar-leg-item"><span class="radar-leg-dot" style="background:#c9b48a"></span>Statistics / Theory</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -706,18 +712,100 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
         </div>
       </div>
     </div>
+
+    <!-- FEATURE 6 — CERTS WITH VERIFY LINKS -->
     <div class="sub-label">Credentials &amp; Certifications</div>
     <div class="certs-grid">
-      <div class="cert-item"><div class="cert-name">Complete Data Science, ML, DL, NLP Bootcamp</div><div class="cert-meta">Krish Naik &nbsp;&mdash;&nbsp; Udemy &nbsp;&mdash;&nbsp; Aug 2025</div></div>
-      <div class="cert-item"><div class="cert-name">BCG Data Science Job Simulation</div><div class="cert-meta">Forage &nbsp;&mdash;&nbsp; Churn Prediction &nbsp;&mdash;&nbsp; Jun 2025</div></div>
-      <div class="cert-item"><div class="cert-name">JPMorgan Quantitative Research Virtual Program</div><div class="cert-meta">Forage &nbsp;&mdash;&nbsp; Loan Default Model &nbsp;&mdash;&nbsp; Jun 2025</div></div>
+      <div class="cert-item">
+        <div class="cert-name">Complete Data Science, ML, DL, NLP Bootcamp <span class="cert-stamp">Verified</span></div>
+        <div class="cert-meta">Krish Naik &nbsp;&mdash;&nbsp; Udemy &nbsp;&mdash;&nbsp; Aug 2025</div>
+        <a href="https://www.udemy.com/certificate/UC-2c48d16d-6bf8-45d5-a6b0-ce8ad61ff728/" target="_blank" class="cert-verify">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 10L10 2M5 2h5v5"/></svg>
+          View Certificate
+        </a>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">BCG Data Science Job Simulation <span class="cert-stamp">Verified</span></div>
+        <div class="cert-meta">Forage &nbsp;&mdash;&nbsp; Churn Prediction &nbsp;&mdash;&nbsp; Jun 2025</div>
+        <a href="https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/SKZxezskWgmFjRvj9/Tcz8gTtprzAS4xSoK_SKZxezskWgmFjRvj9_bws7LRo6ksrYnAn2b_1751141649677_completion_certificate.pdf" target="_blank" class="cert-verify">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 10L10 2M5 2h5v5"/></svg>
+          View Certificate
+        </a>
+      </div>
+      <div class="cert-item">
+        <div class="cert-name">JPMorgan Quantitative Research Virtual Program <span class="cert-stamp">Verified</span></div>
+        <div class="cert-meta">Forage &nbsp;&mdash;&nbsp; Loan Default Model &nbsp;&mdash;&nbsp; Jun 2025</div>
+        <a href="https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/Sj7temL583QAYpHXD/bWqaecPDbYAwSDqJy_Sj7temL583QAYpHXD_bws7LRo6ksrYnAn2b_1751202864975_completion_certificate.pdf" target="_blank" class="cert-verify">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 10L10 2M5 2h5v5"/></svg>
+          View Certificate
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Ch05 Divider -->
+<!-- Ch05 Divider — DISPATCHES (Feature 3) -->
 <div class="chap-div"><div class="chap-div-inner container">
   <div class="chap-num">05</div>
+  <div class="chap-line"></div>
+  <div><div class="chap-sub">Field Dispatches</div><div class="chap-title">Written from the Trenches</div></div>
+</div></div>
+
+<!-- BLOG SECTION (Feature 3) -->
+<section id="log">
+  <div class="container">
+    <p class="log-intro">"Thinking out loud so the next person doesn't have to start from zero."</p>
+    <div class="log-grid">
+
+      <div class="log-card reveal">
+        <div class="log-card-tag">LLM Engineering</div>
+        <div class="log-card-date">Feb 2026</div>
+        <div class="log-card-title">Why SHAP Can Quietly Lie to You in a Drifting System</div>
+        <p class="log-card-excerpt">Model explainability tools are supposed to build trust. But when your feature distribution shifts and the model hasn't been retrained, SHAP attributions can confidently mislead you into thinking everything is fine.</p>
+        <div class="log-card-footer">
+          <span class="log-read" onclick="openLog('shap')">Read Dispatch &#8594;</span>
+          <span class="log-read-time">7 min read</span>
+        </div>
+      </div>
+
+      <div class="log-card reveal" style="transition-delay:.1s">
+        <div class="log-card-tag">MLOps</div>
+        <div class="log-card-date">Jan 2026</div>
+        <div class="log-card-title">From Notebook to Firebase: What Actually Changes</div>
+        <p class="log-card-excerpt">Everyone talks about "deploying to production" like it's a single step. It isn't. Here's what building Cascade AI taught me about the real gap between a working notebook and a system that earns the word "production."</p>
+        <div class="log-card-footer">
+          <span class="log-read" onclick="openLog('firebase')">Read Dispatch &#8594;</span>
+          <span class="log-read-time">9 min read</span>
+        </div>
+      </div>
+
+      <div class="log-card reveal" style="transition-delay:.2s">
+        <div class="log-card-tag">Quant / ML</div>
+        <div class="log-card-date">Dec 2025</div>
+        <div class="log-card-title">Walk-Forward Validation: Why Backtesting Usually Lies</div>
+        <p class="log-card-excerpt">Every quant strategy looks great on historical data. The dirty secret is that most backtests are optimised on the same data they're evaluated on. Walk-forward validation is the closest thing to an honest test — here's how I implemented it in OptiQuant.</p>
+        <div class="log-card-footer">
+          <span class="log-read" onclick="openLog('walkforward')">Read Dispatch &#8594;</span>
+          <span class="log-read-time">6 min read</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LOG READER (full-screen article overlay) -->
+<div class="log-reader" id="log-reader">
+  <div class="log-reader-header">
+    <div class="log-reader-brand">Field Dispatches &mdash; R. Dudhat</div>
+    <button class="log-reader-close" onclick="closeLog()">&#10005; Close Dispatch</button>
+  </div>
+  <div class="log-reader-body" id="log-reader-body"></div>
+</div>
+
+<!-- Ch06 Divider -->
+<div class="chap-div"><div class="chap-div-inner container">
+  <div class="chap-num">06</div>
   <div class="chap-line"></div>
   <div><div class="chap-sub">Send a Dispatch</div><div class="chap-title">Get in Touch</div></div>
 </div></div>
@@ -730,9 +818,10 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
         <h3>Open to Expeditions</h3>
         <p>Actively seeking AI engineering internships &mdash; LLM product teams, ML infrastructure, or applied ML at early-stage startups. If you are building something that matters, let us talk.</p>
         <div class="c-links">
-          <a href="/cdn-cgi/l/email-protection#284b47465c494b5c065a4c5d4c40495c684f45494144064b4745" class="c-link"><em class="c-icon">@</em><span><span class="__cf_email__" data-cfemail="573438392336342379253322333f362317303a363e3b7934383a">[email&#160;protected]</span></span></a>
+          <a href="mailto:rudradudhat2509@gmail.com" class="c-link"><em class="c-icon">@</em><span>rudradudhat2509@gmail.com</span></a>
           <a href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" class="c-link"><em class="c-icon">in</em><span>linkedin.com/in/rdudhat-iitbhilai</span></a>
           <a href="https://github.com/RudraDudhat2509" target="_blank" class="c-link"><em class="c-icon">gh</em><span>github.com/RudraDudhat2509</span></a>
+          <a href="https://www.kaggle.com/rudrad7" target="_blank" class="c-link"><em class="c-icon">kg</em><span>kaggle.com/rudrad7</span></a>
         </div>
       </div>
       <form class="cform" action="https://formspree.io/f/xreakrgk" method="POST">
@@ -753,8 +842,10 @@ footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;ba
   <div class="footer-note">IIT Bhilai &nbsp;&middot;&nbsp; DSAI &nbsp;&middot;&nbsp; 2024&ndash;2028 &nbsp;&middot;&nbsp; Built with intention. Deployed with purpose.</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* CURSOR */
+<script>
+/* ═══════════════════════════════════════
+   CURSOR
+   ═══════════════════════════════════════ */
 const cur=document.getElementById('cur'),trail=document.getElementById('trail');
 let mx=0,my=0;
 document.addEventListener('mousemove',e=>{
@@ -767,10 +858,11 @@ document.querySelectorAll('a,button').forEach(el=>{
   el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
 });
 
-/* GITHUB API */
+/* ═══════════════════════════════════════
+   GITHUB API
+   ═══════════════════════════════════════ */
 const SKIP=new Set(['Resume-','RudraDudhat2509','OptiQuant']);
 const LC={'Python':'#3776ab','Jupyter Notebook':'#f37726','JavaScript':'#c47a1a','TypeScript':'#3178c6','HTML':'#b44a18',default:'#c47a1a'};
-
 async function loadGH(){
   const grid=document.getElementById('gh-grid');
   try{
@@ -798,13 +890,11 @@ async function loadGH(){
   }
 }
 
-/* REVEAL */
+/* timeline*/
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
 },{threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-/* TIMELINE */
 const tlObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
@@ -816,14 +906,262 @@ const tlObs=new IntersectionObserver(entries=>{
 },{threshold:.1});
 document.querySelectorAll('.tl-item').forEach(el=>tlObs.observe(el));
 
-/* FORM */
-function sendForm(e){
-  e.preventDefault();
-    const btn=e.target.querySelector('.fsubmit');
-  btn.textContent='Dispatch Sent';
-  btn.style.background='var(--sepia)';
-  setTimeout(()=>{btn.textContent='Send Dispatch';btn.style.background='';e.target.reset();},3000);
+/*chart (radar)*/
+function drawRadar(){
+  const canvas=document.getElementById('radarCanvas');
+  if(!canvas)return;
+  const dpr=window.devicePixelRatio||1;
+  const size=canvas.parentElement.clientWidth;
+  canvas.width=size*dpr;
+  canvas.height=size*dpr;
+  canvas.style.width=size+'px';
+  canvas.style.height=size+'px';
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  const cx=size/2,cy=size/2,r=size*0.38;
+  const axes=[
+    {label:'LLM Eng.',val:.9},
+    {label:'ML / DS',val:.85},
+    {label:'MLOps',val:.8},
+    {label:'Systems',val:.65},
+    {label:'Statistics',val:.75},
+  ];
+  const n=axes.length;
+  const angleStep=(Math.PI*2)/n;
+  const startAngle=-Math.PI/2;
+
+  // Grid rings
+  [.25,.5,.75,1].forEach(frac=>{
+    ctx.beginPath();
+    for(let i=0;i<n;i++){
+      const a=startAngle+i*angleStep;
+      const x=cx+Math.cos(a)*r*frac;
+      const y=cy+Math.sin(a)*r*frac;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle=`rgba(196,122,26,${frac===1?.22:.1})`;
+    ctx.lineWidth=frac===1?1:.6;
+    ctx.stroke();
+    // subtle fill for innermost
+    if(frac===1){
+      ctx.fillStyle='rgba(196,122,26,.02)';
+      ctx.fill();
+    }
+  });
+
+  // Spokes
+  axes.forEach((_,i)=>{
+    const a=startAngle+i*angleStep;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);
+    ctx.strokeStyle='rgba(196,122,26,.15)';
+    ctx.lineWidth=.6;
+    ctx.stroke();
+  });
+
+  // Data polygon
+  ctx.beginPath();
+  axes.forEach((ax,i)=>{
+    const a=startAngle+i*angleStep;
+    const x=cx+Math.cos(a)*r*ax.val;
+    const y=cy+Math.sin(a)*r*ax.val;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.closePath();
+  ctx.fillStyle='rgba(196,122,26,.13)';
+  ctx.fill();
+  ctx.strokeStyle='rgba(196,122,26,.75)';
+  ctx.lineWidth=1.5;
+  ctx.stroke();
+
+  // Data points
+  axes.forEach((ax,i)=>{
+    const a=startAngle+i*angleStep;
+    const x=cx+Math.cos(a)*r*ax.val;
+    const y=cy+Math.sin(a)*r*ax.val;
+    ctx.beginPath();
+    ctx.arc(x,y,3.5,0,Math.PI*2);
+    ctx.fillStyle='#c47a1a';
+    ctx.fill();
+    ctx.strokeStyle='rgba(5,3,1,.8)';
+    ctx.lineWidth=1;
+    ctx.stroke();
+  });
+
+  // Labels
+  ctx.font=`600 ${size*0.046}px 'Cinzel', serif`;
+  ctx.fillStyle='rgba(107,76,42,.8)';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  axes.forEach((ax,i)=>{
+    const a=startAngle+i*angleStep;
+    const lx=cx+Math.cos(a)*(r+size*0.1);
+    const ly=cy+Math.sin(a)*(r+size*0.1);
+    ctx.fillText(ax.label,lx,ly);
+  });
 }
+window.addEventListener('load',drawRadar);
+window.addEventListener('resize',drawRadar);
+const debriefData={
+  cascade:{
+    stamp:'Live — Firebase Deployed',
+    title:'Cascade AI',
+    subtitle:'Multi-Agent Intelligence Platform',
+    tech:'Python / OpenAI API / LangChain / Firebase Cloud Functions / Firestore / GCS / Node.js',
+    phases:[
+      {label:'Problem',heading:'The Gap No One Talks About',text:'Most "AI assistants" are a single LLM call dressed up with a nice UI. The real challenge is orchestrating multiple specialized agents — each with its own scope, error conditions, and memory — without the whole thing falling apart when one agent returns an unexpected format.'},
+      {label:'Architecture',heading:'The Orchestration Engine',text:'The core is an LLM planner that reads a user\'s plain-text request and generates a multi-step execution blueprint: which agents to call, in what order, with what inputs. Firebase Cloud Functions execute each agent as an isolated serverless unit. When an agent fails or returns a malformed index, a router layer with conditional branching automatically corrects course.'},
+      {label:'Memory',heading:'Per-User Private Context',text:'Each user gets an isolated memory layer in Firestore. Large payloads — scraped pages, processed documents — are offloaded to GCS with references stored in Firestore. This keeps the real-time DB fast while enabling genuinely stateful multi-session interactions. Firebase Auth gates everything.'},
+      {label:'Output',heading:'Formatters & Delivery',text:'The final stage is a formatter agent that takes the pipeline output and reshapes it for the target channel: Slack blocks, PDF generation, or plain email. This separation means the orchestration core is channel-agnostic — adding a new output format is a one-agent change.'}
+    ],
+    metrics:null,
+    links:[]
+  },
+  optiquant:{
+    stamp:'AWS EC2 — Live Deployment',
+    title:'OptiQuant',
+    subtitle:'Full-Stack ML Application — AI-Powered Alpha Signals',
+    tech:'Python / LightGBM / CatBoost / Random Forest / SHAP / Streamlit / Docker / AWS EC2 / GitHub Actions',
+    phases:[
+      {label:'Problem',heading:'Why Most Quant Backtests Are Fiction',text:'Standard backtesting evaluates a strategy on the same data used to tune it. Lookahead bias creeps in through feature calculation windows. The result is a strategy that performs brilliantly on historical data and fails immediately in production. OptiQuant was built to avoid this from day one.'},
+      {label:'Data',heading:'Feature Engineering Without Lookahead',text:'Every feature — momentum, volatility bands, RSI, risk-adjusted metrics — is calculated using only data available at the prediction timestamp. The walk-forward validation loop retrains the model on an expanding window and evaluates on the unseen next period, simulating real production retraining cycles.'},
+      {label:'Model',heading:'Ensemble Architecture & Signal Refinement',text:'Three models (LightGBM, CatBoost, Random Forest) are trained independently and combined via a weighted average. The raw ensemble output is then normalized for volatility and smoothed to produce a final daily alpha signal. Stocks are ranked by this signal — the top percentile becomes the strategy\'s portfolio for that day.'},
+      {label:'Deployment',heading:'Docker + CI/CD + SHAP in the UI',text:'The entire application runs in a Docker container deployed to AWS EC2 via GitHub Actions. Every push to main triggers a rebuild and redeploy. SHAP values are computed on-demand in the Streamlit UI, making every prediction inspectable — users can see exactly which features drove a particular signal.'}
+    ],
+    metrics:[
+      {val:'28.16%',label:'CAGR'},
+      {val:'1.05',label:'Sharpe Ratio'},
+      {val:'1.41',label:'Calmar Ratio'},
+      {val:'-20%',label:'Max Drawdown'},
+      {val:'53.92%',label:'Win Rate'},
+    ],
+    links:[
+      {text:'View on GitHub →',url:'https://github.com/RudraDudhat2509/OptiQuant'},
+      {text:'Live Demo →',url:'http://13.61.176.157:8501'}
+    ]
+  }
+};
+
+function openDebrief(id){
+  const d=debriefData[id];
+  if(!d)return;
+  let html=`
+    <div class="debrief-stamp">${d.stamp}</div>
+    <div class="debrief-title">${d.title}</div>
+    <div class="debrief-tech" style="margin-bottom:.4rem">${d.subtitle}</div>
+    <div class="debrief-tech">${d.tech}</div>
+    <div class="debrief-phases">
+      ${d.phases.map(p=>`
+        <div class="debrief-phase">
+          <div class="phase-label">${p.label}</div>
+          <div class="phase-content">
+            <div class="phase-heading">${p.heading}</div>
+            <p class="phase-text">${p.text}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  if(d.metrics){
+    html+=`<div class="debrief-metrics">${d.metrics.map(m=>`<div class="dm-item"><span class="dm-val">${m.val}</span><span class="dm-label">${m.label}</span></div>`).join('')}</div>`;
+  }
+  if(d.links&&d.links.length){
+    html+=`<div class="debrief-links">${d.links.map(l=>`<a href="${l.url}" target="_blank" class="proj-link">${l.text}</a>`).join('')}</div>`;
+  }
+  document.getElementById('debrief-content').innerHTML=html;
+  document.getElementById('debrief-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDebrief(){
+  document.getElementById('debrief-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeDebriefOnBg(e){
+  if(e.target===document.getElementById('debrief-overlay'))closeDebrief();
+}
+
+/* ═══════════════════════════════════════
+   FEATURE 3 — LOG ARTICLES
+   ═══════════════════════════════════════ */
+const logArticles={
+  shap:{
+    tag:'LLM Engineering',
+    date:'February 2026',
+    title:'Why SHAP Can Quietly Lie to You in a Drifting System',
+    subtitle:'Model explainability tools build trust. A drifting model with confident SHAP outputs destroys it — silently.',
+    body:`
+      <p>Model drift is insidious because it doesn't announce itself. Your accuracy metric drifts down slowly enough that no alarm fires. Your monitoring dashboard still shows reasonable loss curves. And then there's SHAP — faithfully reporting which features drove each prediction, attributing scores with the precision of a court document — while the model itself is operating on a distribution it has never seen.</p>
+      <div class="log-reader-pull">SHAP tells you what the model is doing. It says nothing about whether what the model is doing is correct.</div>
+      <h2 class="log-reader-h2">The Core Problem: Faithful to the Wrong Model</h2>
+      <p>SHAP is a <em>local explainability method</em>. It approximates, for a given input, how much each feature contributed to the model's output relative to a baseline. This is genuinely useful — it lets you verify that the model is using the right signals, and it catches obvious failure modes like a credit model weighting zip code too heavily.</p>
+      <p>But SHAP is faithful to the model, not to reality. If your input distribution has shifted — new seasonality patterns, a macro regime change, a product pivot that changed user behaviour — the model may be confidently wrong, and SHAP will confidently explain those wrong predictions using whatever the current feature values are.</p>
+      <h2 class="log-reader-h2">What I Saw Building OptiQuant</h2>
+      <p>OptiQuant uses SHAP attributions surfaced directly in the Streamlit UI. During testing, I deliberately evaluated the model on a data window it wasn't trained on — a six-month period with significantly different market volatility. The model's Sharpe ratio dropped. But the SHAP outputs remained high-confidence: momentum and RSI were still flagged as primary drivers, the attributions looked plausible, and nothing in the visualisation screamed "something is wrong."</p>
+      <p>The only signal that something was off came from the walk-forward validation loss curves — not SHAP. This is the gap that matters: <em>SHAP explains predictions, it doesn't validate them.</em></p>
+      <h2 class="log-reader-h2">What to Actually Monitor</h2>
+      <p>Pair SHAP with distribution drift monitoring. Track the input feature distributions (mean, variance, KL-divergence from training distribution) on a sliding window. When those drift beyond a threshold, treat all SHAP outputs as suspect until the model is retrained. The workflow I'd recommend: run distribution checks first, gate SHAP display behind a "drift status: stable" indicator, and log both sets of outputs together so they can be correlated in post-mortems.</p>
+      <p>Explainability without stability monitoring is a confidence trick. Build both, or build neither.</p>
+    `
+  },
+  firebase:{
+    tag:'MLOps',
+    date:'January 2026',
+    title:'From Notebook to Firebase: What Actually Changes',
+    subtitle:'The real curriculum of shipping Cascade AI — everything the tutorials skip.',
+    body:`
+      <p>The gap between a working notebook and a production system is not a technical gap. It is a <em>thinking</em> gap. A notebook is a linear script that assumes cooperative inputs, infinite patience, and a human operator on standby. A production system assumes hostile inputs, concurrent users, intermittent failures, and zero human intervention at 3am.</p>
+      <div class="log-reader-pull">The notebook works. The deployment is where you find out what the notebook was hiding.</div>
+      <h2 class="log-reader-h2">What the Notebook Doesn't Model</h2>
+      <p>When I started building Cascade AI, the notebook version of the multi-agent pipeline worked beautifully. Agents called each other in sequence, the LLM planner generated clean JSON blueprints, and the output formatters produced exactly what I wanted. Then I tried to deploy it to Firebase Cloud Functions.</p>
+      <p>Three things broke immediately. First: cold start latency. Firebase functions spin down between calls — a 2-3 second cold start on an LLM call that already takes 4-6 seconds is unacceptable UX. Second: JSON parsing failures from LLM outputs that occasionally included markdown fences or trailing commas. In a notebook you notice and fix it manually. In production, it crashes the pipeline and the user gets a 500. Third: memory. Passing large scraped page content between agents as function arguments blew through the payload limits.</p>
+      <h2 class="log-reader-h2">The Fixes Are Architecture</h2>
+      <p>Cold start: keep functions warm with scheduled ping calls and minimize import load. JSON failures: never trust raw LLM output — always parse defensively with a validation layer that retries with an explicit "return only valid JSON" system prompt if the first parse fails. Memory: offload large payloads to GCS immediately after generation, pass only GCS references between agents, reconstruct at the point of consumption.</p>
+      <p>None of these are hard problems. But none of them exist in the notebook. The notebook is a proof of concept; the deployment is the actual engineering. Every production system you've ever used has solved these problems invisibly, which is why the notebook feels complete and the deployment feels broken. It isn't broken — it's just honest.</p>
+      <h2 class="log-reader-h2">What I'd Tell Myself Earlier</h2>
+      <p>Design for failure before you design for features. Assume every external call fails half the time. Assume every LLM output is malformed until proven otherwise. Write your retry logic before your happy path. The notebooks will always work — make the deployments work too.</p>
+    `
+  },
+  walkforward:{
+    tag:'Quant / ML',
+    date:'December 2025',
+    title:'Walk-Forward Validation: Why Backtesting Usually Lies',
+    subtitle:'How I built an honest evaluation loop for OptiQuant — and what most tutorials get wrong.',
+    body:`
+      <p>Every quant strategy looks profitable on historical data. This is not because quants are smart. It is because standard backtesting is, structurally, a form of cheating. You tune hyperparameters on data, then evaluate on the same data. You calculate features using future values that wouldn't have been available at prediction time. You optimize a strategy's parameters against the full historical period, then report performance on that same period as if it's out-of-sample.</p>
+      <div class="log-reader-pull">A strategy that can't survive an honest walk-forward test doesn't survive live trading. The data just hasn't had a chance to tell you yet.</div>
+      <h2 class="log-reader-h2">What Walk-Forward Actually Means</h2>
+      <p>Walk-forward validation simulates real production use. You start with an initial training window — say, the first 200 days of data. You train the model, generate predictions for day 201, record the result, then expand the training window to include day 201 and repeat. The model never sees the data it's predicting on during training.</p>
+      <p>In OptiQuant, I implemented this as an expanding window loop. Each iteration retrains the full ensemble (LightGBM, CatBoost, Random Forest) on all data up to the prediction date, generates signals for the next trading day, records the portfolio return, then advances. The reported metrics — 161% return, 2.73 Sharpe, 64% win rate over 272 days — are all calculated on these out-of-sample predictions, not on training data.</p>
+      <h2 class="log-reader-h2">The Lookahead Bias Traps</h2>
+      <p>Even with a proper walk-forward loop, lookahead bias hides in the feature engineering. If you calculate a 50-day rolling mean at time T, you're using data from T-49 to T. That's fine. But if you normalize features using statistics calculated over the entire dataset, you're leaking future information into past predictions. Every normalization, every scaling, every rolling statistic must be calculated using only past data at the prediction timestamp.</p>
+      <p>The test I use: if you could have computed this feature value at prediction time using only data available up to that moment, it's clean. If you need future data to compute it, it's contaminated. Apply this test to every feature, every transformation, every preprocessing step. It is tedious. It is the work.</p>
+    `
+  }
+};
+
+function openLog(id){
+  const a=logArticles[id];
+  if(!a)return;
+  document.getElementById('log-reader-body').innerHTML=`
+    <div class="log-reader-tag">${a.tag}</div>
+    <div class="log-reader-date">${a.date}</div>
+    <div class="log-reader-title">${a.title}</div>
+    <div class="log-reader-subtitle">${a.subtitle}</div>
+    <div class="log-reader-content">${a.body}</div>
+  `;
+  document.getElementById('log-reader').classList.add('open');
+  document.getElementById('log-reader').scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+function closeLog(){
+  document.getElementById('log-reader').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeDebrief();closeLog();}
+});
 
 loadGH();
 </script>
