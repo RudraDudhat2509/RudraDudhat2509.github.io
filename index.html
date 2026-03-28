@@ -3,1239 +3,550 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Rudra Dudhat — AI Engineer</title>
+<title>Rudra Dudhat</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
-/* ═══ DESIGN TOKENS ═══ */
 :root {
-  /* GOW Blood + Ghost of Tsushima Gold + Spider-Man Red + Uncharted Earth */
-  --void:       #02040a;
-  --deep:       #060c18;
-  --surface:    #0d1625;
-  --card:       #111c2e;
-  --border:     rgba(180,140,60,0.2);
-  --border-hot: rgba(220,60,30,0.6);
-  
-  --gold:    #d4a843;
-  --gold2:   #f0c060;
-  --red:     #c8281c;
-  --red2:    #e8401e;
-  --cyan:    #38c8e8;
-  --cream:   #f0e8d0;
-  --mist:    rgba(240,232,208,0.7);
-  --faded:   rgba(240,232,208,0.35);
-  
-  --ink: #f0e8d0;
-  
-  /* Gradients */
-  --g-gold: linear-gradient(135deg, #d4a843, #f0c060, #d4a843);
-  --g-fire: linear-gradient(135deg, #c8281c, #e8401e, #ff6030);
-  --g-sky:  linear-gradient(180deg, #0a1828, #162848);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--void);
-  color: var(--ink);
-  font-family: 'Rajdhani', sans-serif;
-  overflow-x: hidden;
-  cursor: none;
-}
-
-/* ═══ CUSTOM CURSOR ═══ */
-#cursor-dot {
-  position: fixed; z-index: 99999; pointer-events: none;
-  width: 8px; height: 8px;
-  background: var(--gold);
-  border-radius: 50%;
-  transform: translate(-50%,-50%);
-  transition: transform .1s, background .2s;
-  mix-blend-mode: screen;
-}
-#cursor-ring {
-  position: fixed; z-index: 99998; pointer-events: none;
-  width: 28px; height: 28px;
-  border: 1.5px solid var(--gold);
-  border-radius: 50%;
-  transform: translate(-50%,-50%) rotate(0deg);
-  transition: width .3s, height .3s, border-color .3s;
-  animation: cursorSpin 8s linear infinite;
-  opacity: 0.7;
-}
-#cursor-ring::before, #cursor-ring::after {
-  content: '';
-  position: absolute;
-  width: 3px; height: 3px;
-  background: var(--gold2);
-  border-radius: 50%;
-}
-#cursor-ring::before { top: -2px; left: 50%; transform: translateX(-50%); }
-#cursor-ring::after  { bottom: -2px; left: 50%; transform: translateX(-50%); }
-@keyframes cursorSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
-body:hover #cursor-dot { opacity: 1; }
-
-/* ═══ PARTICLES / AMBIENT ═══ */
-#ambient-canvas {
-  position: fixed; inset: 0; z-index: 0;
-  pointer-events: none;
-}
-
-/* ═══ NAV / HUD ═══ */
-#hud {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 800;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: .8rem 3rem;
-  background: linear-gradient(to bottom, rgba(2,4,10,.95), rgba(2,4,10,.4));
-  border-bottom: 1px solid rgba(180,140,60,.12);
-}
-.hud-brand {
-  font-family: 'Cinzel', serif;
-  font-size: .68rem; letter-spacing: .55em; text-transform: uppercase;
-  color: var(--gold);
-  display: flex; align-items: center; gap: .7rem;
-}
-.hud-brand-dot {
-  width: 6px; height: 6px;
-  background: var(--red);
-  border-radius: 50%;
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.5;transform:scale(.6);} }
-.hud-nav { display: flex; gap: 2.5rem; list-style: none; }
-.hud-nav a {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .78rem; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--faded); text-decoration: none;
-  position: relative; padding-bottom: 2px;
-  transition: color .3s;
-}
-.hud-nav a::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 1px; background: var(--gold);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform .3s;
-}
-.hud-nav a:hover { color: var(--gold2); }
-.hud-nav a:hover::after { transform: scaleX(1); }
-.hud-status {
-  font-family: 'Orbitron', monospace;
-  font-size: .52rem; letter-spacing: .2em; color: rgba(56,200,232,.7);
-  display: flex; align-items: center; gap: .5rem;
-}
-.hud-status-bar {
-  width: 40px; height: 2px;
-  background: rgba(56,200,232,.2);
-  position: relative; overflow: hidden;
-}
-.hud-status-bar::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: var(--cyan);
-  animation: scanBar 2s ease-in-out infinite;
-}
-@keyframes scanBar { 0%{transform:translateX(-100%);} 100%{transform:translateX(200%);} }
-
-/* ═══ SCENE: HERO ═══ */
-#scene-hero {
-  min-height: 100vh;
-  position: relative;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-}
-
-/* 3D Tilting environment */
-.scene-3d {
-  position: absolute; inset: 0;
-  transform-style: preserve-3d;
-  perspective: 1200px;
-}
-
-/* Sky layers */
-.sky-layer {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 30%, #0e2040, var(--void) 70%);
-}
-.sky-layer::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: 
-    radial-gradient(ellipse 30% 20% at 70% 25%, rgba(200,40,28,.08), transparent),
-    radial-gradient(ellipse 40% 30% at 20% 60%, rgba(180,140,60,.04), transparent);
-}
-
-/* Torii gate silhouette (Ghost of Tsushima) */
-.torii {
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 100%; max-width: 900px;
-  pointer-events: none; z-index: 2;
-}
-
-/* Mountain layers (parallax) */
-.mountain-layer {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  pointer-events: none;
-}
-.ml-far {
-  bottom: 15vh;
-  background: linear-gradient(to top, rgba(10,20,45,.8), transparent);
-  height: 35vh;
-  clip-path: polygon(0% 100%, 5% 65%, 12% 80%, 20% 45%, 28% 70%, 35% 30%, 42% 55%, 50% 20%, 58% 50%, 65% 35%, 72% 60%, 80% 40%, 88% 65%, 95% 50%, 100% 70%, 100% 100%);
-}
-.ml-mid {
-  bottom: 8vh;
-  background: linear-gradient(to top, rgba(8,15,35,.95), rgba(8,15,35,.4));
-  height: 28vh;
-  clip-path: polygon(0% 100%, 8% 55%, 15% 75%, 22% 38%, 30% 65%, 38% 28%, 45% 50%, 52% 18%, 60% 45%, 68% 32%, 76% 58%, 83% 40%, 90% 62%, 96% 48%, 100% 60%, 100% 100%);
-}
-.ml-near {
-  bottom: 0;
-  background: linear-gradient(to top, rgba(5,10,22,1), rgba(5,10,22,.7));
-  height: 18vh;
-  clip-path: polygon(0% 100%, 12% 45%, 25% 80%, 38% 35%, 50% 65%, 62% 30%, 75% 60%, 88% 40%, 100% 55%, 100% 100%);
-}
-
-/* Sakura petals */
-.petal {
-  position: absolute;
-  width: 6px; height: 8px;
-  background: rgba(255,180,180,.6);
-  border-radius: 50% 0 50% 0;
-  pointer-events: none;
-  animation: petalFall linear infinite;
-}
-@keyframes petalFall {
-  0%   { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
-  10%  { opacity: .8; }
-  90%  { opacity: .4; }
-  100% { transform: translateY(100vh) rotate(720deg) translateX(60px); opacity: 0; }
-}
-
-/* Scan lines */
-.scanlines {
-  position: absolute; inset: 0; z-index: 5; pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 3px,
-    rgba(0,0,0,.03) 3px,
-    rgba(0,0,0,.03) 4px
-  );
-}
-
-/* Vignette */
-.vignette {
-  position: absolute; inset: 0; z-index: 4; pointer-events: none;
-  background: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 40%, rgba(0,0,0,.7));
-}
-
-/* Ground glow */
-.ground-glow {
-  position: absolute; bottom: 0; left: 20%; right: 20%; height: 2px;
-  background: linear-gradient(to right, transparent, var(--gold), rgba(200,40,28,.8), var(--gold), transparent);
-  filter: blur(3px);
-  z-index: 3;
-  animation: groundPulse 3s ease-in-out infinite;
-}
-@keyframes groundPulse { 0%,100%{opacity:.5;} 50%{opacity:1;} }
-
-/* HERO CONTENT */
-.hero-stage {
-  position: relative; z-index: 10;
-  text-align: center;
-  padding: 2rem;
-}
-
-.hero-subtitle-pre {
-  font-family: 'Orbitron', monospace;
-  font-size: .58rem; letter-spacing: .7em; text-transform: uppercase;
-  color: var(--cyan);
-  margin-bottom: 1.5rem;
-  opacity: 0; animation: fadeUp .8s .3s ease forwards;
-  display: flex; align-items: center; justify-content: center; gap: 1rem;
-}
-.hero-subtitle-pre::before, .hero-subtitle-pre::after {
-  content: '';
-  width: 40px; height: 1px;
-  background: linear-gradient(to right, transparent, var(--cyan));
-}
-.hero-subtitle-pre::before { transform: scaleX(-1); }
-
-.hero-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(4rem, 10vw, 9rem);
-  line-height: .9;
-  letter-spacing: .04em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(212,168,67,.3);
-  background: linear-gradient(180deg, var(--gold2) 0%, var(--gold) 40%, rgba(200,40,28,.9) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  opacity: 0; animation: nameReveal 1.2s .6s cubic-bezier(.16,1,.3,1) forwards;
-  position: relative;
-  text-shadow: none;
-  filter: drop-shadow(0 0 60px rgba(212,168,67,.2)) drop-shadow(0 4px 30px rgba(0,0,0,.8));
-}
-@keyframes nameReveal {
-  from { opacity: 0; transform: translateY(40px) scale(.95); filter: blur(20px) drop-shadow(0 0 60px rgba(212,168,67,.2)); }
-  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0) drop-shadow(0 0 60px rgba(212,168,67,.2)) drop-shadow(0 4px 30px rgba(0,0,0,.8)); }
-}
-
-.hero-name-sub {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(.7rem, 1.5vw, 1rem);
-  letter-spacing: .5em; text-transform: uppercase;
-  color: var(--gold);
-  opacity: .6;
-  margin-top: .8rem;
-  opacity: 0; animation: fadeUp .8s .9s ease forwards;
-}
-
-.hero-divider {
-  display: flex; align-items: center; justify-content: center; gap: 1.2rem;
-  margin: 2rem 0;
-  opacity: 0; animation: fadeUp .6s 1.1s ease forwards;
-}
-.hero-divider-line {
-  width: 80px; height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold));
-}
-.hero-divider-line:last-child { transform: scaleX(-1); }
-.hero-divider-symbol {
-  font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold);
-  animation: rotateSym 12s linear infinite;
-}
-@keyframes rotateSym { to { transform: rotate(360deg); } }
-
-.hero-desc {
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  color: var(--mist);
-  max-width: 540px; margin: 0 auto 2.5rem;
-  line-height: 1.85;
-  opacity: 0; animation: fadeUp .8s 1.2s ease forwards;
-}
-
-/* GAME MENU BUTTONS */
-.menu-actions {
-  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-  opacity: 0; animation: fadeUp .8s 1.4s ease forwards;
-}
-
-.menu-btn {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .85rem; letter-spacing: .25em; text-transform: uppercase; font-weight: 600;
-  text-decoration: none; color: inherit;
-  position: relative;
-  padding: .9rem 2.4rem;
-  display: inline-flex; align-items: center; gap: .6rem;
-  transition: all .3s;
-  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%);
-}
-.menu-btn::before {
-  content: '';
-  position: absolute; inset: 0;
-  clip-path: inherit;
-  transition: all .3s;
-}
-.menu-btn-gold {
-  color: var(--void);
-  background: transparent;
-}
-.menu-btn-gold::before {
-  background: linear-gradient(135deg, var(--gold2), var(--gold));
-  z-index: -1;
-}
-.menu-btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(212,168,67,.4); }
-.menu-btn-ghost {
-  color: var(--cream);
-  border: 1px solid rgba(212,168,67,.35);
-  background: rgba(212,168,67,.05);
-}
-.menu-btn-ghost:hover {
-  border-color: var(--gold);
-  background: rgba(212,168,67,.12);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(212,168,67,.15);
-}
-
-/* HUD corner decorations */
-.hud-corner {
-  position: absolute; z-index: 10;
-  width: 60px; height: 60px;
-  pointer-events: none;
-}
-.hud-corner svg { width: 100%; height: 100%; }
-.hud-corner-tl { top: 80px; left: 20px; }
-.hud-corner-tr { top: 80px; right: 20px; transform: scaleX(-1); }
-.hud-corner-bl { bottom: 20px; left: 20px; transform: scaleY(-1); }
-.hud-corner-br { bottom: 20px; right: 20px; transform: scale(-1); }
-
-/* XP bar / scroll hint */
-.xp-hint {
-  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-  z-index: 10;
-  display: flex; flex-direction: column; align-items: center; gap: .5rem;
-  animation: xpBob 3s ease-in-out infinite;
-}
-@keyframes xpBob { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(8px);} }
-.xp-label {
-  font-family: 'Orbitron', monospace;
-  font-size: .48rem; letter-spacing: .5em; text-transform: uppercase;
-  color: rgba(212,168,67,.5);
-}
-.xp-bar {
-  width: 60px; height: 2px;
-  background: rgba(212,168,67,.15);
-  overflow: hidden;
-}
-.xp-bar::after {
-  content: '';
-  display: block; height: 100%;
-  width: 40%; background: var(--gold);
-  animation: xpScan 2s ease-in-out infinite;
-}
-@keyframes xpScan { 0%{width:20%;} 50%{width:80%;} 100%{width:20%;} }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ═══ SECTION WRAPPERS ═══ */
-.section-void { background: var(--void); position: relative; }
-.section-deep { background: var(--deep); position: relative; }
-
-/* Chapter Dividers — game chapter screens */
-.chapter-screen {
-  position: relative;
-  padding: 2.5rem 0;
-  background: var(--void);
-  overflow: hidden;
-}
-.chapter-screen::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent, transparent 80px,
-    rgba(212,168,67,.018) 80px, rgba(212,168,67,.018) 81px
-  );
-}
-.chapter-inner {
-  max-width: 1100px; margin: 0 auto; padding: 0 2rem;
-  display: flex; align-items: center; gap: 2rem;
-}
-.chapter-num-wrap {
-  flex-shrink: 0;
-  position: relative;
-}
-.chapter-num {
-  font-family: 'Orbitron', monospace;
-  font-size: 5rem; line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(212,168,67,.25);
-  letter-spacing: -.02em;
-}
-.chapter-num::before {
-  content: attr(data-n);
-  position: absolute; inset: 0;
-  font-family: 'Orbitron', monospace;
-  font-size: 5rem;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(200,40,28,.2);
-  transform: translate(3px,3px);
-}
-.chapter-sep { flex-shrink: 0; display: flex; flex-direction: column; gap: 4px; }
-.chapter-sep span { width: 2px; height: 12px; background: var(--gold); opacity: .4; }
-.chapter-sep span:nth-child(2) { opacity: .2; }
-.chapter-text { flex: 1; }
-.chapter-tag {
-  font-family: 'Orbitron', monospace;
-  font-size: .5rem; letter-spacing: .5em; text-transform: uppercase;
-  color: var(--cyan); margin-bottom: .3rem;
-}
-.chapter-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
-  color: var(--cream); line-height: 1.1;
-}
-.chapter-title span { color: var(--gold); }
-.chapter-line {
-  flex: 1; height: 1px;
-  background: linear-gradient(to right, rgba(212,168,67,.4), transparent);
-}
-
-/* ═══ ABOUT ═══ */
-#about { padding: 5rem 0; }
-.about-container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-.about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; align-items: start; }
-
-.lore-panel {
-  position: relative;
-}
-.lore-panel p {
-  font-family: 'IM Fell English', serif;
-  font-size: 1.1rem; line-height: 1.95;
-  color: rgba(240,232,208,.85);
-  margin-bottom: 1.3rem;
-}
-.lore-panel p:first-child::first-letter {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 4.5rem; float: left;
-  line-height: .72; margin: .1em .1em 0 0;
-  background: var(--g-fire); -webkit-background-clip: text; background-clip: text;
-  color: transparent;
-}
-.lore-aside {
-  border-left: 2px solid var(--red);
-  padding: .8rem 1.2rem;
-  background: linear-gradient(to right, rgba(200,40,28,.06), transparent);
-  margin: 1.5rem 0;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1rem; font-weight: 500; letter-spacing: .04em;
-  color: rgba(240,232,208,.75); line-height: 1.6;
-}
-.lore-aside em { color: var(--red2); font-style: italic; }
-
-/* Stats panel like a game character stats screen */
-.stats-card {
-  background: linear-gradient(160deg, rgba(13,22,37,.9), rgba(6,12,24,.95));
-  border: 1px solid rgba(212,168,67,.2);
-  padding: 2rem;
-  position: relative;
-  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-}
-.stats-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(212,168,67,.025) 24px, rgba(212,168,67,.025) 25px);
-  clip-path: inherit;
-}
-.stats-card-header {
-  font-family: 'Orbitron', monospace;
-  font-size: .55rem; letter-spacing: .45em; text-transform: uppercase;
-  color: var(--cyan); margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(56,200,232,.15);
-  padding-bottom: .8rem;
-  display: flex; align-items: center; gap: .8rem;
-}
-.stats-card-header::before {
-  content: '●'; font-size: .4rem; color: var(--cyan); animation: pulse-dot 1.5s ease-in-out infinite;
-}
-
-.stat-row {
-  display: flex; align-items: center; margin-bottom: 1rem;
-  gap: .8rem;
-}
-.stat-label {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
-  color: var(--faded); width: 100px; flex-shrink: 0;
-}
-.stat-bar-wrap {
-  flex: 1; height: 4px;
-  background: rgba(255,255,255,.05);
-  position: relative; overflow: visible;
-}
-.stat-bar {
-  height: 100%;
-  position: relative;
-  transition: width 1.5s cubic-bezier(.16,1,.3,1);
-}
-.stat-bar::after {
-  content: '';
-  position: absolute; right: -1px; top: -2px;
-  width: 2px; height: 8px;
-  background: inherit;
-  filter: blur(2px) brightness(1.5);
-}
-.sb-gold { background: linear-gradient(to right, var(--gold), var(--gold2)); }
-.sb-red  { background: linear-gradient(to right, var(--red), var(--red2)); }
-.sb-cyan { background: linear-gradient(to right, #1888a8, var(--cyan)); }
-.stat-val {
-  font-family: 'Orbitron', monospace;
-  font-size: .65rem; color: var(--gold);
-  width: 50px; text-align: right; flex-shrink: 0;
-}
-
-.stat-numbers {
-  display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-top: 1.5rem;
-  border-top: 1px solid rgba(212,168,67,.1); padding-top: 1.5rem;
-}
-.sn-item { text-align: center; padding: .7rem; background: rgba(212,168,67,.03); }
-.sn-val {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.6rem; color: var(--gold); display: block; line-height: 1;
-}
-.sn-label {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .6rem; letter-spacing: .12em; color: var(--faded);
-  text-transform: uppercase; margin-top: .3rem; display: block;
-}
-
-/* ═══ PROJECTS ═══ */
-#projects { padding: 4rem 0 5rem; }
-.projects-container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-
-.proj-intro-text {
-  font-family: 'IM Fell English', serif; font-style: italic;
-  font-size: 1rem; color: var(--faded);
-  text-align: center; margin-bottom: 3rem;
-  letter-spacing: .03em;
-}
-
-/* Featured mission card */
-.mission-card {
-  position: relative;
-  background: linear-gradient(135deg, rgba(13,22,37,.95), rgba(8,15,30,.98));
-  border: 1px solid rgba(212,168,67,.25);
-  padding: 0; margin-bottom: 1.5rem;
-  overflow: hidden;
-  transition: all .4s;
-  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px));
-}
-.mission-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: 
-    radial-gradient(ellipse 60% 50% at 0% 50%, rgba(200,40,28,.04), transparent),
-    repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(212,168,67,.015) 28px, rgba(212,168,67,.015) 29px);
-}
-.mission-card:hover {
-  border-color: rgba(212,168,67,.5);
-  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 40px rgba(212,168,67,.05), inset 0 0 60px rgba(212,168,67,.02);
-  transform: translateY(-4px);
-}
-
-/* Side accent bar */
-.mission-accent {
-  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: linear-gradient(to bottom, var(--gold2), var(--red), var(--gold2));
-  animation: accentShift 4s ease-in-out infinite;
-}
-@keyframes accentShift {
-  0%,100% { opacity: .6; }
-  50% { opacity: 1; filter: brightness(1.3); }
-}
-
-.mission-inner { padding: 2.4rem 2.4rem 2.4rem 3rem; position: relative; z-index: 1; }
-
-.mission-status {
-  display: inline-flex; align-items: center; gap: .5rem;
-  font-family: 'Orbitron', monospace;
-  font-size: .5rem; letter-spacing: .4em; text-transform: uppercase;
-  color: var(--void);
-  background: linear-gradient(135deg, var(--gold2), var(--gold));
-  padding: .25rem .8rem;
-  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-  margin-bottom: 1rem;
-}
-.mission-status-dot { width: 5px; height: 5px; background: var(--void); border-radius: 50%; animation: pulse-dot 1.5s ease-in-out infinite; }
-
-.mission-title {
-  font-family: 'Cinzel', serif;
-  font-size: 1.5rem; font-weight: 700;
-  color: var(--cream); margin-bottom: .3rem; line-height: 1.2;
-}
-.mission-title a { color: inherit; text-decoration: none; transition: color .3s; }
-.mission-title a:hover { color: var(--gold); }
-
-.mission-stack {
-  font-family: 'Orbitron', monospace;
-  font-size: .48rem; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--gold); opacity: .75; margin-bottom: 1rem;
-}
-
-.mission-desc {
-  font-family: 'IM Fell English', serif;
-  font-size: 1rem; color: rgba(240,232,208,.78); line-height: 1.8;
-  max-width: 680px; margin-bottom: 1.4rem;
-}
-
-.mission-objectives {
-  display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-bottom: 1.4rem;
-}
-.obj-item {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .88rem; font-weight: 500; letter-spacing: .03em;
-  color: rgba(240,232,208,.68);
-  padding-left: 1.2rem; position: relative; line-height: 1.5;
-}
-.obj-item::before {
-  content: '◆';
-  position: absolute; left: 0;
-  color: var(--gold); font-size: .45rem;
-  top: .25em;
-}
-
-.mission-footer {
-  display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
-}
-.mission-link {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
-  color: var(--gold); text-decoration: none;
-  display: inline-flex; align-items: center; gap: .4rem;
-  border-bottom: 1px solid rgba(212,168,67,.3);
-  padding-bottom: 2px;
-  transition: all .3s;
-}
-.mission-link:hover { color: var(--gold2); border-color: var(--gold2); gap: .7rem; }
-.mission-debrief-btn {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
-  color: rgba(240,232,208,.5);
-  background: none; border: 1px solid rgba(240,232,208,.15);
-  padding: .4rem 1rem;
-  cursor: none;
-  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
-  transition: all .3s;
-}
-.mission-debrief-btn:hover {
-  color: var(--cyan); border-color: rgba(56,200,232,.4);
-  background: rgba(56,200,232,.05);
-}
-
-/* Secondary missions */
-.side-missions-label {
-  font-family: 'Orbitron', monospace;
-  font-size: .52rem; letter-spacing: .5em; text-transform: uppercase;
-  color: rgba(212,168,67,.5);
-  margin: 2.5rem 0 1.2rem;
-  display: flex; align-items: center; gap: 1rem;
-}
-.side-missions-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, rgba(212,168,67,.25), transparent); }
-
-.side-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(295px,1fr)); gap: 1rem; }
-.side-card {
-  position: relative;
-  border: 1px solid rgba(212,168,67,.1);
-  background: rgba(212,168,67,.02);
-  padding: 1.6rem;
-  text-decoration: none; color: inherit;
-  display: block;
-  transition: all .35s;
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  overflow: hidden;
-}
-.side-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-  opacity: 0; transition: opacity .3s;
-}
-.side-card:hover { border-color: rgba(212,168,67,.35); background: rgba(212,168,67,.06); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.4); }
-.side-card:hover::before { opacity: 1; }
-.side-lang {
-  display: flex; align-items: center; gap: .5rem;
-  font-family: 'Orbitron', monospace;
-  font-size: .5rem; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--faded); margin-bottom: .6rem;
-}
-.lang-pip { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.side-title { font-family: 'Cinzel', serif; font-size: .95rem; font-weight: 600; color: var(--cream); margin-bottom: .5rem; }
-.side-desc { font-family: 'IM Fell English', serif; font-size: .9rem; color: var(--faded); line-height: 1.7; }
-.side-meta { margin-top: .8rem; font-family: 'Orbitron', monospace; font-size: .5rem; letter-spacing: .12em; color: rgba(212,168,67,.4); }
-.gh-loading-new { grid-column: 1/-1; text-align: center; padding: 3rem; font-family: 'Orbitron', monospace; font-size: .52rem; letter-spacing: .4em; color: rgba(212,168,67,.3); animation: breathe 2s ease-in-out infinite; }
-@keyframes breathe { 0%,100%{opacity:.2;} 50%{opacity:.8;} }
-
-/* ═══ SKILLS ═══ */
-#skills { padding: 4rem 0 5rem; }
-.skills-container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-.skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
-
-.skill-panel {
-  border: 1px solid rgba(212,168,67,.15);
-  background: linear-gradient(160deg, rgba(13,22,37,.6), rgba(6,12,24,.8));
-  padding: 1.5rem;
-  position: relative; overflow: hidden;
-  transition: all .3s;
-}
-.skill-panel::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(to right, transparent, rgba(212,168,67,.3), transparent);
-  transform: scaleX(0); transition: transform .3s;
-}
-.skill-panel:hover { border-color: rgba(212,168,67,.3); background: linear-gradient(160deg, rgba(13,22,37,.9), rgba(6,12,24,.95)); }
-.skill-panel:hover::after { transform: scaleX(1); }
-
-.sp-title {
-  font-family: 'Orbitron', monospace;
-  font-size: .52rem; letter-spacing: .35em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 1rem;
-  padding-bottom: .6rem;
-  border-bottom: 1px solid rgba(212,168,67,.12);
-  display: flex; align-items: center; gap: .5rem;
-}
-.sp-title-icon { font-size: .6rem; }
-
-.sp-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
-.sp-tag {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .8rem; font-weight: 500; letter-spacing: .05em;
-  color: rgba(240,232,208,.75);
-  padding: .2rem .55rem;
-  border: 1px solid rgba(212,168,67,.12);
-  background: rgba(212,168,67,.03);
-  transition: all .25s;
-}
-.sp-tag:hover {
-  border-color: rgba(212,168,67,.35);
-  color: var(--cream);
-  background: rgba(212,168,67,.08);
-  transform: translateY(-1px);
-}
-
-/* ═══ EXPERIENCE / TIMELINE ═══ */
-#experience { padding: 4rem 0 5rem; }
-.exp-container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-
-.timeline-new { position: relative; }
-.timeline-new::before {
-  content: '';
-  position: absolute; left: 14px; top: 0; bottom: 0; width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(212,168,67,.4) 8%, rgba(212,168,67,.25) 92%, transparent);
-}
-
-.tl-entry {
-  display: grid; grid-template-columns: 48px 1fr; gap: 2rem;
-  margin-bottom: 2.5rem;
-  opacity: 0; transform: translateX(-20px); transition: all .6s ease;
-}
-.tl-entry.in-view { opacity: 1; transform: translateX(0); }
-
-.tl-node { display: flex; flex-direction: column; align-items: center; padding-top: .2rem; }
-.tl-gem {
-  width: 14px; height: 14px;
-  border: 1.5px solid var(--gold);
-  background: var(--void);
-  transform: rotate(45deg); flex-shrink: 0;
-  position: relative; z-index: 1;
-  transition: background .3s, box-shadow .3s;
-}
-.tl-entry:hover .tl-gem {
-  background: var(--gold);
-  box-shadow: 0 0 12px rgba(212,168,67,.6);
-}
-.tl-ts {
-  font-family: 'Orbitron', monospace;
-  font-size: .42rem; letter-spacing: .1em; color: rgba(212,168,67,.5);
-  writing-mode: vertical-rl; margin-top: .6rem;
-  text-transform: uppercase;
-}
-
-.tl-body { padding-bottom: .5rem; border-bottom: 1px solid rgba(212,168,67,.07); }
-.tl-role {
-  font-family: 'Cinzel', serif;
-  font-size: 1rem; font-weight: 700; color: var(--cream); margin-bottom: .15rem;
-}
-.tl-org {
-  font-family: 'IM Fell English', serif;
-  font-size: .9rem; font-style: italic; color: var(--faded); margin-bottom: .75rem;
-}
-.tl-list { list-style: none; }
-.tl-list li {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .92rem; font-weight: 500; letter-spacing: .02em;
-  color: rgba(240,232,208,.72); line-height: 1.6;
-  padding-left: 1.2rem; position: relative; margin-bottom: .2rem;
-}
-.tl-list li::before { content: '/'; position: absolute; left: 0; color: var(--red); font-family: 'Cinzel', serif; }
-
-/* Certs */
-.certs-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px,1fr)); gap: .9rem; margin-top: 3rem; }
-.cert-card {
-  border: 1px solid rgba(212,168,67,.12);
-  padding: 1.1rem 1.4rem;
-  background: rgba(212,168,67,.02);
-  position: relative; overflow: hidden;
-  transition: all .3s;
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-}
-.cert-card::before {
-  content: '';
-  position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
-  background: var(--gold); transform: scaleY(0); transform-origin: top; transition: transform .3s;
-}
-.cert-card:hover { border-color: rgba(212,168,67,.3); }
-.cert-card:hover::before { transform: scaleY(1); }
-.cert-name { font-family: 'Rajdhani', sans-serif; font-size: .9rem; font-weight: 600; color: var(--cream); letter-spacing: .04em; line-height: 1.35; margin-bottom: .3rem; }
-.cert-meta { font-family: 'Orbitron', monospace; font-size: .48rem; letter-spacing: .15em; color: var(--gold); text-transform: uppercase; }
-.cert-badge { display: inline-block; font-family: 'Orbitron', monospace; font-size: .4rem; letter-spacing: .25em; text-transform: uppercase; color: var(--void); background: rgba(212,168,67,.6); padding: .1rem .45rem; clip-path: polygon(3px 0%,100% 0%,calc(100% - 3px) 100%,0% 100%); margin-left: .4rem; }
-
-/* ═══ DISPATCHES / BLOG ═══ */
-#log { padding: 4rem 0 5rem; }
-.log-container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-.log-grid-new { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 1.4rem; }
-
-.dispatch-card {
-  border: 1px solid rgba(212,168,67,.12);
-  background: linear-gradient(160deg, rgba(13,22,37,.7), rgba(6,12,24,.9));
-  padding: 2rem;
-  position: relative; overflow: hidden;
-  transition: all .4s;
-  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
-}
-.dispatch-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(to right, transparent, var(--gold), var(--red), transparent);
-  opacity: 0; transition: opacity .3s;
-}
-.dispatch-card:hover { border-color: rgba(212,168,67,.32); transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,.5); }
-.dispatch-card:hover::before { opacity: 1; }
-
-.dispatch-tag {
-  font-family: 'Orbitron', monospace;
-  font-size: .48rem; letter-spacing: .4em; text-transform: uppercase;
-  color: var(--void);
-  background: linear-gradient(135deg, var(--gold2), var(--gold));
-  padding: .15rem .65rem;
-  clip-path: polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
-  display: inline-block; margin-bottom: .9rem;
-}
-.dispatch-date { font-family: 'Orbitron', monospace; font-size: .48rem; letter-spacing: .2em; color: rgba(212,168,67,.35); text-transform: uppercase; margin-bottom: .6rem; }
-.dispatch-title { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600; color: var(--cream); line-height: 1.35; margin-bottom: .8rem; }
-.dispatch-excerpt { font-family: 'IM Fell English', serif; font-size: .95rem; color: var(--faded); line-height: 1.75; }
-.dispatch-footer { margin-top: 1.3rem; padding-top: 1rem; border-top: 1px solid rgba(212,168,67,.08); display: flex; align-items: center; justify-content: space-between; }
-.dispatch-read {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
-  color: var(--gold); display: flex; align-items: center; gap: .4rem;
-  background: none; border: none; cursor: none; transition: all .3s;
-}
-.dispatch-read:hover { color: var(--gold2); gap: .7rem; }
-.dispatch-time { font-family: 'Orbitron', monospace; font-size: .48rem; letter-spacing: .12em; color: rgba(212,168,67,.4); text-transform: uppercase; }
-
-/* ═══ CONTACT ═══ */
-#contact { padding: 5rem 0; }
-.contact-container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-.contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; align-items: start; }
-
-.contact-lore h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 1.2rem; color: var(--cream); margin-bottom: .9rem; font-weight: 600;
-}
-.contact-lore p {
-  font-family: 'IM Fell English', serif; font-style: italic;
-  font-size: 1rem; color: var(--faded); line-height: 1.85; margin-bottom: 2rem;
-}
-.contact-links { display: flex; flex-direction: column; gap: .6rem; }
-.cl-item {
-  display: flex; align-items: center; gap: 1rem;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .85rem; font-weight: 500; letter-spacing: .06em;
-  color: rgba(240,232,208,.75);
-  text-decoration: none; padding: .75rem 1rem;
-  border: 1px solid rgba(212,168,67,.1);
-  background: rgba(212,168,67,.02);
-  transition: all .3s; position: relative; overflow: hidden;
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-}
-.cl-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: rgba(212,168,67,.05); transition: width .3s; }
-.cl-item:hover { border-color: var(--gold); color: var(--cream); }
-.cl-item:hover::before { width: 100%; }
-.cl-icon {
-  font-family: 'Orbitron', monospace;
-  font-size: .58rem; color: var(--gold);
-  width: 24px; text-align: center;
-  flex-shrink: 0; position: relative; z-index: 1;
-}
-.cl-text { position: relative; z-index: 1; }
-
-/* Contact form */
-.contact-form { display: flex; flex-direction: column; gap: 1rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
-.form-group { display: flex; flex-direction: column; gap: .35rem; }
-.form-label {
-  font-family: 'Orbitron', monospace;
-  font-size: .5rem; letter-spacing: .3em; text-transform: uppercase; color: var(--faded);
-}
-.form-input, .form-textarea {
-  background: rgba(13,22,37,.8);
-  border: 1px solid rgba(212,168,67,.15);
-  color: var(--cream);
-  padding: .75rem 1rem;
-  font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 500;
-  outline: none; transition: border-color .3s, background .3s;
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-}
-.form-input::placeholder, .form-textarea::placeholder { color: rgba(240,232,208,.25); }
-.form-input:focus, .form-textarea:focus { border-color: rgba(212,168,67,.5); background: rgba(13,22,37,.95); }
-.form-textarea { min-height: 120px; resize: none; }
-.form-submit {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: .85rem; letter-spacing: .25em; text-transform: uppercase; font-weight: 700;
-  color: var(--void);
-  background: linear-gradient(135deg, var(--gold2), var(--gold));
-  border: none; padding: .9rem 2.2rem;
-  align-self: flex-start;
-  clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%);
-  cursor: none; transition: all .3s;
-}
-.form-submit:hover { box-shadow: 0 8px 30px rgba(212,168,67,.4); transform: translateY(-2px); }
-
-/* ═══ DEBRIEF MODAL ═══ */
-.debrief-overlay {
-  position: fixed; inset: 0; z-index: 3000;
-  display: none; align-items: center; justify-content: center;
-  padding: 2rem;
-  background: rgba(2,4,10,.92);
-  backdrop-filter: blur(12px);
-}
-.debrief-overlay.open { display: flex; }
-.debrief-modal {
-  position: relative; max-width: 880px; width: 100%;
-  max-height: 88vh; overflow-y: auto;
-  background: linear-gradient(160deg, #0d1625, #06080f);
-  border: 1px solid rgba(212,168,67,.3);
-  padding: 3rem;
-  animation: modalIn .4s cubic-bezier(.16,1,.3,1);
-  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
-}
-@keyframes modalIn { from{opacity:0;transform:translateY(30px) scale(.96);} to{opacity:1;transform:translateY(0) scale(1);} }
-.debrief-close {
-  position: absolute; top: 1.2rem; right: 1.8rem;
-  font-family: 'Orbitron', monospace; font-size: .58rem; letter-spacing: .3em;
-  color: rgba(212,168,67,.4); background: none; border: none;
-  text-transform: uppercase; cursor: none; transition: color .2s;
-}
-.debrief-close:hover { color: var(--gold); }
-.dm-status { display: inline-block; font-family: 'Orbitron', monospace; font-size: .5rem; letter-spacing: .4em; color: var(--void); background: linear-gradient(135deg, var(--gold2),var(--gold)); padding: .2rem .8rem; clip-path: polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%); margin-bottom: 1rem; }
-.dm-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.2rem,3vw,1.9rem); color: var(--cream); margin-bottom: .3rem; }
-.dm-sub { font-family: 'Orbitron', monospace; font-size: .52rem; letter-spacing: .18em; color: var(--gold); text-transform: uppercase; margin-bottom: .4rem; }
-.dm-stack { font-family: 'Orbitron', monospace; font-size: .48rem; letter-spacing: .12em; color: rgba(212,168,67,.5); text-transform: uppercase; margin-bottom: 2rem; }
-.dm-phases { display: grid; gap: 1.5rem; }
-.dm-phase { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start; }
-.dp-label { font-family: 'Orbitron', monospace; font-size: .48rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); writing-mode: vertical-rl; transform: rotate(180deg); border-left: 1px solid rgba(212,168,67,.3); padding-left: .5rem; white-space: nowrap; }
-.dp-content { border-left: 1px solid rgba(212,168,67,.08); padding-left: 1.5rem; }
-.dp-heading { font-family: 'Cinzel', serif; font-size: .85rem; color: var(--cream); margin-bottom: .5rem; letter-spacing: .05em; }
-.dp-text { font-family: 'IM Fell English', serif; font-size: .98rem; color: rgba(240,232,208,.75); line-height: 1.82; }
-.dm-metrics { display: grid; grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); gap: .8rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(212,168,67,.1); }
-.dm-stat { text-align: center; padding: .8rem; }
-.dm-stat-val { font-family: 'Orbitron', monospace; font-size: 1.5rem; color: var(--gold); display: block; line-height: 1; }
-.dm-stat-label { font-family: 'Rajdhani', sans-serif; font-size: .62rem; letter-spacing: .15em; color: var(--faded); text-transform: uppercase; margin-top: .3rem; display: block; }
-.dm-links { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
-
-/* ═══ LOG READER ═══ */
-.log-reader {
-  position: fixed; inset: 0; z-index: 3000;
-  display: none; flex-direction: column;
-  background: var(--deep); overflow-y: auto;
-}
-.log-reader.open { display: flex; }
-.log-reader-header {
-  position: sticky; top: 0;
-  background: rgba(6,12,24,.97); backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(212,168,67,.15);
-  padding: .9rem 2rem; z-index: 10;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.lrh-brand { font-family: 'Orbitron', monospace; font-size: .52rem; letter-spacing: .4em; color: rgba(212,168,67,.5); text-transform: uppercase; }
-.lrh-close { font-family: 'Rajdhani', sans-serif; font-size: .78rem; letter-spacing: .25em; color: var(--red2); background: none; border: none; text-transform: uppercase; cursor: none; transition: color .2s; }
-.lrh-close:hover { color: var(--cream); }
-.log-reader-body { max-width: 700px; margin: 0 auto; padding: 3rem 2rem 6rem; }
-.lr-tag { font-family: 'Orbitron', monospace; font-size: .5rem; letter-spacing: .4em; text-transform: uppercase; color: var(--void); background: linear-gradient(135deg,var(--gold2),var(--gold)); padding: .18rem .7rem; clip-path: polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%); display: inline-block; margin-bottom: 1rem; }
-.lr-date { font-family: 'Orbitron', monospace; font-size: .52rem; letter-spacing: .25em; color: rgba(212,168,67,.45); text-transform: uppercase; margin-bottom: 1.3rem; }
-.lr-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.5rem,4vw,2.5rem); color: var(--cream); line-height: 1.15; margin-bottom: .8rem; }
-.lr-subtitle { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.08rem; color: var(--faded); margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(212,168,67,.12); }
-.lr-content p { font-family: 'IM Fell English', serif; font-size: 1.08rem; line-height: 1.95; color: rgba(240,232,208,.82); margin-bottom: 1.5rem; }
-.lr-content p:first-child::first-letter { font-family: 'Cinzel Decorative', serif; font-size: 4rem; float: left; line-height: .72; margin: .1em .1em 0 0; background: var(--g-fire); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.lr-content em { color: var(--red2); }
-.lr-content strong { font-weight: 600; color: var(--cream); }
-.lr-pull { background: rgba(212,168,67,.05); border-left: 3px solid var(--gold); padding: 1rem 1.4rem; margin: 2rem 0; font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 500; color: rgba(240,232,208,.7); line-height: 1.65; }
-.lr-h2 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--cream); margin: 2.5rem 0 .8rem; letter-spacing: .04em; }
-
-/* ═══ FOOTER ═══ */
-footer {
-  background: var(--void);
-  border-top: 1px solid rgba(212,168,67,.1);
-  padding: 2.5rem 2rem; text-align: center;
-  position: relative;
-}
-footer::before {
-  content: '';
-  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), var(--red), var(--gold), transparent);
-}
-.footer-name { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: rgba(212,168,67,.3); margin-bottom: .4rem; }
-.footer-note { font-family: 'Orbitron', monospace; font-size: .48rem; letter-spacing: .35em; color: rgba(212,168,67,.2); text-transform: uppercase; }
-
-/* ═══ REVEAL ═══ */
-.reveal-el {
-  opacity: 0; transform: translateY(25px);
-  transition: opacity .75s ease, transform .75s ease;
-}
-.reveal-el.in-view { opacity: 1; transform: translateY(0); }
-
-/* ═══ RESPONSIVE ═══ */
-@media (max-width: 900px) {
-  .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .mission-objectives { grid-template-columns: 1fr; }
-}
-@media (max-width: 768px) {
-  #hud { padding: .7rem 1.2rem; }
-  .hud-nav { gap: 1rem; }
-  .hud-nav a { font-size: .54rem; }
-  .hud-status { display: none; }
-  .chapter-inner { flex-wrap: wrap; gap: .5rem; }
-  .chapter-num { font-size: 3.5rem; }
-  .form-row { grid-template-columns: 1fr; }
-  .dm-phase { grid-template-columns: 1fr; }
-  .dp-label { writing-mode: horizontal-tb; transform: none; border-left: none; border-bottom: 1px solid rgba(212,168,67,.3); padding-left: 0; padding-bottom: .4rem; margin-bottom: .4rem; }
+  --paper:      #e8d9bc;
+  --paper-dark: #c9b48a;
+  --ink:        #0f0a05;
+  --ink-soft:   #2a1f0e;
+  --ink-faded:  #4a3820;
+  --amber:      #c47a1a;
+  --amber-glow: #e0951f;
+  --rust:       #8b3510;
+  --rust-light: #b44a18;
+  --sepia:      #6b4c2a;
+  --gold:       #d4a843;
+  --cream:      #f5edd8;
+  --void:       #050301;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--void);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;overflow-x:hidden;}
+*{cursor:none!important;}
+.cursor{position:fixed;width:12px;height:12px;z-index:99999;pointer-events:none;border:1.5px solid var(--amber);transform:translate(-50%,-50%) rotate(45deg);transition:width .2s,height .2s,border-color .2s;}
+.cursor.big{width:20px;height:20px;border-color:var(--gold);}
+.trail{position:fixed;width:4px;height:4px;z-index:99998;pointer-events:none;border-radius:50%;background:var(--amber);opacity:.4;transform:translate(-50%,-50%);transition:left .1s,top .1s;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:.9rem 3rem;background:linear-gradient(to bottom,rgba(5,3,1,.97),rgba(5,3,1,.7));border-bottom:1px solid rgba(196,122,26,.18);}
+.nav-brand{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;}
+.nav-brand span{color:rgba(212,168,67,.4);}
+nav ul{display:flex;gap:2.5rem;list-style:none;}
+nav a{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,217,188,.75);text-decoration:none;transition:color .3s;position:relative;}
+nav a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--amber);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+nav a:hover{color:var(--gold);}
+nav a:hover::after{transform:scaleX(1);}
+
+/* HERO */
+#hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 50% 65%,rgba(196,122,26,.06),transparent 70%),radial-gradient(ellipse 80% 60% at 50% 100%,rgba(139,53,16,.1),transparent 55%),#06040100;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(196,122,26,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(196,122,26,.055) 1px,transparent 1px);background-size:70px 70px;}
+.lbox{position:absolute;left:0;right:0;height:6px;background:linear-gradient(to right,transparent,rgba(196,122,26,.75),var(--amber),rgba(196,122,26,.75),transparent);z-index:2;}
+.lbox.t{top:0;}.lbox.b{bottom:0;}
+.compass-bg{position:absolute;right:6vw;top:50%;transform:translateY(-50%);width:min(42vw,560px);opacity:.18;animation:cspin 100s linear infinite;filter:drop-shadow(0 0 18px rgba(196,122,26,.25)) drop-shadow(0 0 50px rgba(196,122,26,.1));}
+@keyframes cspin{to{transform:translateY(-50%) rotate(360deg);}}
+.splat{position:absolute;pointer-events:none;opacity:.14;}
+.splat-a{top:12%;left:4%;width:160px;transform:rotate(8deg);}
+.splat-b{bottom:18%;right:8%;width:110px;transform:rotate(-18deg) scaleX(-1);}
+.bone-cage{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,1300px);height:90vh;opacity:.18;pointer-events:none;z-index:1;filter:drop-shadow(0 0 4px rgba(200,160,96,.08));}
+.emblem{position:absolute;pointer-events:none;}
+.emblem-norse-1{top:13%;left:4%;width:min(13vw,120px);opacity:.28;animation:emFloat 8s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(196,122,26,.18));}
+.emblem-norse-2{bottom:17%;left:6%;width:min(9vw,85px);opacity:.22;animation:emFloat 10s ease-in-out infinite reverse;filter:drop-shadow(0 0 6px rgba(196,122,26,.14));}
+.emblem-jp-1{top:11%;right:4%;width:min(9vw,82px);opacity:.24;animation:emFloat 9s 1s ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(196,122,26,.15));}
+.emblem-jp-2{bottom:14%;right:5%;width:min(12vw,105px);opacity:.22;animation:emFloat 11s 2s ease-in-out infinite reverse;filter:drop-shadow(0 0 8px rgba(196,122,26,.14));}
+@keyframes emFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+.hero-inner{position:relative;z-index:3;padding:2rem;max-width:800px;}
+.chap-tag{display:inline-flex;align-items:center;gap:.8rem;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.55em;text-transform:uppercase;color:var(--amber);margin-bottom:1.8rem;opacity:0;animation:rise .8s .4s ease forwards;}
+.chap-tag .hl{flex:1;height:1px;max-width:50px;}
+.hl-l{background:linear-gradient(to left,transparent,var(--amber));}
+.hl-r{background:linear-gradient(to right,transparent,var(--amber));}
+.hero-name{font-family:'Cinzel Decorative',serif;font-size:clamp(3.2rem,8.5vw,7rem);color:var(--cream);line-height:.95;opacity:0;animation:rise 1s .6s ease forwards;text-shadow:0 0 80px rgba(196,122,26,.16),0 2px 0 rgba(0,0,0,.85),0 4px 24px rgba(0,0,0,.55);margin-bottom:1rem;}
+.hero-name em{display:block;font-style:normal;color:var(--amber);font-size:.38em;letter-spacing:.14em;font-family:'Cinzel',serif;font-weight:400;margin-top:.35em;}
+.rope-div{display:flex;align-items:center;gap:.8rem;margin:1.6rem 0;opacity:0;animation:rise .8s .9s ease forwards;}
+.rope{flex:1;height:2px;max-width:200px;background:repeating-linear-gradient(90deg,var(--sepia) 0,var(--sepia) 4px,transparent 4px,transparent 6px,rgba(139,53,16,.4) 6px,rgba(139,53,16,.4) 8px);}
+.rope-knot{font-family:'Cinzel',serif;font-size:.75rem;color:var(--amber);letter-spacing:.2em;}
+.hero-desc{font-family:'IM Fell English',serif;font-style:italic;font-size:clamp(1.05rem,2vw,1.28rem);color:rgba(232,217,188,.88);line-height:1.78;max-width:530px;opacity:0;animation:rise .9s 1.1s ease forwards;margin-bottom:2.5rem;}
+.hero-acts{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:rise .8s 1.3s ease forwards;}
+.btn{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;padding:.85rem 2.1rem;position:relative;display:inline-block;transition:all .3s;}
+.btn::before,.btn::after{content:'';position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(212,168,67,.55);}
+.btn::before{top:4px;left:4px;}.btn::after{bottom:4px;right:4px;}
+.btn-gold{color:var(--ink);background:var(--amber);border:1px solid var(--gold);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);font-weight:700;box-shadow:0 2px 16px rgba(196,122,26,.28);}
+.btn-gold:hover{background:var(--gold);box-shadow:0 0 32px rgba(212,168,67,.45),0 4px 16px rgba(0,0,0,.4);transform:translateY(-2px);}
+.btn-line{color:rgba(232,217,188,.92);background:rgba(196,122,26,.06);border:1px solid rgba(196,122,26,.6);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
+.btn-line:hover{color:var(--gold);border-color:var(--amber);background:rgba(196,122,26,.14);transform:translateY(-2px);box-shadow:0 0 18px rgba(196,122,26,.12);}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(196,122,26,.6);animation:pulse 3s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:translateX(-50%) translateY(0);opacity:.38;}50%{transform:translateX(-50%) translateY(7px);opacity:.75;}}
+@keyframes rise{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
+
+/* CHAPTER DIVIDERS */
+.chap-div{position:relative;padding:3rem 0;background:var(--void);overflow:hidden;}
+.chap-div-inner{max-width:1080px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2.5rem;}
+.chap-num{font-family:'Cinzel Decorative',serif;font-size:4.5rem;line-height:1;color:rgba(196,122,26,.2);white-space:nowrap;flex-shrink:0;}
+.chap-line{flex:1;height:1px;background:linear-gradient(to right,rgba(196,122,26,.5),transparent);}
+.chap-sub{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.5em;color:rgba(196,122,26,.85);text-transform:uppercase;margin-bottom:.35rem;}
+.chap-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.5rem,3vw,2.3rem);color:var(--cream);line-height:1.1;}
+.container{max-width:1080px;margin:0 auto;padding:0 2rem;}
+.sec-body{padding:4.5rem 2rem;}
+
+/* ABOUT */
+#about{background:var(--paper);position:relative;overflow:hidden;}
+#about::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 40% 30% at 10% 20%,rgba(139,53,16,.05),transparent 55%),radial-gradient(ellipse 35% 40% at 88% 80%,rgba(107,76,42,.07),transparent 55%);pointer-events:none;}
+#about::after{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(to bottom,var(--void),transparent);}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start;}
+.journal p{font-family:'IM Fell English',serif;font-size:1.1rem;line-height:1.9;color:var(--ink-soft);margin-bottom:1.35rem;}
+.journal p:first-child::first-letter{font-family:'Cinzel Decorative',serif;font-size:4rem;float:left;line-height:.72;margin:.1em .08em 0 0;color:var(--rust);text-shadow:2px 2px 0 rgba(139,53,16,.18);}
+.journal em{color:var(--rust-light);font-style:italic;}
+.journal-aside{background:rgba(196,122,26,.07);border-left:2px solid var(--amber);padding:.9rem 1.1rem;margin:1.4rem 0;font-family:'Caveat',cursive;font-size:1.08rem;color:var(--ink-faded);line-height:1.6;position:relative;}
+.journal-aside::before{content:'"';font-family:'Cinzel Decorative',serif;font-size:2.8rem;color:rgba(196,122,26,.18);position:absolute;top:-.4rem;left:.4rem;line-height:1;}
+.stat-panel{background:rgba(15,10,5,.06);border:1px solid rgba(107,76,42,.22);padding:1.8rem;position:relative;}
+.stat-panel::before,.stat-panel::after{content:'';position:absolute;width:7px;height:7px;border-radius:50%;background:rgba(196,122,26,.3);}
+.stat-panel::before{top:5px;left:5px;}.stat-panel::after{bottom:5px;right:5px;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.8rem;}
+.stat-item{padding:.9rem;border-bottom:1px solid rgba(107,76,42,.18);}
+.stat-n{font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--amber);display:block;line-height:1;}
+.stat-l{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.14em;color:var(--sepia);text-transform:uppercase;margin-top:.25rem;display:block;}
+.edu-block{padding-top:1.1rem;border-top:1px solid rgba(107,76,42,.18);}
+.edu-inst{font-family:'Cinzel',serif;font-size:.85rem;color:var(--ink-soft);font-weight:600;margin-bottom:.2rem;}
+.edu-detail{font-family:'IM Fell English',serif;font-size:.88rem;color:var(--sepia);font-style:italic;}
+
+/* PROJECTS */
+#projects{background:var(--void);padding:4rem 0 5rem;}
+.proj-intro{font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;color:rgba(232,217,188,.65);text-align:center;margin-bottom:2.8rem;letter-spacing:.02em;}
+.proj-featured{position:relative;border:1px solid rgba(196,122,26,.32);padding:2.4rem;margin-bottom:1.4rem;overflow:hidden;background:linear-gradient(135deg,rgba(196,122,26,.07),rgba(139,53,16,.05),rgba(10,7,2,.88));transition:all .4s;}
+.proj-featured::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 45% 70% at 0% 50%,rgba(196,122,26,.05),transparent),repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(196,122,26,.014) 28px,rgba(196,122,26,.014) 29px);}
+.proj-featured:hover{border-color:rgba(196,122,26,.65);box-shadow:0 0 50px rgba(196,122,26,.07),inset 0 0 50px rgba(196,122,26,.025);transform:translateY(-3px);}
+.corner-mark{position:absolute;width:18px;height:18px;border-color:rgba(196,122,26,.4);border-style:solid;}
+.c-tl{top:7px;left:7px;border-width:1px 0 0 1px;}.c-tr{top:7px;right:7px;border-width:1px 1px 0 0;}
+.c-bl{bottom:7px;left:7px;border-width:0 0 1px 1px;}.c-br{bottom:7px;right:7px;border-width:0 1px 1px 0;}
+.proj-stamp{display:inline-block;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.38em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:.22rem .75rem;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);margin-bottom:.9rem;position:relative;z-index:1;}
+.proj-name{font-family:'Cinzel',serif;font-weight:700;color:var(--cream);position:relative;z-index:1;margin-bottom:.45rem;font-size:1.5rem;}
+.proj-name a{color:inherit;text-decoration:none;transition:color .3s;}
+.proj-name a:hover{color:var(--gold);}
+.proj-tech{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;margin-bottom:.9rem;position:relative;z-index:1;}
+.proj-desc{font-family:'IM Fell English',serif;font-size:1rem;color:rgba(232,217,188,.82);line-height:1.78;position:relative;z-index:1;margin-bottom:1.4rem;max-width:700px;}
+.proj-bullets{list-style:none;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:.45rem;}
+.proj-bullets li{font-family:'Crimson Pro',serif;font-size:.92rem;color:rgba(232,217,188,.72);padding-left:1.1rem;position:relative;line-height:1.5;}
+.proj-bullets li::before{content:'--';position:absolute;left:0;color:var(--amber);font-family:'Cinzel',serif;font-size:.65rem;}
+.proj-link{display:inline-block;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);text-decoration:none;border-bottom:1px solid rgba(196,122,26,.28);padding-bottom:.1rem;position:relative;z-index:1;transition:all .3s;margin-top:1.1rem;}
+.proj-link:hover{color:var(--gold);border-color:var(--gold);}
+
+/* EXPEDITION DEBRIEF BUTTON */
+.proj-debrief-btn{display:inline-block;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(196,122,26,.85);border:1px solid rgba(196,122,26,.45);padding:.45rem 1rem;background:rgba(196,122,26,.05);margin-top:1.1rem;margin-left:1rem;transition:all .3s;position:relative;z-index:1;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+.proj-debrief-btn:hover{color:var(--amber);border-color:var(--amber);background:rgba(196,122,26,.12);box-shadow:0 0 14px rgba(196,122,26,.15);}
+
+.other-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(196,122,26,.65);margin:2.5rem 0 1.2rem;display:flex;align-items:center;gap:1rem;}
+.other-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(196,122,26,.3),transparent);}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:1.1rem;}
+.proj-card{border:1px solid rgba(196,122,26,.13);padding:1.7rem;background:rgba(196,122,26,.025);position:relative;overflow:hidden;transition:all .35s;text-decoration:none;display:block;color:inherit;}
+.proj-card::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(196,122,26,.016) 24px,rgba(196,122,26,.016) 25px);pointer-events:none;}
+.proj-card:hover{border-color:rgba(196,122,26,.48);background:rgba(196,122,26,.055);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.38);}
+.proj-card .proj-name{font-size:1rem;margin-bottom:.55rem;}
+.proj-card .proj-tech{margin-bottom:.7rem;}
+.proj-card .proj-desc{font-size:.9rem;margin-bottom:0;max-width:100%;color:rgba(232,217,188,.76);}
+.lang-dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;}
+.proj-meta{margin-top:.9rem;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.12em;color:rgba(196,122,26,.62);}
+.gh-loading{grid-column:1/-1;text-align:center;padding:3.5rem;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(196,122,26,.35);animation:breathe 2s ease-in-out infinite;}
+@keyframes breathe{0%,100%{opacity:.3;}50%{opacity:.8;}}
+
+/* ═══════════════════════════════════════════
+   FEATURE 7 — EXPEDITION DEBRIEF MODAL
+   ═══════════════════════════════════════════ */
+.debrief-overlay{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem;background:rgba(5,3,1,.92);backdrop-filter:blur(8px);}
+.debrief-overlay.open{display:flex;}
+.debrief-modal{position:relative;max-width:860px;width:100%;max-height:88vh;overflow-y:auto;background:linear-gradient(160deg,#0e0903,#080502);border:1px solid rgba(196,122,26,.35);padding:3rem;animation:modalIn .4s cubic-bezier(.16,1,.3,1) forwards;}
+.debrief-modal::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(196,122,26,.012) 28px,rgba(196,122,26,.012) 29px);pointer-events:none;}
+.debrief-modal .corner-mark{border-color:rgba(196,122,26,.5);}
+@keyframes modalIn{from{opacity:0;transform:translateY(30px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+.debrief-close{position:absolute;top:1.2rem;right:1.5rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.3em;color:rgba(196,122,26,.45);background:none;border:none;text-transform:uppercase;transition:color .2s;}
+.debrief-close:hover{color:var(--amber);}
+.debrief-stamp{display:inline-block;font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.42em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:.2rem .8rem;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);margin-bottom:1rem;}
+.debrief-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,3vw,1.9rem);color:var(--cream);margin-bottom:.4rem;line-height:1.15;}
+.debrief-tech{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;margin-bottom:2rem;}
+.debrief-phases{display:grid;gap:1.5rem;position:relative;z-index:1;}
+.debrief-phase{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:start;}
+.phase-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--amber);writing-mode:vertical-rl;transform:rotate(180deg);border-left:1px solid rgba(196,122,26,.3);padding-left:.5rem;white-space:nowrap;}
+.phase-content{border-left:1px solid rgba(196,122,26,.1);padding-left:1.5rem;}
+.phase-heading{font-family:'Cinzel',serif;font-size:.8rem;color:var(--cream);margin-bottom:.55rem;letter-spacing:.08em;}
+.phase-text{font-family:'IM Fell English',serif;font-size:.98rem;color:rgba(232,217,188,.78);line-height:1.8;}
+.debrief-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.8rem;margin-top:2rem;padding-top:1.8rem;border-top:1px solid rgba(196,122,26,.12);position:relative;z-index:1;}
+.dm-item{text-align:center;padding:.8rem;}
+.dm-val{font-family:'Cinzel Decorative',serif;font-size:1.6rem;color:var(--amber);display:block;line-height:1;}
+.dm-label{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;color:rgba(196,122,26,.5);text-transform:uppercase;margin-top:.3rem;display:block;}
+.debrief-links{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;position:relative;z-index:1;}
+
+/* ═══════════════════════════════════════════
+   SKILLS — existing + Feature 4 radar
+   ═══════════════════════════════════════════ */
+#skills{background:var(--paper);position:relative;overflow:hidden;}
+#skills::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 90% 20%,rgba(139,53,16,.04),transparent 55%);pointer-events:none;}
+#skills::after{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(to bottom,var(--void),transparent);}
+
+.skills-layout{display:block;position:relative;z-index:1;}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:1.4rem;}
+.skill-grp{padding:1.4rem;border:1px solid rgba(107,76,42,.22);background:rgba(255,255,255,.32);position:relative;transition:all .3s;}
+.skill-grp::before,.skill-grp::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(196,122,26,.3);}
+.skill-grp::before{top:5px;left:5px;}.skill-grp::after{bottom:5px;right:5px;}
+.skill-grp:hover{border-color:rgba(139,53,16,.42);background:rgba(255,255,255,.5);}
+.skill-grp-title{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--rust);margin-bottom:.9rem;padding-bottom:.55rem;border-bottom:1px solid rgba(107,76,42,.18);}
+.skill-items{display:flex;flex-wrap:wrap;gap:.35rem;}
+.skill-item{font-family:'IM Fell English',serif;font-size:.9rem;color:var(--ink-faded);padding:.18rem .5rem;border:1px solid rgba(107,76,42,.14);background:rgba(196,122,26,.03);transition:all .2s;}
+.skill-item:hover{border-color:rgba(139,53,16,.38);color:var(--ink-soft);background:rgba(196,122,26,.08);}
+
+
+/* EXPERIENCE */
+#experience{background:var(--void);padding:4rem 0 5rem;}
+.timeline{position:relative;}
+.timeline::before{content:'';position:absolute;left:1rem;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(196,122,26,.45) 8%,rgba(196,122,26,.28) 92%,transparent);}
+.tl-item{display:grid;grid-template-columns:3rem 1fr;gap:2rem;margin-bottom:2.8rem;opacity:0;transform:translateX(-18px);transition:all .6s ease;}
+.tl-item.visible{opacity:1;transform:translateX(0);}
+.tl-marker{display:flex;flex-direction:column;align-items:center;padding-top:.2rem;}
+.tl-diamond{width:13px;height:13px;border:1.5px solid var(--amber);background:var(--void);transform:rotate(45deg);flex-shrink:0;position:relative;z-index:1;transition:background .3s;}
+.tl-item:hover .tl-diamond{background:var(--amber);}
+.tl-date{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.13em;color:var(--amber);text-transform:uppercase;writing-mode:vertical-rl;margin-top:.7rem;opacity:.65;}
+.tl-content{padding-bottom:.5rem;border-bottom:1px solid rgba(196,122,26,.08);}
+.tl-role{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--cream);margin-bottom:.2rem;}
+.tl-org{font-family:'IM Fell English',serif;font-size:.9rem;font-style:italic;color:rgba(232,217,188,.65);margin-bottom:.75rem;}
+.tl-pts{list-style:none;}
+.tl-pts li{font-family:'Crimson Pro',serif;font-size:.96rem;color:rgba(232,217,188,.75);line-height:1.65;padding-left:1.1rem;position:relative;margin-bottom:.22rem;}
+.tl-pts li::before{content:'/';position:absolute;left:0;color:var(--amber);font-family:'Cinzel',serif;}
+
+/* FEATURE 6 — CERTS WITH VERIFY LINKS */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:.9rem;margin-top:3rem;}
+.cert-item{border:1px solid rgba(196,122,26,.16);padding:1.1rem 1.4rem;background:rgba(196,122,26,.025);transition:all .3s;position:relative;}
+.cert-item::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber);transform:scaleY(0);transform-origin:top;transition:transform .3s;}
+.cert-item:hover{border-color:rgba(196,122,26,.38);}.cert-item:hover::after{transform:scaleY(1);}
+.cert-name{font-family:'Cinzel',serif;font-size:.8rem;color:var(--cream);line-height:1.35;margin-bottom:.3rem;}
+.cert-meta{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;}
+.cert-verify{display:inline-flex;align-items:center;gap:.4rem;font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(196,122,26,.7);text-decoration:none;margin-top:.6rem;border-bottom:1px solid rgba(196,122,26,.3);padding-bottom:.1rem;transition:all .3s;}
+.cert-verify:hover{color:var(--amber);border-color:var(--amber);}
+.cert-verify svg{width:10px;height:10px;opacity:.8;}
+.cert-stamp{display:inline-block;font-family:'Cinzel',serif;font-size:.42rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink);background:rgba(196,122,26,.55);padding:.12rem .5rem;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);margin-left:.5rem;vertical-align:middle;}
+.sub-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:rgba(196,122,26,.62);margin-top:3rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;}
+.sub-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,rgba(196,122,26,.28),transparent);}
+
+/* ═══════════════════════════════════════════
+   FEATURE 3 — CAPTAIN'S LOG (BLOG)
+   ═══════════════════════════════════════════ */
+#log{background:var(--void);padding:4rem 0 5rem;}
+.log-intro{font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;color:rgba(232,217,188,.62);text-align:center;margin-bottom:3rem;}
+.log-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.4rem;}
+.log-card{border:1px solid rgba(196,122,26,.15);background:linear-gradient(160deg,rgba(196,122,26,.04),rgba(10,7,2,.9));padding:2rem;position:relative;overflow:hidden;transition:all .4s;}
+.log-card::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(196,122,26,.013) 26px,rgba(196,122,26,.013) 27px);pointer-events:none;}
+.log-card:hover{border-color:rgba(196,122,26,.42);box-shadow:0 8px 40px rgba(0,0,0,.5);transform:translateY(-4px);}
+.log-card-tag{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:.15rem .65rem;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);display:inline-block;margin-bottom:.9rem;}
+.log-card-date{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.22em;color:rgba(196,122,26,.38);text-transform:uppercase;margin-bottom:.6rem;}
+.log-card-title{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--cream);line-height:1.35;margin-bottom:.8rem;font-weight:600;}
+.log-card-excerpt{font-family:'IM Fell English',serif;font-size:.96rem;color:rgba(232,217,188,.72);line-height:1.75;}
+.log-card-footer{margin-top:1.3rem;padding-top:1rem;border-top:1px solid rgba(196,122,26,.1);display:flex;align-items:center;justify-content:space-between;}
+.log-read{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:.4rem;}
+.log-read-time{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.12em;color:rgba(196,122,26,.55);text-transform:uppercase;}
+
+/* LOG FULL-SCREEN READER */
+.log-reader{position:fixed;inset:0;z-index:2000;display:none;flex-direction:column;background:var(--paper);overflow-y:auto;}
+.log-reader.open{display:flex;}
+.log-reader-header{position:sticky;top:0;background:rgba(232,217,188,.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(107,76,42,.2);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:10;}
+.log-reader-brand{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.35em;color:var(--sepia);text-transform:uppercase;}
+.log-reader-close{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.28em;color:var(--rust);background:none;border:none;text-transform:uppercase;transition:color .2s;}
+.log-reader-close:hover{color:var(--ink);}
+.log-reader-body{max-width:680px;margin:0 auto;padding:3rem 2rem 5rem;}
+.log-reader-tag{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.42em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:.18rem .7rem;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);display:inline-block;margin-bottom:1rem;}
+.log-reader-date{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;color:var(--sepia);text-transform:uppercase;margin-bottom:1.5rem;}
+.log-reader-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.6rem,4vw,2.6rem);color:var(--ink);line-height:1.15;margin-bottom:.8rem;}
+.log-reader-subtitle{font-family:'IM Fell English',serif;font-style:italic;font-size:1.12rem;color:var(--sepia);margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(107,76,42,.2);}
+.log-reader-content p{font-family:'IM Fell English',serif;font-size:1.1rem;line-height:2;color:var(--ink-soft);margin-bottom:1.5rem;}
+.log-reader-content p:first-child::first-letter{font-family:'Cinzel Decorative',serif;font-size:4.2rem;float:left;line-height:.72;margin:.1em .1em 0 0;color:var(--rust);}
+.log-reader-content em{color:var(--rust-light);}
+.log-reader-content strong{font-weight:600;color:var(--ink);}
+.log-reader-pull{background:rgba(196,122,26,.08);border-left:3px solid var(--amber);padding:1rem 1.4rem;margin:2rem 0;font-family:'Caveat',cursive;font-size:1.12rem;color:var(--ink-faded);line-height:1.6;position:relative;}
+.log-reader-pull::before{content:'"';font-family:'Cinzel Decorative',serif;font-size:3rem;color:rgba(196,122,26,.2);position:absolute;top:-.5rem;left:.4rem;line-height:1;}
+.log-reader-h2{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--ink);margin:2.5rem 0 .8rem;letter-spacing:.04em;}
+
+/* CONTACT */
+#contact{background:var(--paper);position:relative;overflow:hidden;}
+#contact::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 45% at 20% 70%,rgba(139,53,16,.04),transparent 55%);pointer-events:none;}
+#contact::after{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(to bottom,var(--void),transparent);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:4.5rem;align-items:start;position:relative;z-index:1;}
+.contact-copy h3{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--ink-soft);margin-bottom:.9rem;}
+.contact-copy p{font-family:'IM Fell English',serif;font-style:italic;font-size:1.02rem;color:var(--sepia);line-height:1.8;margin-bottom:1.8rem;}
+.c-links{display:flex;flex-direction:column;gap:.65rem;}
+.c-link{display:flex;align-items:center;gap:.9rem;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--ink-faded);text-decoration:none;padding:.7rem .95rem;border:1px solid rgba(107,76,42,.18);background:rgba(196,122,26,.025);transition:all .3s;position:relative;overflow:hidden;}
+.c-link::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(196,122,26,.055);transition:width .3s;}
+.c-link:hover{border-color:var(--amber);color:var(--rust);}
+.c-link:hover::before{width:100%;}
+.c-icon{font-family:'Cinzel',serif;font-size:.68rem;color:var(--amber);flex-shrink:0;position:relative;z-index:1;width:1.2rem;text-align:center;font-style:normal;}
+.c-link span:last-child{position:relative;z-index:1;}
+.cform{display:flex;flex-direction:column;gap:1.1rem;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.fgrp{display:flex;flex-direction:column;gap:.38rem;}
+.flabel{font-family:'Cinzel',serif;font-size:.57rem;letter-spacing:.28em;text-transform:uppercase;color:var(--sepia);}
+.finput,.ftarea{background:rgba(255,255,255,.48);border:1px solid rgba(107,76,42,.22);color:var(--ink-soft);padding:.72rem .95rem;font-family:'IM Fell English',serif;font-size:1rem;outline:none;transition:border-color .3s,background .3s;}
+.finput:focus,.ftarea:focus{border-color:var(--amber);background:rgba(255,255,255,.72);}
+.ftarea{min-height:125px;resize:none;}
+.fsubmit{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:var(--amber);border:1px solid var(--gold);padding:.88rem 2rem;font-weight:700;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .3s;align-self:flex-start;}
+.fsubmit:hover{background:var(--gold);box-shadow:0 4px 18px rgba(212,168,67,.28);transform:translateY(-2px);}
+
+footer{background:var(--void);border-top:1px solid rgba(196,122,26,.12);padding:2.2rem;text-align:center;position:relative;}
+footer::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(to right,transparent,var(--amber),transparent);}
+.footer-name{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:rgba(196,122,26,.28);margin-bottom:.45rem;}
+.footer-note{font-family:'Cinzel',serif;font-size:.53rem;letter-spacing:.28em;color:rgba(196,122,26,.22);text-transform:uppercase;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .75s ease,transform .75s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  .skills-layout{grid-template-columns:1fr;}
+  .radar-panel{position:static;}
+  .radar-wrap{max-width:340px;margin:0 auto;}
+}
+@media(max-width:768px){
+  nav{padding:.8rem 1.2rem;}nav ul{gap:1.2rem;}nav a{font-size:.54rem;}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .proj-bullets{grid-template-columns:1fr;}
+  .frow{grid-template-columns:1fr;}
+  .hero-name{font-size:clamp(2.6rem,11vw,4.5rem);}
+  .chap-div-inner{flex-direction:column;gap:.5rem;}
+  .chap-num{font-size:3rem;}
+  .debrief-phase{grid-template-columns:1fr;}
+  .phase-label{writing-mode:horizontal-tb;transform:none;border-left:none;border-bottom:1px solid rgba(196,122,26,.3);padding-left:0;padding-bottom:.4rem;margin-bottom:.4rem;}
 }
 </style>
 </head>
 <body>
 
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
-<canvas id="ambient-canvas"></canvas>
+<div class="cursor" id="cur"></div>
+<div class="trail" id="trail"></div>
 
-<!-- HUD NAV -->
-<nav id="hud">
-  <div class="hud-brand">
-    <div class="hud-brand-dot"></div>
-    R. Dudhat
-  </div>
-  <ul class="hud-nav">
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">R. <span>Dudhat</span></div>
+  <ul>
     <li><a href="#about">Dossier</a></li>
-    <li><a href="#projects">Missions</a></li>
+    <li><a href="#projects">Expeditions</a></li>
     <li><a href="#skills">Arsenal</a></li>
     <li><a href="#experience">Field Log</a></li>
     <li><a href="#log">Dispatches</a></li>
-    <li><a href="#contact">Signal</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="hud-status">
-    <div class="hud-status-bar"></div>
-    ONLINE
-  </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
-<section id="scene-hero">
-  <div class="scene-3d" id="scene3d">
-    <div class="sky-layer"></div>
-    <div class="mountain-layer ml-far"></div>
-    <div class="mountain-layer ml-mid"></div>
-    <div class="mountain-layer ml-near"></div>
-    <!-- Petals injected by JS -->
-  </div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="lbox t"></div>
+  <div class="lbox b"></div>
 
-  <!-- HUD Corner decorations -->
-  <div class="hud-corner hud-corner-tl">
-    <svg viewBox="0 0 60 60" fill="none">
-      <path d="M2 2 L32 2" stroke="#d4a843" stroke-width="1.5" opacity=".5"/>
-      <path d="M2 2 L2 32" stroke="#d4a843" stroke-width="1.5" opacity=".5"/>
-      <circle cx="2" cy="2" r="2" fill="#d4a843" opacity=".7"/>
-      <path d="M8 8 L22 8" stroke="#c8281c" stroke-width=".8" opacity=".4"/>
-      <path d="M8 8 L8 22" stroke="#c8281c" stroke-width=".8" opacity=".4"/>
-    </svg>
-  </div>
-  <div class="hud-corner hud-corner-tr">
-    <svg viewBox="0 0 60 60" fill="none">
-      <path d="M2 2 L32 2" stroke="#d4a843" stroke-width="1.5" opacity=".5"/>
-      <path d="M2 2 L2 32" stroke="#d4a843" stroke-width="1.5" opacity=".5"/>
-      <circle cx="2" cy="2" r="2" fill="#d4a843" opacity=".7"/>
-      <path d="M8 8 L22 8" stroke="#c8281c" stroke-width=".8" opacity=".4"/>
-      <path d="M8 8 L8 22" stroke="#c8281c" stroke-width=".8" opacity=".4"/>
-    </svg>
-  </div>
-  <div class="hud-corner hud-corner-bl">
-    <svg viewBox="0 0 60 60" fill="none">
-      <path d="M2 2 L32 2" stroke="#d4a843" stroke-width="1.5" opacity=".5"/>
-      <path d="M2 2 L2 32" stroke="#d4a843" stroke-width="1.5" opacity=".5"/>
-      <circle cx="2" cy="2" r="2" fill="#d4a843" opacity=".7"/>
-    </svg>
-  </div>
-  <div class="hud-corner hud-corner-br">
-    <svg viewBox="0 0 60 60" fill="none">
-      <path d="M2 2 L32 2" stroke="#d4a843" stroke-width="1.5" opacity=".5"/>
-      <path d="M2 2 L2 32" stroke="#d4a843" stroke-width="1.5" opacity=".5"/>
-      <circle cx="2" cy="2" r="2" fill="#d4a843" opacity=".7"/>
-    </svg>
-  </div>
+  <svg class="compass-bg" viewBox="0 0 400 400" fill="none">
+    <circle cx="200" cy="200" r="192" stroke="#c47a1a" stroke-width=".7"/>
+    <circle cx="200" cy="200" r="172" stroke="#c47a1a" stroke-width=".35"/>
+    <circle cx="200" cy="200" r="148" stroke="#c47a1a" stroke-width=".7"/>
+    <circle cx="200" cy="200" r="118" stroke="#c47a1a" stroke-width=".3"/>
+    <circle cx="200" cy="200" r="30"  stroke="#c47a1a" stroke-width="1"/>
+    <polygon points="200,18 193,200 200,178 207,200" fill="#c47a1a"/>
+    <polygon points="200,382 193,200 200,222 207,200" fill="#c47a1a" opacity=".3"/>
+    <polygon points="18,200 200,193 178,200 200,207" fill="#c47a1a" opacity=".3"/>
+    <polygon points="382,200 200,193 222,200 200,207" fill="#c47a1a" opacity=".3"/>
+    <text x="194" y="12" font-size="14" fill="#c47a1a" font-family="serif" font-weight="bold">N</text>
+    <text x="194" y="398" font-size="12" fill="#c47a1a" font-family="serif" opacity=".35">S</text>
+    <text x="4"   y="205" font-size="12" fill="#c47a1a" font-family="serif" opacity=".35">W</text>
+    <text x="385" y="205" font-size="12" fill="#c47a1a" font-family="serif" opacity=".35">E</text>
+    <g stroke="#c47a1a" stroke-width=".45" opacity=".35">
+      <line x1="200" y1="28"  x2="200" y2="48"/>
+      <line x1="200" y1="352" x2="200" y2="372"/>
+      <line x1="28"  y1="200" x2="48"  y2="200"/>
+      <line x1="352" y1="200" x2="372" y2="200"/>
+      <line x1="68"  y1="68"  x2="82"  y2="82"/>
+      <line x1="318" y1="68"  x2="304" y2="82"/>
+      <line x1="68"  y1="332" x2="82"  y2="318"/>
+      <line x1="318" y1="332" x2="304" y2="318"/>
+    </g>
+    <line x1="200" y1="48"  x2="200" y2="352" stroke="#c47a1a" stroke-width=".25" opacity=".25"/>
+    <line x1="48"  y1="200" x2="352" y2="200" stroke="#c47a1a" stroke-width=".25" opacity=".25"/>
+    <line x1="95"  y1="95"  x2="305" y2="305" stroke="#c47a1a" stroke-width=".2" opacity=".15"/>
+    <line x1="305" y1="95"  x2="95"  y2="305" stroke="#c47a1a" stroke-width=".2" opacity=".15"/>
+  </svg>
 
-  <div class="scanlines"></div>
-  <div class="vignette"></div>
-  <div class="ground-glow"></div>
+  <svg class="splat splat-a" viewBox="0 0 200 200" fill="#5a3010">
+    <ellipse cx="100" cy="88" rx="42" ry="14" transform="rotate(-14 100 88)"/>
+    <ellipse cx="58"  cy="122" rx="7" ry="22" transform="rotate(18 58 122)"/>
+    <ellipse cx="152" cy="76" rx="5" ry="16" transform="rotate(-28 152 76)"/>
+    <circle cx="38" cy="78" r="5"/><circle cx="162" cy="128" r="3"/><circle cx="78" cy="155" r="4"/>
+    <ellipse cx="122" cy="142" rx="16" ry="5" transform="rotate(8 122 142)"/>
+  </svg>
+  <svg class="splat splat-b" viewBox="0 0 160 160" fill="#5a3010">
+    <ellipse cx="80" cy="68" rx="32" ry="11" transform="rotate(9 80 68)"/>
+    <ellipse cx="48" cy="102" rx="5" ry="17" transform="rotate(-22 48 102)"/>
+    <circle cx="112" cy="112" r="4"/><circle cx="28" cy="58" r="3"/>
+    <ellipse cx="102" cy="48" rx="13" ry="4" transform="rotate(24 102 48)"/>
+  </svg>
 
-  <div class="hero-stage">
-    <div class="hero-subtitle-pre">IIT Bhilai &nbsp;·&nbsp; DSAI &nbsp;·&nbsp; 2026</div>
-    <h1 class="hero-name">Rudra<br>Dudhat</h1>
-    <div class="hero-name-sub">AI Engineer &nbsp;·&nbsp; Builder &nbsp;·&nbsp; 2nd Year</div>
-    <div class="hero-divider">
-      <div class="hero-divider-line"></div>
-      <div class="hero-divider-symbol">✦</div>
-      <div class="hero-divider-line"></div>
+  <svg class="bone-cage" viewBox="0 0 1300 900" fill="none">
+    <g stroke="#c8a060" stroke-width="1.2" fill="none">
+      <line x1="650" y1="0" x2="650" y2="900"/>
+      <path d="M650,120 C580,80 420,60 280,95 C200,115 140,155 100,200" stroke-width="2"/>
+      <path d="M650,120 C720,80 880,60 1020,95 C1100,115 1160,155 1200,200" stroke-width="2"/>
+      <path d="M650,210 C570,175 400,162 250,200 C170,220 110,265 75,310"/>
+      <path d="M650,210 C730,175 900,162 1050,200 C1130,220 1190,265 1225,310"/>
+      <path d="M650,300 C560,270 380,265 225,305 C148,328 90,375 58,425"/>
+      <path d="M650,300 C740,270 920,265 1075,305 C1152,328 1210,375 1242,425"/>
+      <path d="M650,390 C548,368 360,368 200,410 C126,436 70,486 42,540"/>
+      <path d="M650,390 C752,368 940,368 1100,410 C1174,436 1230,486 1258,540"/>
+      <path d="M650,480 C535,465 340,472 175,515 C104,544 50,596 28,655"/>
+      <path d="M650,480 C765,465 960,472 1125,515 C1196,544 1250,596 1272,655"/>
+      <path d="M650,570 C522,562 318,578 150,622 C82,652 32,706 14,768"/>
+      <path d="M650,570 C778,562 982,578 1150,622 C1218,652 1268,706 1286,768"/>
+      <path d="M650,660 C505,660 295,685 122,732 C58,760 18,812 2,880" stroke-width="1.5"/>
+      <path d="M650,660 C795,660 1005,685 1178,732 C1242,760 1282,812 1298,880" stroke-width="1.5"/>
+      <line x1="580" y1="140" x2="540" y2="220" stroke-width=".7" opacity=".6"/>
+      <line x1="720" y1="140" x2="760" y2="220" stroke-width=".7" opacity=".6"/>
+      <line x1="510" y1="235" x2="458" y2="320" stroke-width=".7" opacity=".6"/>
+      <line x1="790" y1="235" x2="842" y2="320" stroke-width=".7" opacity=".6"/>
+      <line x1="435" y1="332" x2="376" y2="420" stroke-width=".7" opacity=".6"/>
+      <line x1="865" y1="332" x2="924" y2="420" stroke-width=".7" opacity=".6"/>
+      <line x1="352" y1="432" x2="290" y2="520" stroke-width=".7" opacity=".6"/>
+      <line x1="948" y1="432" x2="1010" y2="520" stroke-width=".7" opacity=".6"/>
+      <ellipse cx="650" cy="55" rx="38" ry="48" stroke-width="1.5"/>
+      <ellipse cx="650" cy="42" rx="18" ry="14"/>
+      <ellipse cx="636" cy="40" rx="7" ry="8"/>
+      <ellipse cx="664" cy="40" rx="7" ry="8"/>
+      <path d="M646,52 L650,58 L654,52" stroke-width=".8"/>
+      <path d="M630,66 L628,74 M638,68 L636,76 M646,69 L644,77 M654,69 L652,77 M662,68 L660,76 M670,66 L668,74" stroke-width=".7"/>
+      <path d="M560,870 C590,830 620,810 650,808 C680,810 710,830 740,870" stroke-width="1.8"/>
+      <ellipse cx="610" cy="855" rx="28" ry="18"/>
+      <ellipse cx="690" cy="855" rx="28" ry="18"/>
+    </g>
+    <defs><radialGradient id="cageGlow" cx="50%" cy="100%" r="50%"><stop offset="0%" stop-color="#c47a1a" stop-opacity=".18"/><stop offset="100%" stop-color="#c47a1a" stop-opacity="0"/></radialGradient></defs>
+    <ellipse cx="650" cy="900" rx="500" ry="120" fill="url(#cageGlow)"/>
+  </svg>
+
+  <svg class="emblem emblem-norse-1" viewBox="0 0 200 200" fill="none">
+    <g stroke="#c8a060" fill="none">
+      <circle cx="100" cy="100" r="12" stroke-width="2"/>
+      <circle cx="100" cy="100" r="45" stroke-width=".6" opacity=".4"/>
+      <circle cx="100" cy="100" r="80" stroke-width=".5" opacity=".3"/>
+      <g stroke-width="1.8">
+        <line x1="100" y1="88" x2="100" y2="20"/>
+        <line x1="100" y1="112" x2="100" y2="180"/>
+        <line x1="88" y1="100" x2="20" y2="100"/>
+        <line x1="112" y1="100" x2="180" y2="100"/>
+        <line x1="91" y1="91" x2="43" y2="43"/>
+        <line x1="109" y1="109" x2="157" y2="157"/>
+        <line x1="109" y1="91" x2="157" y2="43"/>
+        <line x1="91" y1="109" x2="43" y2="157"/>
+      </g>
+      <g stroke-width="1.2">
+        <path d="M100,30 L92,22 M100,30 L108,22"/>
+        <path d="M100,170 L92,178 M100,170 L108,178"/>
+        <path d="M30,100 L22,92 M30,100 L22,108"/>
+        <path d="M170,100 L178,92 M170,100 L178,108"/>
+        <path d="M50,50 L42,38 M50,50 L38,42"/>
+        <path d="M150,150 L158,162 M150,150 L162,158"/>
+        <path d="M150,50 L162,42 M150,50 L158,38"/>
+        <path d="M50,150 L38,158 M50,150 L42,162"/>
+      </g>
+    </g>
+  </svg>
+
+  <svg class="emblem emblem-norse-2" viewBox="0 0 160 160" fill="none">
+    <g stroke="#c8a060" stroke-width="2" stroke-linejoin="round" fill="none">
+      <polygon points="80,22 110,75 50,75" stroke-width="6" stroke="#050301"/>
+      <polygon points="80,22 110,75 50,75" stroke-width="2"/>
+      <polygon points="80,138 44,77 116,77" stroke-width="6" stroke="#050301"/>
+      <polygon points="80,138 44,77 116,77" stroke-width="2"/>
+      <polygon points="80,55 100,88 60,88" stroke-width="5" stroke="#050301"/>
+      <polygon points="80,55 100,88 60,88" stroke-width="1.5"/>
+      <circle cx="80" cy="80" r="72" stroke-width=".7" opacity=".35"/>
+    </g>
+  </svg>
+
+  <svg class="emblem emblem-jp-1" viewBox="0 0 140 160" fill="none">
+    <g stroke="#c8a060" fill="none">
+      <path d="M5,42 Q70,20 135,42" stroke-width="4" stroke-linecap="round"/>
+      <line x1="18" y1="58" x2="122" y2="58" stroke-width="2.5"/>
+      <line x1="25" y1="72" x2="115" y2="72" stroke-width="1.5"/>
+      <line x1="35" y1="55" x2="35" y2="155" stroke-width="3.5"/>
+      <line x1="105" y1="55" x2="105" y2="155" stroke-width="3.5"/>
+      <line x1="20" y1="155" x2="50" y2="155" stroke-width="2.5"/>
+      <line x1="90" y1="155" x2="120" y2="155" stroke-width="2.5"/>
+      <circle cx="35" cy="48" r="4"/>
+      <circle cx="105" cy="48" r="4"/>
+      <path d="M5,42 Q2,36 8,32" stroke-width="2"/>
+      <path d="M135,42 Q138,36 132,32" stroke-width="2"/>
+    </g>
+  </svg>
+
+  <svg class="emblem emblem-jp-2" viewBox="0 0 180 180" fill="none">
+    <g stroke="#c8a060" fill="none">
+      <circle cx="90" cy="90" r="84" stroke-width="1.5"/>
+      <circle cx="90" cy="90" r="78" stroke-width=".6"/>
+      <circle cx="90" cy="90" r="14" stroke-width="1.5"/>
+      <circle cx="90" cy="52" r="20" stroke-width="1.5"/>
+      <line x1="90" y1="72" x2="90" y2="90" stroke-width="1"/>
+      <circle cx="55" cy="113" r="20" stroke-width="1.5"/>
+      <line x1="73" y1="103" x2="83" y2="90" stroke-width="1"/>
+      <circle cx="125" cy="113" r="20" stroke-width="1.5"/>
+      <line x1="107" y1="103" x2="97" y2="90" stroke-width="1"/>
+    </g>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="chap-tag">
+      <span class="hl hl-l"></span>
+      Chapter 01 &mdash; The Cartographer
+      <span class="hl hl-r"></span>
     </div>
-    <p class="hero-desc">Building AI systems that go beyond the notebook — live multi-agent pipelines, full-stack ML applications, and LLM infrastructure that actually ships to production.</p>
-    <div class="menu-actions">
-      <a href="#projects" class="menu-btn menu-btn-gold">▶ &nbsp;View Missions</a>
-      <a href="https://github.com/RudraDudhat2509" target="_blank" class="menu-btn menu-btn-ghost">◈ &nbsp;GitHub</a>
-      <a href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" class="menu-btn menu-btn-ghost">◈ &nbsp;LinkedIn</a>
+    <h1 class="hero-name">
+      Rudra<br>Dudhat
+      <em>AI Engineer &nbsp;&mdash;&nbsp; IIT Bhilai &nbsp;&mdash;&nbsp; 2nd Year DSAI</em>
+    </h1>
+    <div class="rope-div">
+      <div class="rope"></div>
+      <span class="rope-knot">&#10022; &#10022; &#10022;</span>
+      <div class="rope"></div>
+    </div>
+    <p class="hero-desc">Building AI systems that go beyond the notebook &mdash; live multi-agent pipelines, full-stack ML applications, and LLM infrastructure that actually ships to production.</p>
+    <div class="hero-acts">
+      <a href="#projects" class="btn btn-gold">View Expeditions</a>
+      <a href="https://github.com/RudraDudhat2509" target="_blank" class="btn btn-line">GitHub</a>
+      <a href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" class="btn btn-line">LinkedIn</a>
     </div>
   </div>
-
-  <div class="xp-hint">
-    <div class="xp-label">Scroll to Explore</div>
-    <div class="xp-bar"></div>
-  </div>
+  <div class="scroll-hint">Scroll to explore</div>
 </section>
 
-<!-- CH 01 -->
-<div class="chapter-screen">
-  <div class="chapter-inner">
-    <div class="chapter-num-wrap"><div class="chapter-num" data-n="01">01</div></div>
-    <div class="chapter-sep"><span></span><span></span><span></span></div>
-    <div class="chapter-text">
-      <div class="chapter-tag">Field Dossier</div>
-      <div class="chapter-title">About the <span>Explorer</span></div>
-    </div>
-    <div class="chapter-line"></div>
-  </div>
-</div>
+<!-- Ch01 Divider -->
+<div class="chap-div"><div class="chap-div-inner container">
+  <div class="chap-num">01</div>
+  <div class="chap-line"></div>
+  <div><div class="chap-sub">Field Dossier</div><div class="chap-title">About the Explorer</div></div>
+</div></div>
 
 <!-- ABOUT -->
-<section id="about" class="section-deep">
-  <div class="about-container" style="padding: 5rem 2rem;">
-    <div class="about-grid reveal-el">
-      <div class="lore-panel">
-        <p>I am a <em style="color:#e8401e">second-year B.Tech student in Data Science &amp; AI at IIT Bhilai</em> (CGPA 9.48), but I think of myself less as a student and more as a builder. The classroom is where theory lives — the real learning happens when I am staring at a broken deployment at 2am.</p>
-        <p>My work lives at the intersection of <em style="color:#e8401e">LLM engineering, production ML, and systems architecture</em>. I do not stop at the notebook. I containerize, deploy, monitor, and ship. Cascade AI is live on Firebase. OptiQuant runs on AWS EC2. The gap between prototype and production is where I am most at home.</p>
-        <div class="lore-aside">
-          A model that runs only on your laptop is not a product. It is a proof of concept wearing a <em>costume</em>.
-        </div>
-        <p>When not building, I organise AI workshops for 200+ students at IIT Bhilai, run cold outreach for placement drives, and think about why model explainability tools can quietly create <em style="color:#e8401e">false confidence</em> in a drifting system.</p>
+<section id="about">
+  <div class="sec-body container">
+    <div class="about-grid reveal">
+      <div class="journal">
+        <p>I am a <em>second-year B.Tech student in Data Science &amp; AI at IIT Bhilai</em> (CGPA&nbsp;9.48), but I think of myself less as a student and more as a builder. The classroom is where theory lives &mdash; the real learning happens when I am staring at a broken deployment at 2am.</p>
+        <p>My work lives at the intersection of <em>LLM engineering, production ML, and systems architecture</em>. I do not stop at the notebook. I containerize, deploy, monitor, and ship. Cascade AI is live on Firebase. OptiQuant runs on AWS EC2. The gap between prototype and production is where I am most at home.</p>
+        <div class="journal-aside">A model that runs only on your laptop is not a product. It is a proof of concept wearing a costume.</div>
+        <p>When not building, I organise AI workshops for 200+ students at IIT Bhilai, run cold outreach for placement drives, and think about why model explainability tools can quietly create <em>false confidence</em> in a drifting system.</p>
       </div>
       <div>
-        <div class="stats-card">
-          <div class="stats-card-header">Character Stats</div>
-
-          <div class="stat-row"><div class="stat-label">CGPA</div><div class="stat-bar-wrap"><div class="stat-bar sb-gold" style="width:94.8%" data-w="94.8"></div></div><div class="stat-val">9.48</div></div>
-          <div class="stat-row"><div class="stat-label">ML Depth</div><div class="stat-bar-wrap"><div class="stat-bar sb-red" style="width:82%" data-w="82"></div></div><div class="stat-val">Adv</div></div>
-          <div class="stat-row"><div class="stat-label">Ship Speed</div><div class="stat-bar-wrap"><div class="stat-bar sb-cyan" style="width:78%" data-w="78"></div></div><div class="stat-val">Fast</div></div>
-          <div class="stat-row"><div class="stat-label">LLM Craft</div><div class="stat-bar-wrap"><div class="stat-bar sb-gold" style="width:85%" data-w="85"></div></div><div class="stat-val">High</div></div>
-          <div class="stat-row"><div class="stat-label">DevOps</div><div class="stat-bar-wrap"><div class="stat-bar sb-red" style="width:72%" data-w="72"></div></div><div class="stat-val">Solid</div></div>
-
-          <div class="stat-numbers">
-            <div class="sn-item"><span class="sn-val">9.48</span><span class="sn-label">CGPA</span></div>
-            <div class="sn-item"><span class="sn-val">2</span><span class="sn-label">Live Deploys</span></div>
-            <div class="sn-item"><span class="sn-val">200+</span><span class="sn-label">Students</span></div>
-            <div class="sn-item"><span class="sn-val">2nd</span><span class="sn-label">Year DSAI</span></div>
+        <div class="stat-panel">
+          <div class="stat-grid">
+            <div class="stat-item"><span class="stat-n">9.48</span><span class="stat-l">CGPA / 10</span></div>
+            <div class="stat-item"><span class="stat-n">2</span><span class="stat-l">Live Deployments</span></div>
+            <div class="stat-item"><span class="stat-n">200+</span><span class="stat-l">Students Reached</span></div>
+            <div class="stat-item"><span class="stat-n">2nd</span><span class="stat-l">Year DSAI</span></div>
           </div>
-
-          <div style="border-top:1px solid rgba(212,168,67,.1);margin-top:1rem;padding-top:1rem;">
-            <div style="font-family:'Cinzel',serif;font-size:.8rem;color:var(--cream);margin-bottom:.2rem;font-weight:600;">IIT Bhilai — B.Tech DSAI</div>
-            <div style="font-family:'IM Fell English',serif;font-size:.85rem;font-style:italic;color:var(--faded);">Jul 2024 – May 2028 · JEE Advanced Rank 10,463</div>
+          <div class="edu-block">
+            <div class="edu-inst">IIT Bhilai &mdash; B.Tech DSAI</div>
+            <div class="edu-detail">Jul 2024 &ndash; May 2028 &nbsp;|&nbsp; JEE Advanced Rank 10,463</div>
           </div>
         </div>
       </div>
@@ -1243,163 +554,136 @@ footer::before {
   </div>
 </section>
 
-<!-- CH 02 -->
-<div class="chapter-screen">
-  <div class="chapter-inner">
-    <div class="chapter-num-wrap"><div class="chapter-num" data-n="02">02</div></div>
-    <div class="chapter-sep"><span></span><span></span><span></span></div>
-    <div class="chapter-text">
-      <div class="chapter-tag">Active Missions</div>
-      <div class="chapter-title">The <span>Work</span></div>
-    </div>
-    <div class="chapter-line"></div>
-  </div>
-</div>
+<!-- Ch02 Divider -->
+<div class="chap-div"><div class="chap-div-inner container">
+  <div class="chap-num">02</div>
+  <div class="chap-line"></div>
+  <div><div class="chap-sub">Active Expeditions</div><div class="chap-title">The Work</div></div>
+</div></div>
 
 <!-- PROJECTS -->
-<section id="projects" class="section-void" style="padding:4rem 0 5rem;">
-  <div class="projects-container">
-    <p class="proj-intro-text">"Every system tells a story. These are mine."</p>
+<section id="projects">
+  <div class="container">
+    <p class="proj-intro">"Every system tells a story. These are mine."</p>
 
     <!-- Cascade AI -->
-    <div class="mission-card reveal-el">
-      <div class="mission-accent"></div>
-      <div class="mission-inner">
-        <div class="mission-status"><div class="mission-status-dot"></div>Live — Firebase Deployed</div>
-        <div class="mission-title">Cascade AI — Multi-Agent Intelligence Platform</div>
-        <div class="mission-stack">Python / OpenAI API / LangChain / Firebase Cloud Functions / Firestore / GCS / Node.js</div>
-        <p class="mission-desc">A production-deployed backend where an LLM planner decomposes user tasks into a coordinated pipeline of specialised agents — web search, scraper, auditor, router, and formatter — executed in sequence via Firebase Cloud Functions.</p>
-        <div class="mission-objectives">
-          <div class="obj-item">LLM planner generates multi-step agent blueprints from plain text</div>
-          <div class="obj-item">Parallel search pipeline with AI-powered auditing of scraped pages</div>
-          <div class="obj-item">Router agents with conditional branching and auto index correction</div>
-          <div class="obj-item">Per-user context in Firestore; large payloads offloaded to GCS</div>
-          <div class="obj-item">Output formatters for Slack, PDF, and email</div>
-          <div class="obj-item">Firebase Auth, onboarding quiz, private memory layer per user</div>
-        </div>
-        <div class="mission-footer">
-          <button class="mission-debrief-btn" onclick="openDebrief('cascade')">▶ Mission Debrief</button>
-        </div>
+    <div class="proj-featured reveal">
+      <div class="corner-mark c-tl"></div><div class="corner-mark c-tr"></div>
+      <div class="corner-mark c-bl"></div><div class="corner-mark c-br"></div>
+      <div class="proj-stamp">Live &mdash; Firebase Deployed</div>
+      <div class="proj-name">Cascade AI &mdash; Multi-Agent Intelligence Platform</div>
+      <div class="proj-tech">Python &nbsp;/&nbsp; OpenAI API &nbsp;/&nbsp; LangChain &nbsp;/&nbsp; Firebase Cloud Functions &nbsp;/&nbsp; Firestore &nbsp;/&nbsp; GCS &nbsp;/&nbsp; Node.js</div>
+      <p class="proj-desc">A production-deployed backend where an LLM planner decomposes user tasks into a coordinated pipeline of specialised agents &mdash; web search, scraper, auditor, router, and formatter &mdash; executed in sequence via Firebase Cloud Functions.</p>
+      <ul class="proj-bullets">
+        <li>LLM planner generates multi-step agent blueprints from plain text</li>
+        <li>Parallel search pipeline with AI-powered auditing of scraped pages</li>
+        <li>Router agents with conditional branching and automatic index correction</li>
+        <li>Per-user context in Firestore; large payloads offloaded to GCS</li>
+        <li>Output formatters for Slack, PDF, and email</li>
+        <li>Firebase Auth, onboarding quiz, private memory layer per user</li>
+      </ul>
+      <div style="position:relative;z-index:1;margin-top:1.1rem;">
+        <button class="proj-debrief-btn" onclick="openDebrief('cascade')">&#9654; Expedition Debrief</button>
       </div>
     </div>
 
     <!-- OptiQuant -->
-    <div class="mission-card reveal-el" style="transition-delay:.1s">
-      <div class="mission-accent"></div>
-      <div class="mission-inner">
-        <div class="mission-status"><div class="mission-status-dot"></div>AWS EC2 — Live Demo</div>
-        <div class="mission-title"><a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank">OptiQuant — Full-Stack ML Application</a></div>
-        <div class="mission-stack">Python / LightGBM / CatBoost / Random Forest / SHAP / Streamlit / Docker / AWS EC2 / GitHub Actions</div>
-        <p class="mission-desc">An end-to-end ML application from feature engineering and ensemble model training to a live Streamlit interface for generating and explaining stock alpha signals. Walk-forward backtesting prevents data leakage.</p>
-        <div class="mission-objectives">
-          <div class="obj-item">Weighted ensemble of LightGBM, CatBoost and Random Forest</div>
-          <div class="obj-item">Walk-forward validation simulating real production retraining</div>
-          <div class="obj-item">Dockerised and deployed to AWS EC2 via GitHub Actions CI/CD</div>
-          <div class="obj-item">SHAP attribution layer surfaced directly in the Streamlit UI</div>
-          <div class="obj-item">28.16% CAGR · 1.05 Sharpe · 53.92% win rate · −20% max drawdown</div>
-          <div class="obj-item">Live prediction mode and backtesting engine in one interface</div>
-        </div>
-        <div class="mission-footer">
-          <a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank" class="mission-link">View on GitHub →</a>
-          <button class="mission-debrief-btn" onclick="openDebrief('optiquant')">▶ Mission Debrief</button>
-        </div>
-      </div>
+    <div class="proj-featured reveal">
+      <div class="corner-mark c-tl"></div><div class="corner-mark c-tr"></div>
+      <div class="corner-mark c-bl"></div><div class="corner-mark c-br"></div>
+      <div class="proj-stamp">AWS EC2 &mdash; Live Demo</div>
+      <div class="proj-name"><a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank">OptiQuant &mdash; Full-Stack ML Application</a></div>
+      <div class="proj-tech">Python &nbsp;/&nbsp; LightGBM &nbsp;/&nbsp; CatBoost &nbsp;/&nbsp; Random Forest &nbsp;/&nbsp; SHAP &nbsp;/&nbsp; Streamlit &nbsp;/&nbsp; Docker &nbsp;/&nbsp; AWS EC2 &nbsp;/&nbsp; GitHub Actions</div>
+      <p class="proj-desc">An end-to-end ML application from feature engineering and ensemble model training to a live Streamlit interface for generating and explaining stock alpha signals. Walk-forward backtesting prevents data leakage. SHAP explainability makes every prediction inspectable in the UI.</p>
+      <ul class="proj-bullets">
+        <li>Weighted ensemble of LightGBM, CatBoost and Random Forest</li>
+        <li>Walk-forward validation simulating real production retraining</li>
+        <li>Dockerised and deployed to AWS EC2 via GitHub Actions CI/CD</li>
+        <li>SHAP attribution layer surfaced directly in the Streamlit UI</li>
+        <li>28.16% CAGR &nbsp;|&nbsp; 1.05 Sharpe &nbsp;|&nbsp; 53.92% win rate &nbsp;|&nbsp; &minus;20% max drawdown</li>
+        <li>Live prediction mode and backtesting engine in one interface</li>
+      </ul>
+      <a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank" class="proj-link">View on GitHub &rarr;</a>
+      <button class="proj-debrief-btn" onclick="openDebrief('optiquant')">&#9654; Expedition Debrief</button>
     </div>
 
-    <div class="side-missions-label">Side Missions — Live from GitHub</div>
-    <div class="side-grid" id="gh-grid">
-      <div class="gh-loading-new">Syncing field reports&hellip;</div>
+    <!-- Dynamic GitHub extras -->
+    <div class="other-label">Other Dispatches &mdash; Live from GitHub</div>
+    <div class="proj-grid" id="gh-grid">
+      <div class="gh-loading">Fetching field reports&hellip;</div>
     </div>
   </div>
 </section>
 
-<!-- CH 03 -->
-<div class="chapter-screen">
-  <div class="chapter-inner">
-    <div class="chapter-num-wrap"><div class="chapter-num" data-n="03">03</div></div>
-    <div class="chapter-sep"><span></span><span></span><span></span></div>
-    <div class="chapter-text">
-      <div class="chapter-tag">Equipment Manifest</div>
-      <div class="chapter-title">The <span>Arsenal</span></div>
-    </div>
-    <div class="chapter-line"></div>
+<!-- EXPEDITION DEBRIEF MODALS (Feature 7) -->
+<div class="debrief-overlay" id="debrief-overlay" onclick="closeDebriefOnBg(event)">
+  <div class="debrief-modal" id="debrief-modal">
+    <div class="corner-mark c-tl"></div><div class="corner-mark c-tr"></div>
+    <div class="corner-mark c-bl"></div><div class="corner-mark c-br"></div>
+    <button class="debrief-close" onclick="closeDebrief()">&#10005; Close</button>
+    <div id="debrief-content"></div>
   </div>
 </div>
 
-<!-- SKILLS -->
-<section id="skills" class="section-deep" style="padding:4rem 0 5rem;">
-  <div class="skills-container">
-    <div class="skills-grid reveal-el">
-      <div class="skill-panel">
-        <div class="sp-title"><span class="sp-title-icon">⌨</span>Languages</div>
-        <div class="sp-tags"><span class="sp-tag">Python</span><span class="sp-tag">SQL</span><span class="sp-tag">Java</span><span class="sp-tag">C</span><span class="sp-tag">JavaScript</span></div>
-      </div>
-      <div class="skill-panel">
-        <div class="sp-title"><span class="sp-title-icon">⚙</span>ML &amp; Data Science</div>
-        <div class="sp-tags"><span class="sp-tag">PyTorch</span><span class="sp-tag">TensorFlow</span><span class="sp-tag">Scikit-learn</span><span class="sp-tag">LightGBM</span><span class="sp-tag">CatBoost</span><span class="sp-tag">SHAP</span><span class="sp-tag">Pandas</span><span class="sp-tag">NumPy</span></div>
-      </div>
-      <div class="skill-panel">
-        <div class="sp-title"><span class="sp-title-icon">◈</span>LLM &amp; GenAI</div>
-        <div class="sp-tags"><span class="sp-tag">LangChain</span><span class="sp-tag">OpenAI API</span><span class="sp-tag">Hugging Face</span><span class="sp-tag">RAG</span><span class="sp-tag">Ollama</span><span class="sp-tag">Prompt Eng.</span></div>
-      </div>
-      <div class="skill-panel">
-        <div class="sp-title"><span class="sp-title-icon">☁</span>Infra &amp; DevOps</div>
-        <div class="sp-tags"><span class="sp-tag">AWS EC2</span><span class="sp-tag">Firebase</span><span class="sp-tag">Docker</span><span class="sp-tag">GitHub Actions</span><span class="sp-tag">CI/CD</span><span class="sp-tag">GCS</span><span class="sp-tag">Firestore</span></div>
-      </div>
-      <div class="skill-panel">
-        <div class="sp-title"><span class="sp-title-icon">◻</span>Web &amp; Interfaces</div>
-        <div class="sp-tags"><span class="sp-tag">Streamlit</span><span class="sp-tag">Flask</span><span class="sp-tag">Gradio</span><span class="sp-tag">FastAPI</span></div>
-      </div>
-      <div class="skill-panel">
-        <div class="sp-title"><span class="sp-title-icon">∑</span>Statistics</div>
-        <div class="sp-tags"><span class="sp-tag">Time-Series</span><span class="sp-tag">Bayesian Inf.</span><span class="sp-tag">Hypothesis Testing</span><span class="sp-tag">PCA</span><span class="sp-tag">MLE</span><span class="sp-tag">Regularisation</span></div>
+<!-- Ch03 Divider -->
+<div class="chap-div"><div class="chap-div-inner container">
+  <div class="chap-num">03</div>
+  <div class="chap-line"></div>
+  <div><div class="chap-sub">Equipment Manifest</div><div class="chap-title">The Arsenal</div></div>
+</div></div>
+
+<!-- SKILLS with Radar (Feature 4) -->
+<section id="skills">
+  <div class="sec-body container">
+    <div class="skills-layout reveal">
+      <div class="skills-grid">
+        <div class="skill-grp"><div class="skill-grp-title">Languages</div><div class="skill-items"><span class="skill-item">Python</span><span class="skill-item">SQL</span><span class="skill-item">Java</span><span class="skill-item">C</span><span class="skill-item">JavaScript</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">ML &amp; Data Science</div><div class="skill-items"><span class="skill-item">PyTorch</span><span class="skill-item">TensorFlow</span><span class="skill-item">Scikit-learn</span><span class="skill-item">LightGBM</span><span class="skill-item">CatBoost</span><span class="skill-item">SHAP</span><span class="skill-item">Pandas</span><span class="skill-item">NumPy</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">LLM &amp; GenAI</div><div class="skill-items"><span class="skill-item">LangChain</span><span class="skill-item">OpenAI API</span><span class="skill-item">Hugging Face</span><span class="skill-item">RAG</span><span class="skill-item">Ollama</span><span class="skill-item">Prompt Engineering</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">Infra &amp; DevOps</div><div class="skill-items"><span class="skill-item">AWS EC2</span><span class="skill-item">Firebase</span><span class="skill-item">Docker</span><span class="skill-item">GitHub Actions</span><span class="skill-item">CI/CD</span><span class="skill-item">GCS</span><span class="skill-item">Firestore</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">Web &amp; Interfaces</div><div class="skill-items"><span class="skill-item">Streamlit</span><span class="skill-item">Flask</span><span class="skill-item">Gradio</span></div></div>
+        <div class="skill-grp"><div class="skill-grp-title">Statistics</div><div class="skill-items"><span class="skill-item">Time-Series</span><span class="skill-item">Bayesian Inference</span><span class="skill-item">Hypothesis Testing</span><span class="skill-item">PCA</span><span class="skill-item">Regularisation</span></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CH 04 -->
-<div class="chapter-screen">
-  <div class="chapter-inner">
-    <div class="chapter-num-wrap"><div class="chapter-num" data-n="04">04</div></div>
-    <div class="chapter-sep"><span></span><span></span><span></span></div>
-    <div class="chapter-text">
-      <div class="chapter-tag">Captain's Log</div>
-      <div class="chapter-title">Field <span>Experience</span></div>
-    </div>
-    <div class="chapter-line"></div>
-  </div>
-</div>
+<!-- Ch04 Divider -->
+<div class="chap-div"><div class="chap-div-inner container">
+  <div class="chap-num">04</div>
+  <div class="chap-line"></div>
+  <div><div class="chap-sub">Captain's Log</div><div class="chap-title">Field Experience</div></div>
+</div></div>
 
 <!-- EXPERIENCE -->
-<section id="experience" class="section-void" style="padding:4rem 0 5rem;">
-  <div class="exp-container">
-    <div class="timeline-new">
-      <div class="tl-entry">
-        <div class="tl-node"><div class="tl-gem"></div><div class="tl-ts">2024–2028</div></div>
-        <div class="tl-body">
-          <div class="tl-role">B.Tech — Data Science &amp; Artificial Intelligence</div>
-          <div class="tl-org">Indian Institute of Technology, Bhilai · CGPA 9.48 · Deputy Class Representative</div>
+<section id="experience">
+  <div class="container" style="padding-top:4rem;padding-bottom:4rem">
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-marker"><div class="tl-diamond"></div><div class="tl-date">2024&ndash;2028</div></div>
+        <div class="tl-content">
+          <div class="tl-role">B.Tech &mdash; Data Science &amp; Artificial Intelligence</div>
+          <div class="tl-org">Indian Institute of Technology, Bhilai &nbsp;&mdash;&nbsp; CGPA 9.48 &nbsp;&mdash;&nbsp; Deputy Class Representative</div>
         </div>
       </div>
-      <div class="tl-entry">
-        <div class="tl-node"><div class="tl-gem"></div><div class="tl-ts">Jul 2025–Now</div></div>
-        <div class="tl-body">
-          <div class="tl-role">Core Member — DS&amp;AI Club, IIT Bhilai</div>
+      <div class="tl-item">
+        <div class="tl-marker"><div class="tl-diamond"></div><div class="tl-date">Jul 2025&ndash;Now</div></div>
+        <div class="tl-content">
+          <div class="tl-role">Core Member &mdash; DS&amp;AI Club, IIT Bhilai</div>
           <div class="tl-org">IIT Bhilai</div>
-          <ul class="tl-list">
+          <ul class="tl-pts">
             <li>Led a 12-person team organising AI, GenAI, and industry sessions reaching 200+ students</li>
             <li>Managed speaker outreach, scheduling, and end-to-end logistics across 100+ attendee workshops</li>
             <li>Mentored juniors on ML project ideation, model evaluation, and deployment workflows</li>
           </ul>
         </div>
       </div>
-      <div class="tl-entry">
-        <div class="tl-node"><div class="tl-gem"></div><div class="tl-ts">Jul 2025–Now</div></div>
-        <div class="tl-body">
-          <div class="tl-role">Student Placement Volunteer — CCPS, IIT Bhilai</div>
+      <div class="tl-item">
+        <div class="tl-marker"><div class="tl-diamond"></div><div class="tl-date">Jul 2025&ndash;Now</div></div>
+        <div class="tl-content">
+          <div class="tl-role">Student Placement Volunteer &mdash; CCPS, IIT Bhilai</div>
           <div class="tl-org">Centre for Career Planning and Services</div>
-          <ul class="tl-list">
+          <ul class="tl-pts">
             <li>Coordinated recruitment for 15+ companies across drives serving 100+ students</li>
             <li>Cold-outreached 50+ companies; onboarded 2 new recruiters through persistent follow-up</li>
             <li>Liaison between company HR and student candidates during assessments</li>
@@ -1408,111 +692,125 @@ footer::before {
       </div>
     </div>
 
-    <div style="font-family:'Orbitron',monospace;font-size:.52rem;letter-spacing:.5em;text-transform:uppercase;color:rgba(212,168,67,.5);margin-top:3rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;">Credentials &amp; Certifications<span style="flex:1;height:1px;background:linear-gradient(to right,rgba(212,168,67,.25),transparent);"></span></div>
-    <div class="certs-row">
-      <div class="cert-card">
-        <div class="cert-name">Complete Data Science, ML, DL, NLP Bootcamp <span class="cert-badge">Verified</span></div>
-        <div class="cert-meta">Krish Naik · Udemy · Aug 2025</div>
+    <!-- FEATURE 6 — CERTS WITH VERIFY LINKS -->
+    <div class="sub-label">Credentials &amp; Certifications</div>
+    <div class="certs-grid">
+      <div class="cert-item">
+        <div class="cert-name">Complete Data Science, ML, DL, NLP Bootcamp <span class="cert-stamp">Verified</span></div>
+        <div class="cert-meta">Krish Naik &nbsp;&mdash;&nbsp; Udemy &nbsp;&mdash;&nbsp; Aug 2025</div>
+        <a href="https://www.udemy.com/certificate/" target="_blank" class="cert-verify">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 10L10 2M5 2h5v5"/></svg>
+          View Certificate
+        </a>
       </div>
-      <div class="cert-card">
-        <div class="cert-name">BCG Data Science Job Simulation <span class="cert-badge">Verified</span></div>
-        <div class="cert-meta">Forage · Churn Prediction · Jun 2025</div>
+      <div class="cert-item">
+        <div class="cert-name">BCG Data Science Job Simulation <span class="cert-stamp">Verified</span></div>
+        <div class="cert-meta">Forage &nbsp;&mdash;&nbsp; Churn Prediction &nbsp;&mdash;&nbsp; Jun 2025</div>
+        <a href="https://www.theforage.com/achievements" target="_blank" class="cert-verify">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 10L10 2M5 2h5v5"/></svg>
+          View Certificate
+        </a>
       </div>
-      <div class="cert-card">
-        <div class="cert-name">JPMorgan Quantitative Research Virtual Program <span class="cert-badge">Verified</span></div>
-        <div class="cert-meta">Forage · Loan Default Model · Jun 2025</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CH 05 -->
-<div class="chapter-screen">
-  <div class="chapter-inner">
-    <div class="chapter-num-wrap"><div class="chapter-num" data-n="05">05</div></div>
-    <div class="chapter-sep"><span></span><span></span><span></span></div>
-    <div class="chapter-text">
-      <div class="chapter-tag">Field Dispatches</div>
-      <div class="chapter-title">Written from the <span>Trenches</span></div>
-    </div>
-    <div class="chapter-line"></div>
-  </div>
-</div>
-
-<!-- LOG -->
-<section id="log" class="section-deep" style="padding:4rem 0 5rem;">
-  <div class="log-container">
-    <p class="proj-intro-text">"Thinking out loud so the next person doesn't have to start from zero."</p>
-    <div class="log-grid-new">
-      <div class="dispatch-card reveal-el">
-        <div class="dispatch-tag">LLM Engineering</div>
-        <div class="dispatch-date">Feb 2026</div>
-        <div class="dispatch-title">Why SHAP Can Quietly Lie to You in a Drifting System</div>
-        <p class="dispatch-excerpt">Model explainability tools are supposed to build trust. But when your feature distribution shifts and the model hasn't been retrained, SHAP attributions can confidently mislead you into thinking everything is fine.</p>
-        <div class="dispatch-footer">
-          <button class="dispatch-read" onclick="openLog('shap')">Read Dispatch →</button>
-          <span class="dispatch-time">7 min read</span>
-        </div>
-      </div>
-      <div class="dispatch-card reveal-el" style="transition-delay:.1s">
-        <div class="dispatch-tag">MLOps</div>
-        <div class="dispatch-date">Jan 2026</div>
-        <div class="dispatch-title">From Notebook to Firebase: What Actually Changes</div>
-        <p class="dispatch-excerpt">Everyone talks about "deploying to production" like it's a single step. It isn't. Here's what building Cascade AI taught me about the real gap between a working notebook and a system that earns the word "production."</p>
-        <div class="dispatch-footer">
-          <button class="dispatch-read" onclick="openLog('firebase')">Read Dispatch →</button>
-          <span class="dispatch-time">9 min read</span>
-        </div>
-      </div>
-      <div class="dispatch-card reveal-el" style="transition-delay:.2s">
-        <div class="dispatch-tag">Quant / ML</div>
-        <div class="dispatch-date">Dec 2025</div>
-        <div class="dispatch-title">Walk-Forward Validation: Why Backtesting Usually Lies</div>
-        <p class="dispatch-excerpt">Every quant strategy looks great on historical data. The dirty secret is that most backtests are optimised on the same data they're evaluated on. Walk-forward validation is the closest thing to an honest test.</p>
-        <div class="dispatch-footer">
-          <button class="dispatch-read" onclick="openLog('walkforward')">Read Dispatch →</button>
-          <span class="dispatch-time">6 min read</span>
-        </div>
+      <div class="cert-item">
+        <div class="cert-name">JPMorgan Quantitative Research Virtual Program <span class="cert-stamp">Verified</span></div>
+        <div class="cert-meta">Forage &nbsp;&mdash;&nbsp; Loan Default Model &nbsp;&mdash;&nbsp; Jun 2025</div>
+        <a href="https://www.theforage.com/achievements" target="_blank" class="cert-verify">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 10L10 2M5 2h5v5"/></svg>
+          View Certificate
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CH 06 -->
-<div class="chapter-screen">
-  <div class="chapter-inner">
-    <div class="chapter-num-wrap"><div class="chapter-num" data-n="06">06</div></div>
-    <div class="chapter-sep"><span></span><span></span><span></span></div>
-    <div class="chapter-text">
-      <div class="chapter-tag">Send a Signal</div>
-      <div class="chapter-title">Get in <span>Touch</span></div>
+<!-- Ch05 Divider — DISPATCHES (Feature 3) -->
+<div class="chap-div"><div class="chap-div-inner container">
+  <div class="chap-num">05</div>
+  <div class="chap-line"></div>
+  <div><div class="chap-sub">Field Dispatches</div><div class="chap-title">Written from the Trenches</div></div>
+</div></div>
+
+<!-- BLOG SECTION (Feature 3) -->
+<section id="log">
+  <div class="container">
+    <p class="log-intro">"Thinking out loud so the next person doesn't have to start from zero."</p>
+    <div class="log-grid">
+
+      <div class="log-card reveal">
+        <div class="log-card-tag">LLM Engineering</div>
+        <div class="log-card-date">Feb 2026</div>
+        <div class="log-card-title">Why SHAP Can Quietly Lie to You in a Drifting System</div>
+        <p class="log-card-excerpt">Model explainability tools are supposed to build trust. But when your feature distribution shifts and the model hasn't been retrained, SHAP attributions can confidently mislead you into thinking everything is fine.</p>
+        <div class="log-card-footer">
+          <span class="log-read" onclick="openLog('shap')">Read Dispatch &#8594;</span>
+          <span class="log-read-time">7 min read</span>
+        </div>
+      </div>
+
+      <div class="log-card reveal" style="transition-delay:.1s">
+        <div class="log-card-tag">MLOps</div>
+        <div class="log-card-date">Jan 2026</div>
+        <div class="log-card-title">From Notebook to Firebase: What Actually Changes</div>
+        <p class="log-card-excerpt">Everyone talks about "deploying to production" like it's a single step. It isn't. Here's what building Cascade AI taught me about the real gap between a working notebook and a system that earns the word "production."</p>
+        <div class="log-card-footer">
+          <span class="log-read" onclick="openLog('firebase')">Read Dispatch &#8594;</span>
+          <span class="log-read-time">9 min read</span>
+        </div>
+      </div>
+
+      <div class="log-card reveal" style="transition-delay:.2s">
+        <div class="log-card-tag">Quant / ML</div>
+        <div class="log-card-date">Dec 2025</div>
+        <div class="log-card-title">Walk-Forward Validation: Why Backtesting Usually Lies</div>
+        <p class="log-card-excerpt">Every quant strategy looks great on historical data. The dirty secret is that most backtests are optimised on the same data they're evaluated on. Walk-forward validation is the closest thing to an honest test — here's how I implemented it in OptiQuant.</p>
+        <div class="log-card-footer">
+          <span class="log-read" onclick="openLog('walkforward')">Read Dispatch &#8594;</span>
+          <span class="log-read-time">6 min read</span>
+        </div>
+      </div>
+
     </div>
-    <div class="chapter-line"></div>
   </div>
+</section>
+
+<!-- LOG READER (full-screen article overlay) -->
+<div class="log-reader" id="log-reader">
+  <div class="log-reader-header">
+    <div class="log-reader-brand">Field Dispatches &mdash; R. Dudhat</div>
+    <button class="log-reader-close" onclick="closeLog()">&#10005; Close Dispatch</button>
+  </div>
+  <div class="log-reader-body" id="log-reader-body"></div>
 </div>
+
+<!-- Ch06 Divider -->
+<div class="chap-div"><div class="chap-div-inner container">
+  <div class="chap-num">06</div>
+  <div class="chap-line"></div>
+  <div><div class="chap-sub">Send a Dispatch</div><div class="chap-title">Get in Touch</div></div>
+</div></div>
 
 <!-- CONTACT -->
-<section id="contact" class="section-void" style="padding:5rem 0;">
-  <div class="contact-container">
-    <div class="contact-grid reveal-el">
-      <div class="contact-lore">
+<section id="contact">
+  <div class="sec-body container">
+    <div class="contact-grid reveal">
+      <div class="contact-copy">
         <h3>Open to Expeditions</h3>
-        <p>Actively seeking AI engineering internships — LLM product teams, ML infrastructure, or applied ML at early-stage startups. If you are building something that matters, let us talk.</p>
-        <div class="contact-links">
-          <a href="mailto:rudradudhat2509@gmail.com" class="cl-item"><span class="cl-icon">@</span><span class="cl-text">contact.rdudhat@gmail.com</span></a>
-          <a href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" class="cl-item"><span class="cl-icon">in</span><span class="cl-text">linkedin.com/in/rdudhat-iitbhilai</span></a>
-          <a href="https://github.com/RudraDudhat2509" target="_blank" class="cl-item"><span class="cl-icon">gh</span><span class="cl-text">github.com/RudraDudhat2509</span></a>
-          <a href="https://www.kaggle.com/rudrad7" target="_blank" class="cl-item"><span class="cl-icon">kg</span><span class="cl-text">kaggle.com/rudrad7</span></a>
+        <p>Actively seeking AI engineering internships &mdash; LLM product teams, ML infrastructure, or applied ML at early-stage startups. If you are building something that matters, let us talk.</p>
+        <div class="c-links">
+          <a href="mailto:rudradudhat2509@gmail.com" class="c-link"><em class="c-icon">@</em><span>contact.rdudhat@gmail.com</span></a>
+          <a href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" class="c-link"><em class="c-icon">in</em><span>linkedin.com/in/rdudhat-iitbhilai</span></a>
+          <a href="https://github.com/RudraDudhat2509" target="_blank" class="c-link"><em class="c-icon">gh</em><span>github.com/RudraDudhat2509</span></a>
+          <a href="https://www.kaggle.com/rudrad7" target="_blank" class="c-link"><em class="c-icon">kg</em><span>kaggle.com/rudrad7</span></a>
         </div>
       </div>
-      <form class="contact-form" action="https://formspree.io/f/xreakrgk" method="POST">
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Name</label><input type="text" name="name" class="form-input" placeholder="Your name" required/></div>
-          <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="your@email.com" required/></div>
+      <form class="cform" action="https://formspree.io/f/xreakrgk" method="POST">
+        <div class="frow">
+          <div class="fgrp"><label class="flabel">Name</label><input type="text" name="name" class="finput" placeholder="Your name" required/></div>
+          <div class="fgrp"><label class="flabel">Email</label><input type="email" name="email" class="finput" placeholder="your@email.com" required/></div>
         </div>
-        <div class="form-group"><label class="form-label">Subject</label><input type="text" name="subject" class="form-input" placeholder="Internship / Collaboration / Other"/></div>
-        <div class="form-group"><label class="form-label">Message</label><textarea name="message" class="form-textarea" placeholder="Tell me about the expedition..."></textarea></div>
-        <button type="submit" class="form-submit">▶ &nbsp;Send Signal</button>
+        <div class="fgrp"><label class="flabel">Subject</label><input type="text" name="subject" class="finput" placeholder="Internship / Collaboration / Other"/></div>
+        <div class="fgrp"><label class="flabel">Message</label><textarea name="message" class="ftarea" placeholder="Tell me about the expedition..."></textarea></div>
+        <button type="submit" class="fsubmit">Send Dispatch</button>
       </form>
     </div>
   </div>
@@ -1520,197 +818,238 @@ footer::before {
 
 <footer>
   <div class="footer-name">Rudra Dudhat</div>
-  <div class="footer-note">IIT Bhilai &nbsp;·&nbsp; DSAI &nbsp;·&nbsp; 2024–2028 &nbsp;·&nbsp; Built with intention. Deployed with purpose.</div>
+  <div class="footer-note">IIT Bhilai &nbsp;&middot;&nbsp; DSAI &nbsp;&middot;&nbsp; 2024&ndash;2028 &nbsp;&middot;&nbsp; Built with intention. Deployed with purpose.</div>
 </footer>
 
-<!-- DEBRIEF MODAL -->
-<div class="debrief-overlay" id="debrief-overlay" onclick="closeDebriefOnBg(event)">
-  <div class="debrief-modal" id="debrief-modal">
-    <button class="debrief-close" onclick="closeDebrief()">✕ &nbsp;Close</button>
-    <div id="debrief-content"></div>
-  </div>
-</div>
-
-<!-- LOG READER -->
-<div class="log-reader" id="log-reader">
-  <div class="log-reader-header">
-    <div class="lrh-brand">Field Dispatches — R. Dudhat</div>
-    <button class="lrh-close" onclick="closeLog()">✕ Close Dispatch</button>
-  </div>
-  <div class="log-reader-body" id="log-reader-body"></div>
-</div>
-
 <script>
-/* ═══ CURSOR ═══ */
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  dot.style.left = mx+'px'; dot.style.top = my+'px';
+/* ═══════════════════════════════════════
+   CURSOR
+   ═══════════════════════════════════════ */
+const cur=document.getElementById('cur'),trail=document.getElementById('trail');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+  setTimeout(()=>{trail.style.left=mx+'px';trail.style.top=my+'px';},90);
 });
-function animRing() {
-  rx += (mx-rx) * .12; ry += (my-ry) * .12;
-  ring.style.left = rx+'px'; ring.style.top = ry+'px';
-  requestAnimationFrame(animRing);
-}
-animRing();
-document.querySelectorAll('a,button,.sp-tag,.dispatch-card,.mission-card,.side-card,.skill-panel').forEach(el => {
-  el.addEventListener('mouseenter', () => { ring.style.width='44px'; ring.style.height='44px'; ring.style.borderColor='#e8401e'; dot.style.background='#e8401e'; });
-  el.addEventListener('mouseleave', () => { ring.style.width='28px'; ring.style.height='28px'; ring.style.borderColor='#d4a843'; dot.style.background='#d4a843'; });
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
 });
 
-/* ═══ AMBIENT CANVAS ═══ */
-const cvs = document.getElementById('ambient-canvas');
-const ctx = cvs.getContext('2d');
-let W, H, stars=[], embers=[];
-function resize() {
-  W = cvs.width = window.innerWidth;
-  H = cvs.height = window.innerHeight;
-}
-resize(); window.addEventListener('resize', resize);
-for(let i=0;i<200;i++) stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*.8+.2,o:Math.random()*.7+.1,s:Math.random()*.001});
-for(let i=0;i<25;i++) embers.push({x:Math.random()*W,y:Math.random()*H+H,vx:(Math.random()-.5)*.4,vy:-(Math.random()*.8+.2),life:Math.random(),size:Math.random()*2+.5,hue:Math.random()*30+10});
-
-function drawAmbient(t) {
-  ctx.clearRect(0,0,W,H);
-  // Stars
-  stars.forEach(s => {
-    s.o += s.s; if(s.o>0.8||s.o<0.1) s.s*=-1;
-    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(240,232,208,${s.o})`; ctx.fill();
-  });
-  // Fire embers
-  embers.forEach(e => {
-    e.x+=e.vx+(Math.sin(t*.001+e.y)*.2);
-    e.y+=e.vy; e.life-=.003;
-    if(e.life<0||e.y<-20) { e.x=Math.random()*W; e.y=H+20; e.life=Math.random()*0.7+0.3; }
-    ctx.beginPath(); ctx.arc(e.x,e.y,e.size,0,Math.PI*2);
-    ctx.fillStyle=`hsla(${e.hue},90%,65%,${e.life*.3})`; ctx.fill();
-  });
-  requestAnimationFrame(drawAmbient);
-}
-requestAnimationFrame(drawAmbient);
-
-/* ═══ SAKURA PETALS ═══ */
-const scene3d = document.getElementById('scene3d');
-for(let i=0;i<25;i++) {
-  const p = document.createElement('div');
-  p.className='petal';
-  p.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*-20}%;animation-duration:${Math.random()*10+8}s;animation-delay:${Math.random()*10}s;transform:rotate(${Math.random()*360}deg);width:${Math.random()*6+3}px;height:${Math.random()*8+4}px;opacity:${Math.random()*.6+.2};background:rgba(${Math.random()>0.5?'255,160,160':'255,200,180'},.6);`;
-  scene3d.appendChild(p);
-}
-
-/* ═══ PARALLAX ═══ */
-let tiltX=0,tiltY=0;
-document.addEventListener('mousemove', e => {
-  tiltX = (e.clientX/window.innerWidth - .5) * 12;
-  tiltY = (e.clientY/window.innerHeight - .5) * 6;
-});
-function applyParallax() {
-  const s = document.getElementById('scene3d');
-  if(s) s.style.transform = `rotateY(${tiltX*.4}deg) rotateX(${-tiltY*.3}deg)`;
-  document.querySelectorAll('.mountain-layer').forEach((el,i) => {
-    const d = (i+1) * 1.5;
-    el.style.transform=`translateX(${tiltX*d}px)`;
-  });
-  requestAnimationFrame(applyParallax);
-}
-applyParallax();
-
-/* ═══ GITHUB ═══ */
-const SKIP = new Set(['Resume-','RudraDudhat2509','OptiQuant','RudraDudhat2509.github.io','momwebsite','iceman']);
-const LC = {'Python':'#3776ab','Jupyter Notebook':'#f37726','JavaScript':'#c47a1a','TypeScript':'#3178c6','HTML':'#b44a18',default:'#d4a843'};
-async function loadGH() {
-  const grid = document.getElementById('gh-grid');
-  try {
-    const res = await fetch('https://api.github.com/users/RudraDudhat2509/repos?sort=updated&per_page=12');
-    if(!res.ok) throw new Error();
-    const repos = await res.json();
-    const list = repos.filter(r => !r.fork && !SKIP.has(r.name));
+/* ═══════════════════════════════════════
+   GITHUB API
+   ═══════════════════════════════════════ */
+const SKIP=new Set(['Resume-','RudraDudhat2509','OptiQuant',"RudraDudhat2509.github.io","momwebsite",'iceman']);
+const LC={'Python':'#3776ab','Jupyter Notebook':'#f37726','JavaScript':'#c47a1a','TypeScript':'#3178c6','HTML':'#b44a18',default:'#c47a1a'};
+async function loadGH(){
+  const grid=document.getElementById('gh-grid');
+  try{
+    const res=await fetch('https://api.github.com/users/RudraDudhat2509/repos?sort=updated&per_page=12');
+    if(!res.ok)throw new Error();
+    const repos=await res.json();
+    const list=repos.filter(r=>!r.fork&&!SKIP.has(r.name));
     if(!list.length){grid.innerHTML='';return;}
-    grid.innerHTML = list.map((r,i) => {
-      const col = LC[r.language]||LC.default;
-      const date = new Date(r.updated_at).toLocaleDateString('en-US',{month:'short',year:'numeric'});
-      const desc = r.description||'Expedition notes not yet filed.';
-      return `<a href="${r.html_url}" target="_blank" class="side-card reveal-el" style="transition-delay:${i*.07}s">
-        <div class="side-lang"><span class="lang-pip" style="background:${col}"></span>${r.language||'Python'}</div>
-        <div class="side-title">${r.name.replace(/-/g,' ')}</div>
-        <p class="side-desc">${desc}</p>
-        <div class="side-meta">${r.stargazers_count} stars · ${date}</div>
+    grid.innerHTML=list.map((r,i)=>{
+      const col=LC[r.language]||LC.default;
+      const date=new Date(r.updated_at).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+      const desc=r.description||'Expedition notes not yet filed.';
+      return `<a href="${r.html_url}" target="_blank" class="proj-card reveal" style="transition-delay:${i*.07}s">
+        <div class="proj-tech" style="display:flex;align-items:center;gap:.4rem;margin-bottom:.65rem">
+          <span class="lang-dot" style="background:${col}"></span>${r.language||'Python'}
+        </div>
+        <div class="proj-name">${r.name.replace(/-/g,' ')}</div>
+        <p class="proj-desc">${desc}</p>
+        <div class="proj-meta">${r.stargazers_count} stars &nbsp;&middot;&nbsp; ${date}</div>
       </a>`;
     }).join('');
-    grid.querySelectorAll('.reveal-el').forEach(el=>obs.observe(el));
-  } catch(e) {
-    grid.innerHTML=`<div class="gh-loading-new" style="animation:none;opacity:.3">Could not reach GitHub — <a href="https://github.com/RudraDudhat2509" style="color:var(--gold)">visit profile</a></div>`;
+    grid.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  }catch(e){
+    grid.innerHTML=`<div class="gh-loading" style="animation:none;opacity:.35">Could not reach GitHub &mdash; <a href="https://github.com/RudraDudhat2509" style="color:var(--amber);text-decoration:none">visit profile</a></div>`;
   }
 }
 
-/* ═══ REVEAL / TIMELINE ═══ */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('in-view');obs.unobserve(e.target);} });
-}, {threshold:.08});
-document.querySelectorAll('.reveal-el').forEach(el=>obs.observe(el));
-
-const tlObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting) {
-      const idx = Array.from(e.target.parentNode.children).indexOf(e.target);
-      setTimeout(()=>e.target.classList.add('in-view'), idx*160);
+/* ═══════════════════════════════════════
+   REVEAL / TIMELINE
+   ═══════════════════════════════════════ */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const tlObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const idx=Array.from(e.target.parentNode.children).indexOf(e.target);
+      setTimeout(()=>e.target.classList.add('visible'),idx*160);
       tlObs.unobserve(e.target);
     }
   });
 },{threshold:.1});
-document.querySelectorAll('.tl-entry').forEach(el=>tlObs.observe(el));
+document.querySelectorAll('.tl-item').forEach(el=>tlObs.observe(el));
 
-/* ═══ DEBRIEF DATA ═══ */
-const debriefData = {
-  cascade:{stamp:'Live — Firebase Deployed',title:'Cascade AI',sub:'Multi-Agent Intelligence Platform',tech:'Python / OpenAI API / LangChain / Firebase Cloud Functions / Firestore / GCS / Node.js',phases:[
-    {label:'Problem',heading:'The Gap No One Talks About',text:'Most "AI assistants" are a single LLM call dressed up with a nice UI. The real challenge is orchestrating multiple specialized agents — each with its own scope, error conditions, and memory — without the whole thing falling apart when one agent returns an unexpected format.'},
-    {label:'Architecture',heading:'The Orchestration Engine',text:'The core is an LLM planner that reads a user\'s plain-text request and generates a multi-step execution blueprint: which agents to call, in what order, with what inputs. Firebase Cloud Functions execute each agent as an isolated serverless unit. When an agent fails or returns a malformed index, a router layer with conditional branching automatically corrects course.'},
-    {label:'Memory',heading:'Per-User Private Context',text:'Each user gets an isolated memory layer in Firestore. Large payloads — scraped pages, processed documents — are offloaded to GCS with references stored in Firestore. This keeps the real-time DB fast while enabling genuinely stateful multi-session interactions. Firebase Auth gates everything.'},
-    {label:'Output',heading:'Formatters & Delivery',text:'The final stage is a formatter agent that takes the pipeline output and reshapes it for the target channel: Slack blocks, PDF generation, or plain email. This separation means the orchestration core is channel-agnostic — adding a new output format is a one-agent change.'}
-  ],metrics:null,links:[]},
-  optiquant:{stamp:'AWS EC2 — Live Deployment',title:'OptiQuant',sub:'Full-Stack ML Application — AI-Powered Alpha Signals',tech:'Python / LightGBM / CatBoost / Random Forest / SHAP / Streamlit / Docker / AWS EC2 / GitHub Actions',phases:[
-    {label:'Problem',heading:'Why Most Quant Backtests Are Fiction',text:'Standard backtesting evaluates a strategy on the same data used to tune it. Lookahead bias creeps in through feature calculation windows. The result is a strategy that performs brilliantly on historical data and fails immediately in production. OptiQuant was built to avoid this from day one.'},
-    {label:'Data',heading:'Feature Engineering Without Lookahead',text:'Every feature — momentum, volatility bands, RSI, risk-adjusted metrics — is calculated using only data available at the prediction timestamp. The walk-forward validation loop retrains the model on an expanding window and evaluates on the unseen next period, simulating real production retraining cycles.'},
-    {label:'Model',heading:'Ensemble Architecture & Signal Refinement',text:'Three models (LightGBM, CatBoost, Random Forest) are trained independently and combined via a weighted average. The raw ensemble output is then normalized for volatility and smoothed to produce a final daily alpha signal. Stocks are ranked by this signal — the top percentile becomes the strategy\'s portfolio for that day.'},
-    {label:'Deploy',heading:'Docker + CI/CD + SHAP in the UI',text:'The entire application runs in a Docker container deployed to AWS EC2 via GitHub Actions. Every push to main triggers a rebuild and redeploy. SHAP values are computed on-demand in the Streamlit UI, making every prediction inspectable — users can see exactly which features drove a particular signal.'}
-  ],
-  metrics:[{val:'28.16%',label:'CAGR'},{val:'1.05',label:'Sharpe'},{val:'1.41',label:'Calmar'},{val:'-20%',label:'Max DD'},{val:'53.92%',label:'Win Rate'}],
-  links:[{text:'GitHub →',url:'https://github.com/RudraDudhat2509/OptiQuant'},{text:'Live Demo →',url:'http://13.61.176.157:8501'}]}
+
+
+/* ═══════════════════════════════════════
+   FEATURE 7 — EXPEDITION DEBRIEF DATA
+   ═══════════════════════════════════════ */
+const debriefData={
+  cascade:{
+    stamp:'Live — Firebase Deployed',
+    title:'Cascade AI',
+    subtitle:'Multi-Agent Intelligence Platform',
+    tech:'Python / OpenAI API / LangChain / Firebase Cloud Functions / Firestore / GCS / Node.js',
+    phases:[
+      {label:'Problem',heading:'The Gap No One Talks About',text:'Most "AI assistants" are a single LLM call dressed up with a nice UI. The real challenge is orchestrating multiple specialized agents — each with its own scope, error conditions, and memory — without the whole thing falling apart when one agent returns an unexpected format.'},
+      {label:'Architecture',heading:'The Orchestration Engine',text:'The core is an LLM planner that reads a user\'s plain-text request and generates a multi-step execution blueprint: which agents to call, in what order, with what inputs. Firebase Cloud Functions execute each agent as an isolated serverless unit. When an agent fails or returns a malformed index, a router layer with conditional branching automatically corrects course.'},
+      {label:'Memory',heading:'Per-User Private Context',text:'Each user gets an isolated memory layer in Firestore. Large payloads — scraped pages, processed documents — are offloaded to GCS with references stored in Firestore. This keeps the real-time DB fast while enabling genuinely stateful multi-session interactions. Firebase Auth gates everything.'},
+      {label:'Output',heading:'Formatters & Delivery',text:'The final stage is a formatter agent that takes the pipeline output and reshapes it for the target channel: Slack blocks, PDF generation, or plain email. This separation means the orchestration core is channel-agnostic — adding a new output format is a one-agent change.'}
+    ],
+    metrics:null,
+    links:[]
+  },
+  optiquant:{
+    stamp:'AWS EC2 — Live Deployment',
+    title:'OptiQuant',
+    subtitle:'Full-Stack ML Application — AI-Powered Alpha Signals',
+    tech:'Python / LightGBM / CatBoost / Random Forest / SHAP / Streamlit / Docker / AWS EC2 / GitHub Actions',
+    phases:[
+      {label:'Problem',heading:'Why Most Quant Backtests Are Fiction',text:'Standard backtesting evaluates a strategy on the same data used to tune it. Lookahead bias creeps in through feature calculation windows. The result is a strategy that performs brilliantly on historical data and fails immediately in production. OptiQuant was built to avoid this from day one.'},
+      {label:'Data',heading:'Feature Engineering Without Lookahead',text:'Every feature — momentum, volatility bands, RSI, risk-adjusted metrics — is calculated using only data available at the prediction timestamp. The walk-forward validation loop retrains the model on an expanding window and evaluates on the unseen next period, simulating real production retraining cycles.'},
+      {label:'Model',heading:'Ensemble Architecture & Signal Refinement',text:'Three models (LightGBM, CatBoost, Random Forest) are trained independently and combined via a weighted average. The raw ensemble output is then normalized for volatility and smoothed to produce a final daily alpha signal. Stocks are ranked by this signal — the top percentile becomes the strategy\'s portfolio for that day.'},
+      {label:'Deployment',heading:'Docker + CI/CD + SHAP in the UI',text:'The entire application runs in a Docker container deployed to AWS EC2 via GitHub Actions. Every push to main triggers a rebuild and redeploy. SHAP values are computed on-demand in the Streamlit UI, making every prediction inspectable — users can see exactly which features drove a particular signal.'}
+    ],
+    metrics:[
+      {val:'28.16%',label:'CAGR'},
+      {val:'1.05',label:'Sharpe Ratio'},
+      {val:'1.41',label:'Calmar Ratio'},
+      {val:'-20%',label:'Max Drawdown'},
+      {val:'53.92%',label:'Win Rate'},
+    ],
+    links:[
+      {text:'View on GitHub →',url:'https://github.com/RudraDudhat2509/OptiQuant'},
+      {text:'Live Demo →',url:'http://13.61.176.157:8501'}
+    ]
+  }
 };
 
-function openDebrief(id) {
-  const d = debriefData[id]; if(!d) return;
-  let html = `<div class="dm-status">${d.stamp}</div><div class="dm-title">${d.title}</div><div class="dm-sub">${d.sub}</div><div class="dm-stack">${d.tech}</div><div class="dm-phases">`;
-  html += d.phases.map(p=>`<div class="dm-phase"><div class="dp-label">${p.label}</div><div class="dp-content"><div class="dp-heading">${p.heading}</div><p class="dp-text">${p.text}</p></div></div>`).join('');
-  html += '</div>';
-  if(d.metrics) html += `<div class="dm-metrics">${d.metrics.map(m=>`<div class="dm-stat"><span class="dm-stat-val">${m.val}</span><span class="dm-stat-label">${m.label}</span></div>`).join('')}</div>`;
-  if(d.links&&d.links.length) html += `<div class="dm-links">${d.links.map(l=>`<a href="${l.url}" target="_blank" class="mission-link">${l.text}</a>`).join('')}</div>`;
-  document.getElementById('debrief-content').innerHTML = html;
+function openDebrief(id){
+  const d=debriefData[id];
+  if(!d)return;
+  let html=`
+    <div class="debrief-stamp">${d.stamp}</div>
+    <div class="debrief-title">${d.title}</div>
+    <div class="debrief-tech" style="margin-bottom:.4rem">${d.subtitle}</div>
+    <div class="debrief-tech">${d.tech}</div>
+    <div class="debrief-phases">
+      ${d.phases.map(p=>`
+        <div class="debrief-phase">
+          <div class="phase-label">${p.label}</div>
+          <div class="phase-content">
+            <div class="phase-heading">${p.heading}</div>
+            <p class="phase-text">${p.text}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  if(d.metrics){
+    html+=`<div class="debrief-metrics">${d.metrics.map(m=>`<div class="dm-item"><span class="dm-val">${m.val}</span><span class="dm-label">${m.label}</span></div>`).join('')}</div>`;
+  }
+  if(d.links&&d.links.length){
+    html+=`<div class="debrief-links">${d.links.map(l=>`<a href="${l.url}" target="_blank" class="proj-link">${l.text}</a>`).join('')}</div>`;
+  }
+  document.getElementById('debrief-content').innerHTML=html;
   document.getElementById('debrief-overlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeDebrief() { document.getElementById('debrief-overlay').classList.remove('open'); document.body.style.overflow=''; }
-function closeDebriefOnBg(e) { if(e.target===document.getElementById('debrief-overlay')) closeDebrief(); }
+function closeDebrief(){
+  document.getElementById('debrief-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeDebriefOnBg(e){
+  if(e.target===document.getElementById('debrief-overlay'))closeDebrief();
+}
 
-/* ═══ LOG ARTICLES ═══ */
-const logArticles = {
-  shap:{tag:'LLM Engineering',date:'February 2026',title:'Why SHAP Can Quietly Lie to You in a Drifting System',subtitle:'Model explainability tools build trust. A drifting model with confident SHAP outputs destroys it — silently.',body:`<p>Model drift is insidious because it doesn't announce itself. Your accuracy metric drifts down slowly enough that no alarm fires. Your monitoring dashboard still shows reasonable loss curves. And then there's SHAP — faithfully reporting which features drove each prediction, attributing scores with the precision of a court document — while the model itself is operating on a distribution it has never seen.</p><div class="lr-pull">SHAP tells you what the model is doing. It says nothing about whether what the model is doing is correct.</div><h2 class="lr-h2">The Core Problem: Faithful to the Wrong Model</h2><p>SHAP is a <em>local explainability method</em>. It approximates, for a given input, how much each feature contributed to the model's output relative to a baseline. This is genuinely useful — it lets you verify that the model is using the right signals, and it catches obvious failure modes like a credit model weighting zip code too heavily.</p><p>But SHAP is faithful to the model, not to reality. If your input distribution has shifted — new seasonality patterns, a macro regime change, a product pivot that changed user behaviour — the model may be confidently wrong, and SHAP will confidently explain those wrong predictions using whatever the current feature values are.</p><h2 class="lr-h2">What I Saw Building OptiQuant</h2><p>OptiQuant uses SHAP attributions surfaced directly in the Streamlit UI. During testing, I deliberately evaluated the model on a data window it wasn't trained on — a six-month period with significantly different market volatility. The model's Sharpe ratio dropped. But the SHAP outputs remained high-confidence: momentum and RSI were still flagged as primary drivers, the attributions looked plausible, and nothing in the visualisation screamed "something is wrong."</p><p>The only signal that something was off came from the walk-forward validation loss curves — not SHAP. This is the gap that matters: <em>SHAP explains predictions, it doesn't validate them.</em></p><h2 class="lr-h2">What to Actually Monitor</h2><p>Pair SHAP with distribution drift monitoring. Track the input feature distributions (mean, variance, KL-divergence from training distribution) on a sliding window. When those drift beyond a threshold, treat all SHAP outputs as suspect until the model is retrained. Build both, or build neither.</p>`},
-  firebase:{tag:'MLOps',date:'January 2026',title:'From Notebook to Firebase: What Actually Changes',subtitle:'The real curriculum of shipping Cascade AI — everything the tutorials skip.',body:`<p>The gap between a working notebook and a production system is not a technical gap. It is a <em>thinking</em> gap. A notebook is a linear script that assumes cooperative inputs, infinite patience, and a human operator on standby. A production system assumes hostile inputs, concurrent users, intermittent failures, and zero human intervention at 3am.</p><div class="lr-pull">The notebook works. The deployment is where you find out what the notebook was hiding.</div><h2 class="lr-h2">What the Notebook Doesn't Model</h2><p>When I started building Cascade AI, the notebook version of the multi-agent pipeline worked beautifully. Agents called each other in sequence, the LLM planner generated clean JSON blueprints, and the output formatters produced exactly what I wanted. Then I tried to deploy it to Firebase Cloud Functions.</p><p>Three things broke immediately. First: cold start latency. Second: JSON parsing failures from LLM outputs that occasionally included markdown fences or trailing commas. Third: memory — passing large scraped page content between agents as function arguments blew through the payload limits.</p><h2 class="lr-h2">The Fixes Are Architecture</h2><p>Cold start: keep functions warm with scheduled ping calls and minimize import load. JSON failures: never trust raw LLM output — always parse defensively with a validation layer that retries with an explicit "return only valid JSON" system prompt if the first parse fails. Memory: offload large payloads to GCS immediately after generation, pass only GCS references between agents.</p><p>None of these are hard problems. But none of them exist in the notebook. The notebook is a proof of concept; the deployment is the actual engineering.</p>`},
-  walkforward:{tag:'Quant / ML',date:'December 2025',title:'Walk-Forward Validation: Why Backtesting Usually Lies',subtitle:'How I built an honest evaluation loop for OptiQuant — and what most tutorials get wrong.',body:`<p>Every quant strategy looks profitable on historical data. This is not because quants are smart. It is because standard backtesting is, structurally, a form of cheating. You tune hyperparameters on data, then evaluate on the same data. You calculate features using future values that wouldn't have been available at prediction time.</p><div class="lr-pull">A strategy that can't survive an honest walk-forward test doesn't survive live trading. The data just hasn't had a chance to tell you yet.</div><h2 class="lr-h2">What Walk-Forward Actually Means</h2><p>Walk-forward validation simulates real production use. You start with an initial training window — say, the first 200 days of data. You train the model, generate predictions for day 201, record the result, then expand the training window to include day 201 and repeat. The model never sees the data it's predicting on during training.</p><p>In OptiQuant, I implemented this as an expanding window loop. Each iteration retrains the full ensemble on all data up to the prediction date, generates signals for the next trading day, records the portfolio return, then advances. The reported metrics are all calculated on these out-of-sample predictions.</p><h2 class="lr-h2">The Lookahead Bias Traps</h2><p>Even with a proper walk-forward loop, lookahead bias hides in the feature engineering. If you normalize features using statistics calculated over the entire dataset, you're leaking future information into past predictions. Every normalization, every scaling, every rolling statistic must be calculated using only past data at the prediction timestamp. Apply this test to every feature, every transformation, every preprocessing step. It is tedious. It is the work.</p>`}
+/* ═══════════════════════════════════════
+   FEATURE 3 — LOG ARTICLES
+   ═══════════════════════════════════════ */
+const logArticles={
+  shap:{
+    tag:'LLM Engineering',
+    date:'February 2026',
+    title:'Why SHAP Can Quietly Lie to You in a Drifting System',
+    subtitle:'Model explainability tools build trust. A drifting model with confident SHAP outputs destroys it — silently.',
+    body:`
+      <p>Model drift is insidious because it doesn't announce itself. Your accuracy metric drifts down slowly enough that no alarm fires. Your monitoring dashboard still shows reasonable loss curves. And then there's SHAP — faithfully reporting which features drove each prediction, attributing scores with the precision of a court document — while the model itself is operating on a distribution it has never seen.</p>
+      <div class="log-reader-pull">SHAP tells you what the model is doing. It says nothing about whether what the model is doing is correct.</div>
+      <h2 class="log-reader-h2">The Core Problem: Faithful to the Wrong Model</h2>
+      <p>SHAP is a <em>local explainability method</em>. It approximates, for a given input, how much each feature contributed to the model's output relative to a baseline. This is genuinely useful — it lets you verify that the model is using the right signals, and it catches obvious failure modes like a credit model weighting zip code too heavily.</p>
+      <p>But SHAP is faithful to the model, not to reality. If your input distribution has shifted — new seasonality patterns, a macro regime change, a product pivot that changed user behaviour — the model may be confidently wrong, and SHAP will confidently explain those wrong predictions using whatever the current feature values are.</p>
+      <h2 class="log-reader-h2">What I Saw Building OptiQuant</h2>
+      <p>OptiQuant uses SHAP attributions surfaced directly in the Streamlit UI. During testing, I deliberately evaluated the model on a data window it wasn't trained on — a six-month period with significantly different market volatility. The model's Sharpe ratio dropped. But the SHAP outputs remained high-confidence: momentum and RSI were still flagged as primary drivers, the attributions looked plausible, and nothing in the visualisation screamed "something is wrong."</p>
+      <p>The only signal that something was off came from the walk-forward validation loss curves — not SHAP. This is the gap that matters: <em>SHAP explains predictions, it doesn't validate them.</em></p>
+      <h2 class="log-reader-h2">What to Actually Monitor</h2>
+      <p>Pair SHAP with distribution drift monitoring. Track the input feature distributions (mean, variance, KL-divergence from training distribution) on a sliding window. When those drift beyond a threshold, treat all SHAP outputs as suspect until the model is retrained. The workflow I'd recommend: run distribution checks first, gate SHAP display behind a "drift status: stable" indicator, and log both sets of outputs together so they can be correlated in post-mortems.</p>
+      <p>Explainability without stability monitoring is a confidence trick. Build both, or build neither.</p>
+    `
+  },
+  firebase:{
+    tag:'MLOps',
+    date:'January 2026',
+    title:'From Notebook to Firebase: What Actually Changes',
+    subtitle:'The real curriculum of shipping Cascade AI — everything the tutorials skip.',
+    body:`
+      <p>The gap between a working notebook and a production system is not a technical gap. It is a <em>thinking</em> gap. A notebook is a linear script that assumes cooperative inputs, infinite patience, and a human operator on standby. A production system assumes hostile inputs, concurrent users, intermittent failures, and zero human intervention at 3am.</p>
+      <div class="log-reader-pull">The notebook works. The deployment is where you find out what the notebook was hiding.</div>
+      <h2 class="log-reader-h2">What the Notebook Doesn't Model</h2>
+      <p>When I started building Cascade AI, the notebook version of the multi-agent pipeline worked beautifully. Agents called each other in sequence, the LLM planner generated clean JSON blueprints, and the output formatters produced exactly what I wanted. Then I tried to deploy it to Firebase Cloud Functions.</p>
+      <p>Three things broke immediately. First: cold start latency. Firebase functions spin down between calls — a 2-3 second cold start on an LLM call that already takes 4-6 seconds is unacceptable UX. Second: JSON parsing failures from LLM outputs that occasionally included markdown fences or trailing commas. In a notebook you notice and fix it manually. In production, it crashes the pipeline and the user gets a 500. Third: memory. Passing large scraped page content between agents as function arguments blew through the payload limits.</p>
+      <h2 class="log-reader-h2">The Fixes Are Architecture</h2>
+      <p>Cold start: keep functions warm with scheduled ping calls and minimize import load. JSON failures: never trust raw LLM output — always parse defensively with a validation layer that retries with an explicit "return only valid JSON" system prompt if the first parse fails. Memory: offload large payloads to GCS immediately after generation, pass only GCS references between agents, reconstruct at the point of consumption.</p>
+      <p>None of these are hard problems. But none of them exist in the notebook. The notebook is a proof of concept; the deployment is the actual engineering. Every production system you've ever used has solved these problems invisibly, which is why the notebook feels complete and the deployment feels broken. It isn't broken — it's just honest.</p>
+      <h2 class="log-reader-h2">What I'd Tell Myself Earlier</h2>
+      <p>Design for failure before you design for features. Assume every external call fails half the time. Assume every LLM output is malformed until proven otherwise. Write your retry logic before your happy path. The notebooks will always work — make the deployments work too.</p>
+    `
+  },
+  walkforward:{
+    tag:'Quant / ML',
+    date:'December 2025',
+    title:'Walk-Forward Validation: Why Backtesting Usually Lies',
+    subtitle:'How I built an honest evaluation loop for OptiQuant — and what most tutorials get wrong.',
+    body:`
+      <p>Every quant strategy looks profitable on historical data. This is not because quants are smart. It is because standard backtesting is, structurally, a form of cheating. You tune hyperparameters on data, then evaluate on the same data. You calculate features using future values that wouldn't have been available at prediction time. You optimize a strategy's parameters against the full historical period, then report performance on that same period as if it's out-of-sample.</p>
+      <div class="log-reader-pull">A strategy that can't survive an honest walk-forward test doesn't survive live trading. The data just hasn't had a chance to tell you yet.</div>
+      <h2 class="log-reader-h2">What Walk-Forward Actually Means</h2>
+      <p>Walk-forward validation simulates real production use. You start with an initial training window — say, the first 200 days of data. You train the model, generate predictions for day 201, record the result, then expand the training window to include day 201 and repeat. The model never sees the data it's predicting on during training.</p>
+      <p>In OptiQuant, I implemented this as an expanding window loop. Each iteration retrains the full ensemble (LightGBM, CatBoost, Random Forest) on all data up to the prediction date, generates signals for the next trading day, records the portfolio return, then advances. The reported metrics — 161% return, 2.73 Sharpe, 64% win rate over 272 days — are all calculated on these out-of-sample predictions, not on training data.</p>
+      <h2 class="log-reader-h2">The Lookahead Bias Traps</h2>
+      <p>Even with a proper walk-forward loop, lookahead bias hides in the feature engineering. If you calculate a 50-day rolling mean at time T, you're using data from T-49 to T. That's fine. But if you normalize features using statistics calculated over the entire dataset, you're leaking future information into past predictions. Every normalization, every scaling, every rolling statistic must be calculated using only past data at the prediction timestamp.</p>
+      <p>The test I use: if you could have computed this feature value at prediction time using only data available up to that moment, it's clean. If you need future data to compute it, it's contaminated. Apply this test to every feature, every transformation, every preprocessing step. It is tedious. It is the work.</p>
+    `
+  }
 };
 
-function openLog(id) {
-  const a = logArticles[id]; if(!a) return;
-  document.getElementById('log-reader-body').innerHTML = `<div class="lr-tag">${a.tag}</div><div class="lr-date">${a.date}</div><div class="lr-title">${a.title}</div><div class="lr-subtitle">${a.subtitle}</div><div class="lr-content">${a.body}</div>`;
+function openLog(id){
+  const a=logArticles[id];
+  if(!a)return;
+  document.getElementById('log-reader-body').innerHTML=`
+    <div class="log-reader-tag">${a.tag}</div>
+    <div class="log-reader-date">${a.date}</div>
+    <div class="log-reader-title">${a.title}</div>
+    <div class="log-reader-subtitle">${a.subtitle}</div>
+    <div class="log-reader-content">${a.body}</div>
+  `;
   document.getElementById('log-reader').classList.add('open');
   document.getElementById('log-reader').scrollTop=0;
   document.body.style.overflow='hidden';
 }
-function closeLog() { document.getElementById('log-reader').classList.remove('open'); document.body.style.overflow=''; }
-document.addEventListener('keydown', e => { if(e.key==='Escape'){closeDebrief();closeLog();} });
+function closeLog(){
+  document.getElementById('log-reader').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeDebrief();closeLog();}
+});
 
 loadGH();
 </script>
