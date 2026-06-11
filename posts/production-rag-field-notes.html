@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Production RAG, the field notes · Rudra Dudhat</title>
+<meta name="description" content="Everything I know about shipping RAG that survives real users: chunking, hybrid retrieval, reranking, RAGAS, and the security holes nobody talks about."/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script data-goatcounter="https://rudra.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+:root{
+  --bg:#F7F1E5; --paper:#FDFAF2;
+  --ink:#1C1812; --ink2:#594E3B; --muted:#8A7A5C;
+  --line:#E2D7BE; --line2:#D4C7A6;
+  --terra:#B5532F; --olive:#3F5A36;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;}
+::selection{background:var(--terra);color:var(--paper);}
+a{color:inherit;}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,241,229,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-in{max-width:720px;margin:0 auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;}
+.nav-name{font-family:var(--serif);font-weight:600;font-size:22px;text-decoration:none;}
+.nav-name span{color:var(--terra);}
+.back{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);text-decoration:none;}
+.back:hover{color:var(--terra);}
+header.post{padding:170px 0 40px;}
+header.post h1{font-family:var(--serif);font-weight:450;font-size:clamp(34px,5vw,52px);letter-spacing:-.015em;line-height:1.1;margin:16px 0 18px;}
+.meta{display:flex;gap:18px;}
+article{padding:14px 0 90px;}
+article p{font-size:17px;line-height:1.8;color:var(--ink2);margin-bottom:22px;}
+article p strong{color:var(--ink);}
+article h2{font-family:var(--serif);font-weight:550;font-size:28px;margin:44px 0 16px;letter-spacing:-.01em;}
+article h3{font-weight:700;font-size:19px;margin:34px 0 12px;}
+article ul,article ol{margin:0 0 22px 22px;color:var(--ink2);font-size:17px;line-height:1.8;}
+article li{margin-bottom:8px;}
+article blockquote{border-left:3px solid var(--terra);padding:6px 0 6px 22px;margin:0 0 22px;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink);}
+article code{font-family:var(--mono);font-size:14.5px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:2px 7px;}
+article pre{background:#1C1812;color:#F7F1E5;border-radius:12px;padding:22px 26px;overflow-x:auto;margin-bottom:22px;}
+article pre code{background:none;border:none;color:inherit;font-size:13.5px;line-height:1.7;padding:0;}
+.endmark{font-family:var(--serif);font-style:italic;color:var(--muted);margin-top:40px;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+footer .wrap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);}
+footer a{text-decoration:none;}
+footer a:hover{color:var(--terra);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="nav-name" href="../index.html">Rudra Dudhat<span>.</span></a>
+    <a class="back" href="../blog.html">← All posts</a>
+  </div>
+</nav>
+
+<header class="post">
+  <div class="wrap">
+    <div class="meta"><span class="label">PRODUCTION AI</span><span class="label">JUN 2026 · 9 MIN READ</span></div>
+    <h1>Production RAG, the field notes</h1>
+    <p style="font-size:18px;color:var(--ink2);">A RAG demo takes an afternoon. A RAG system that survives real users takes everything below. These are my working notes, kept while building and debugging retrieval pipelines, published as-is because I keep re-explaining them.</p>
+  </div>
+</header>
+
+<article>
+  <div class="wrap">
+
+    <h2>Chunking: where most pipelines quietly die</h2>
+    <p>Chunking is how you split documents before embedding, and it decides your ceiling: <strong>bad chunks mean bad retrieval regardless of which model you throw at it.</strong> The options, in the order I reach for them:</p>
+    <ul>
+      <li><strong>Recursive character</strong> splitting (paragraph → line → sentence → word) is the default for most systems.</li>
+      <li><strong>Fixed-size</strong> (every N tokens) is fast and structure-blind. Fine for logs and CSVs.</li>
+      <li><strong>Semantic</strong> chunking embeds sentences and splits where similarity drops. Best quality, expensive. Worth it for research papers and legal docs.</li>
+      <li><strong>Late chunking</strong> embeds the full document first, then pools per chunk. It solves pronoun resolution, where "it" in chunk 12 refers to something defined in chunk 3.</li>
+    </ul>
+    <p>Two rules that are non-negotiable in production: always keep <strong>50 to 100 tokens of overlap</strong> so answers don't get split across chunk boundaries, and always store <strong>metadata</strong> (source, page, section) on every chunk. The metadata feels optional until the first time you have to debug why retrieval returned garbage.</p>
+
+    <h2>Embeddings: treat the model like a database schema</h2>
+    <p>The decision tree is shorter than the blog posts make it look. Multilingual corpus → BGE-M3 locally. Private data that can't leave your servers → local. Past roughly 4B tokens a month, local wins on cost anyway. Otherwise <code>text-embedding-3-small</code> is fine for fast iteration.</p>
+    <p>The part everyone learns the hard way: <strong>changing your embedding model means re-embedding the entire corpus.</strong> Treat it like a database schema migration, because that's what it is. And set <code>normalize_embeddings=True</code>, or your cosine similarity is quietly wrong.</p>
+
+    <h2>Retrieval: hybrid or you will get paged</h2>
+    <p>Dense vector search is semantic: it finds meaning, and it misses exact strings. Sparse search (BM25) is the opposite: it nails <code>LangfuseError 401</code> and product names, and misses synonyms. Each one fails on exactly the queries the other one handles.</p>
+    <p>So production retrieval is <strong>both, merged with reciprocal rank fusion</strong>. RRF works on ranks, not scores: <code>1/(rank_dense+60) + 1/(rank_sparse+60)</code>. On top of that base, the upgrades that have actually earned their complexity:</p>
+    <ul>
+      <li><strong>Metadata pre-filtering</strong>: filter by version, product, or date <em>before</em> the vector search, never after.</li>
+      <li><strong>Multi-query</strong>: three phrasings of the user's question, results unioned, run in parallel.</li>
+      <li><strong>HyDE</strong>: generate a fake answer, embed that, search with it. Fake answers look more like real documents than questions do.</li>
+      <li><strong>Small-to-big</strong>: index small child chunks for precision, hand the larger parent chunk to the LLM for context.</li>
+      <li><strong>Contextual retrieval</strong>: prepend LLM-generated context to each chunk before embedding. Expensive at index time, but the recall gains are real.</li>
+    </ul>
+
+    <h2>Reranking: retrieve wide, then get picky</h2>
+    <p>Your embedding model encodes documents without ever seeing the query. A cross-encoder reranker concatenates query and document and runs full attention across both, which makes it accurate and slow. The production pattern:</p>
+    <blockquote>Retrieve top-50 fast, rerank, return top-5. Never retrieve only 5: if the correct document is at rank 6, it's gone forever.</blockquote>
+    <pre><code>from sentence_transformers import CrossEncoder
+
+reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+scores = reranker.predict([[query, doc] for doc in candidates])</code></pre>
+    <p>Reranking costs 200 to 500ms. Cache results in Redis, since the same query produces the same ranking. And be honest with yourself: if retrieval quality is bad enough, no reranker is rescuing it.</p>
+
+    <h2>Evaluation: RAGAS, read in causal order</h2>
+    <p>Four metrics, and the order matters because you fix root causes, not symptoms:</p>
+    <ul>
+      <li><strong>Context recall</strong>: did retrieval find the needed chunks? This is the dangerous one.</li>
+      <li><strong>Context precision</strong>: of what was retrieved, how much was relevant? Low means noisy retrieval: add a reranker or metadata filters.</li>
+      <li><strong>Faithfulness</strong>: are the answer's claims supported by the context? High means no hallucination. It does <em>not</em> mean the answer is correct.</li>
+      <li><strong>Answer relevancy</strong>: does the answer actually address the question?</li>
+    </ul>
+    <blockquote>Low recall means missing information, and the LLM must hallucinate to fill the gap. That is the primary RAG failure mode in production.</blockquote>
+    <p>The mental model I use: precision asks "is my bag full of junk?", recall asks "did I miss anything?". Raising top_k buys recall and costs precision, which is exactly why the reranker exists. One more rule: if you generate with one model, judge with a different one. No self-scoring.</p>
+
+    <h2>Security: the part everyone ships without</h2>
+    <p>Three attacks I check for in any RAG system that takes user content:</p>
+    <ul>
+      <li><strong>Indirect prompt injection</strong>: the user's query is innocent, but a retrieved document contains instructions and the LLM follows them. Scan at index time <em>and</em> retrieval time, wrap retrieved content in XML tags, and escape angle brackets from untrusted content so nobody closes your tags for you.</li>
+      <li><strong>Data exfiltration</strong>: access control belongs at the vector DB query level, not the application level. Unauthorized chunks must be invisible to search, not discarded after retrieval.</li>
+      <li><strong>Context flooding</strong>: one oversized document fills the context window and evicts your system prompt. Hard-cap chunk size and total retrieved context.</li>
+    </ul>
+    <p>If retrieved content can trigger tool calls, the stakes change completely: that's retrieved text causing real-world actions. Privilege separation helps (a read-only analysis pass, then a decision pass that never sees raw chunks), and anything high-stakes like payments or deletes gets a human in the loop. Trust tiers for sources: internal &gt; verified &gt; external &gt; user uploads.</p>
+
+    <h2>The whole pipeline, one line</h2>
+    <pre><code>query → multi-query (3 variants) + HyDE
+      → metadata pre-filter
+      → parallel dense + sparse
+      → weighted RRF (top-20)
+      → cross-encoder rerank
+      → small-to-big expansion
+      → LLM</code></pre>
+    <p>That's the system I'd defend in a design review. Every stage exists because removing it produces a failure I've either hit or read a postmortem about.</p>
+
+    <p class="endmark">— Rudra. The raw notes live in <a href="https://github.com/RudraDudhat2509/ai_notes">github.com/RudraDudhat2509/ai_notes</a>, updated as I break more things.</p>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 RUDRA DUDHAT</span>
+    <a href="../blog.html">MORE LORE</a>
+  </div>
+</footer>
+
+</body>
+</html>

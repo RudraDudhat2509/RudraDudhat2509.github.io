@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lore · Rudra Dudhat</title>
+<meta name="description" content="Notes on LLM security, agentic attack surfaces, and whatever else survives the drafts folder."/>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script data-goatcounter="https://rudra.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+:root{
+  --bg:#F7F1E5; --bg2:#F2EAD9; --bg3:#EDE2CB;
+  --paper:#FDFAF2;
+  --ink:#1C1812; --ink2:#594E3B; --muted:#8A7A5C;
+  --line:#E2D7BE; --line2:#D4C7A6;
+  --terra:#B5532F; --olive:#3F5A36; --brass:#C8922F;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+::selection{background:var(--terra);color:var(--paper);}
+a{color:inherit;}
+.wrap{max-width:840px;margin:0 auto;padding:0 28px;}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,241,229,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-in{max-width:840px;margin:0 auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;}
+.nav-name{font-family:var(--serif);font-weight:600;font-size:22px;text-decoration:none;}
+.nav-name span{color:var(--terra);}
+.back{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);text-decoration:none;transition:color .2s;}
+.back:hover{color:var(--terra);}
+
+header.page{padding:170px 0 56px;position:relative;overflow:hidden;}
+.deco{position:absolute;border-radius:50%;pointer-events:none;}
+.deco.ring{border:1.5px solid var(--line2);}
+.deco.dash{border:1.5px dashed var(--line2);animation:spin 90s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.page h1{font-family:var(--serif);font-weight:430;font-size:clamp(40px,6vw,64px);letter-spacing:-.015em;line-height:1.05;margin-bottom:18px;position:relative;}
+.page h1 em{font-style:italic;color:var(--terra);}
+.page p{font-size:17px;color:var(--ink2);max-width:520px;position:relative;}
+
+.posts{padding:24px 0 110px;}
+.post{display:block;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:30px 34px;margin-bottom:16px;text-decoration:none;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s;}
+.post:hover{transform:translateY(-4px);box-shadow:0 16px 38px rgba(60,45,20,.12);}
+.post .meta{display:flex;gap:16px;margin-bottom:10px;}
+.post h2{font-family:var(--serif);font-weight:550;font-size:26px;letter-spacing:-.01em;margin-bottom:8px;}
+.post p{font-size:15px;color:var(--ink2);}
+
+.empty{border:1.5px dashed var(--line2);border-radius:16px;padding:64px 40px;text-align:center;background:transparent;}
+.empty .big{font-family:var(--serif);font-style:italic;font-size:30px;color:var(--ink);margin-bottom:12px;}
+.empty p{font-size:15px;color:var(--muted);max-width:380px;margin:0 auto 22px;}
+.empty .label{display:inline-block;border:1px solid var(--line2);border-radius:100px;padding:7px 16px;background:var(--paper);}
+
+footer{border-top:1px solid var(--line);padding:30px 0;}
+footer .wrap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);}
+footer a{text-decoration:none;}
+footer a:hover{color:var(--terra);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="nav-name" href="index.html">Rudra Dudhat<span>.</span></a>
+    <a class="back" href="index.html">← Back to base</a>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="deco ring" style="width:480px;height:480px;top:-160px;right:-180px;"></div>
+  <div class="deco dash" style="width:340px;height:340px;top:-90px;right:-110px;"></div>
+  <div class="wrap">
+    <span class="label">THE LORE ARCHIVE</span>
+    <h1 style="margin-top:14px;">Notes from the<br/><em>breaking</em> room.</h1>
+    <p>Long-form writing on taking AI to production: case studies, debugging stories, and what actually breaks. Occasionally a take that should have stayed in drafts.</p>
+  </div>
+</header>
+
+<main class="posts">
+  <div class="wrap">
+    <!--
+      POST TEMPLATE: copy, fill, ship.
+      <a class="post" href="posts/slug.html">
+        <div class="meta"><span class="label">LLM SECURITY</span><span class="label">JUN 2026 · 8 MIN</span></div>
+        <h2>Post title here</h2>
+        <p>One-line hook for the post.</p>
+      </a>
+    -->
+    <div id="post-list"></div>
+    <div class="empty" id="empty-state">
+      <div class="big">The first post is being written.</div>
+      <p>It's a production debugging case study, it has a deadline, and the deadline is being treated with the respect deadlines deserve around here.</p>
+      <span class="label">STATUS: DRAFTING · NO. OF REWRITES: CLASSIFIED</span>
+    </div>
+  </div>
+</main>
+
+<script src="posts.js"></script>
+<script>
+(function(){
+  const posts = window.POSTS || [];
+  if(!posts.length) return;
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('post-list').innerHTML = posts.map(p => `
+    <a class="post" href="${p.href}">
+      <div class="meta"><span class="label">${p.tag}</span><span class="label">${p.date} · ${p.minutes} MIN READ</span></div>
+      <h2>${p.title}</h2>
+      <p>${p.hook}</p>
+    </a>`).join('');
+})();
+</script>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 RUDRA DUDHAT</span>
+    <a href="index.html">RUDRADUDHAT2509.GITHUB.IO</a>
+  </div>
+</footer>
+
+</body>
+</html>
