@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lore · Rudra Dudhat</title>
 <meta name="description" content="Notes on LLM security, agentic attack surfaces, and whatever else survives the drafts folder."/>
-<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="icon" type="image/png" sizes="64x64" href="img/monogram-64.png?v=2"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
@@ -30,16 +30,17 @@ a{color:inherit;}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,241,229,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
 .nav-in{max-width:840px;margin:0 auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;}
-.nav-name{font-family:var(--serif);font-weight:600;font-size:22px;text-decoration:none;}
+.nav-name{font-family:var(--serif);font-weight:600;font-size:22px;text-decoration:none;display:flex;align-items:center;gap:11px;}
+.nav-name .mark{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);}
 .nav-name span{color:var(--terra);}
 .back{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);text-decoration:none;transition:color .2s;}
 .back:hover{color:var(--terra);}
 
 header.page{padding:170px 0 56px;position:relative;overflow:hidden;}
 .deco{position:absolute;border-radius:50%;pointer-events:none;}
-.deco.ring{border:1.5px solid var(--line2);}
-.deco.dash{border:1.5px dashed var(--line2);animation:spin 90s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
+.deco.ring{border:1px solid var(--line);opacity:.7;}
+.deco.blob{background:var(--bg3);opacity:.55;animation:drift 18s ease-in-out infinite;}
+@keyframes drift{0%,100%{transform:translateY(0);}50%{transform:translateY(-26px);}}
 .page h1{font-family:var(--serif);font-weight:430;font-size:clamp(40px,6vw,64px);letter-spacing:-.015em;line-height:1.05;margin-bottom:18px;position:relative;}
 .page h1 em{font-style:italic;color:var(--terra);}
 .page p{font-size:17px;color:var(--ink2);max-width:520px;position:relative;}
@@ -66,14 +67,14 @@ footer a:hover{color:var(--terra);}
 
 <nav>
   <div class="nav-in">
-    <a class="nav-name" href="index.html">Rudra Dudhat<span>.</span></a>
-    <a class="back" href="index.html">← Back to base</a>
+    <a class="nav-name" href="index.html"><img class="mark" src="img/monogram-512.png" alt="RD monogram"/>Rudra Dudhat<span>.</span></a>
+    <a class="back" href="notes.html" style="margin-right:22px;">Field notes</a><a class="back" href="index.html">← Back to base</a>
   </div>
 </nav>
 
 <header class="page">
-  <div class="deco ring" style="width:480px;height:480px;top:-160px;right:-180px;"></div>
-  <div class="deco dash" style="width:340px;height:340px;top:-90px;right:-110px;"></div>
+  <div class="deco ring" style="width:520px;height:520px;top:-200px;right:-220px;"></div>
+  <div class="deco blob" style="width:150px;height:150px;top:30%;right:8%;"></div>
   <div class="wrap">
     <span class="label">THE LORE ARCHIVE</span>
     <h1 style="margin-top:14px;">Notes from the<br/><em>breaking</em> room.</h1>

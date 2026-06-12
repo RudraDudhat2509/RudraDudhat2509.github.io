@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Field Notes · Rudra Dudhat</title>
+<meta name="description" content="Live engineering notes on agentic AI, rendered straight from the GitHub repo. New notes appear here the moment they're pushed."/>
+<link rel="icon" type="image/png" sizes="64x64" href="img/monogram-64.png?v=2"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script data-goatcounter="https://rudra.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+:root{
+  --bg:#F7F1E5; --bg2:#F2EAD9; --bg3:#EDE2CB;
+  --paper:#FDFAF2;
+  --ink:#1C1812; --ink2:#594E3B; --muted:#8A7A5C;
+  --line:#E2D7BE; --line2:#D4C7A6;
+  --terra:#B5532F; --olive:#3F5A36; --brass:#C8922F;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+::selection{background:var(--terra);color:var(--paper);}
+a{color:inherit;}
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px;}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,241,229,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-in{max-width:1000px;margin:0 auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;}
+.nav-name{font-family:var(--serif);font-weight:600;font-size:21px;text-decoration:none;display:flex;align-items:center;gap:11px;white-space:nowrap;}
+.nav-name .mark{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);}
+.nav-name span{color:var(--terra);}
+.back{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);text-decoration:none;}
+.back:hover{color:var(--terra);}
+
+header.page{padding:170px 0 50px;position:relative;overflow:hidden;}
+.deco{position:absolute;border-radius:50%;pointer-events:none;}
+.deco.ring{border:1px solid var(--line);opacity:.7;}
+.deco.blob{background:var(--bg3);opacity:.55;animation:drift 18s ease-in-out infinite;}
+@keyframes drift{0%,100%{transform:translateY(0);}50%{transform:translateY(-26px);}}
+.page h1{font-family:var(--serif);font-weight:430;font-size:clamp(40px,6vw,64px);letter-spacing:-.015em;line-height:1.05;margin-bottom:18px;position:relative;}
+.page h1 em{font-style:italic;color:var(--terra);}
+.page p{font-size:17px;color:var(--ink2);max-width:560px;position:relative;}
+.live-pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--olive);border:1px solid var(--line2);background:var(--paper);border-radius:100px;padding:7px 16px;margin-top:20px;}
+.live-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--olive);animation:blink 2.2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+main{padding:30px 0 110px;}
+.note-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;}
+.note-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:28px 30px;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s;position:relative;overflow:hidden;}
+.note-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(to right,var(--terra),var(--brass));opacity:0;transition:opacity .3s;}
+.note-card:hover{transform:translateY(-5px);box-shadow:0 18px 42px rgba(60,45,20,.13);}
+.note-card:hover::before{opacity:1;}
+.note-card .n-tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
+.note-card h3{font-family:var(--serif);font-weight:550;font-size:25px;letter-spacing:-.01em;margin-bottom:14px;}
+.note-card .n-acts{display:flex;gap:12px;flex-wrap:wrap;}
+.note-card button{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--bg2);border:1px solid var(--line);border-radius:100px;padding:8px 16px;color:var(--ink2);cursor:pointer;transition:all .2s;}
+.note-card button:hover{background:var(--terra);border-color:var(--terra);color:var(--paper);}
+#status{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--muted);padding:40px 0;text-align:center;}
+
+/* ---- reader ---- */
+.reader-ov{position:fixed;inset:0;z-index:200;background:rgba(28,24,18,.45);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:38px 20px;overflow-y:auto;}
+.reader-ov.open{display:flex;}
+.reader{background:var(--paper);border:1px solid var(--line2);border-radius:20px;max-width:820px;width:100%;padding:52px 58px;position:relative;animation:rIn .35s cubic-bezier(.22,1,.36,1);margin-bottom:40px;}
+@keyframes rIn{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+.r-close{position:sticky;top:0;float:right;background:var(--bg2);border:1px solid var(--line);border-radius:100px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink2);cursor:pointer;padding:8px 16px;z-index:2;}
+.r-close:hover{color:var(--terra);border-color:var(--terra);}
+.reader .r-meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--terra);text-transform:uppercase;margin-bottom:12px;}
+.reader h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4vw,40px);letter-spacing:-.015em;line-height:1.12;margin-bottom:30px;}
+.reader h2{font-family:var(--serif);font-weight:550;font-size:25px;letter-spacing:-.01em;margin:42px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+.reader p{font-size:15.5px;line-height:1.8;color:var(--ink2);margin-bottom:16px;}
+.reader pre{background:#211B12;color:#F1E8D6;border-radius:12px;padding:20px 24px;overflow-x:auto;margin:6px 0 20px;font-family:var(--mono);font-size:12.5px;line-height:1.75;}
+.reader .r-foot{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);flex-wrap:gap;}
+.reader .r-foot a{color:var(--terra);text-decoration:none;}
+
+footer{border-top:1px solid var(--line);padding:30px 0;}
+footer .wrap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);}
+footer a{text-decoration:none;}
+footer a:hover{color:var(--terra);}
+@media(max-width:700px){.reader{padding:40px 26px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="nav-name" href="index.html"><img class="mark" src="img/monogram-512.png" alt="RD monogram"/>Rudra Dudhat<span>.</span></a>
+    <a class="back" href="index.html">← Back to base</a>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="deco ring" style="width:520px;height:520px;top:-200px;right:-220px;"></div>
+  <div class="deco blob" style="width:150px;height:150px;top:32%;right:9%;"></div>
+  <div class="wrap">
+    <span class="label">THE FIELD NOTES</span>
+    <h1 style="margin-top:14px;">Engineering notes,<br/>rendered <em>live.</em></h1>
+    <p>Working notes on agentic AI, read straight from the GitHub repo every time this page loads. When a new module lands in the repo, it shows up here. No rebuild, no deploy.</p>
+    <div class="live-pill"><span class="dot"></span>SYNCED FROM GITHUB.COM/RUDRADUDHAT2509/AI_NOTES</div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="note-grid" id="note-grid"></div>
+    <div id="status">querying github…</div>
+  </div>
+</main>
+
+<div class="reader-ov" id="reader-ov">
+  <div class="reader">
+    <button class="r-close" id="r-close">ESC / CLOSE</button>
+    <div id="r-content"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 RUDRA DUDHAT</span>
+    <a href="https://github.com/RudraDudhat2509/ai_notes" target="_blank" rel="noopener">THE RAW REPO ↗</a>
+  </div>
+</footer>
+
+<script>
+const REPO = 'RudraDudhat2509/ai_notes';
+const grid = document.getElementById('note-grid'), status = document.getElementById('status');
+
+function pretty(name){
+  const ACR = {rag:'RAG', llm:'LLM', jwt:'JWT', api:'API', fastapi:'FastAPI', ai:'AI'};
+  return name.replace(/\.txt$/,'').replace(/^module_/,'').split('_')
+    .map(w => ACR[w] || w[0].toUpperCase() + w.slice(1)).join(' ').replace('FastAPI Pydantic','FastAPI & Pydantic');
+}
+
+async function load(){
+  try{
+    const r = await fetch(`https://api.github.com/repos/${REPO}/git/trees/main?recursive=1`);
+    if(!r.ok) throw new Error(r.status);
+    const tree = (await r.json()).tree.filter(t => t.path.endsWith('.txt'));
+    const mods = {};
+    tree.forEach(t => {
+      const name = t.path.split('/').pop();
+      mods[name] = mods[name] || {name};
+      if(t.path.startsWith('full notes/')) mods[name].full = t.path;
+      if(t.path.startsWith('quick review/')) mods[name].quick = t.path;
+      mods[name].size = Math.max(mods[name].size || 0, t.size || 0);
+    });
+    const list = Object.values(mods);
+    if(!list.length){ status.textContent = 'no notes found. suspicious.'; return; }
+    status.style.display = 'none';
+    grid.innerHTML = list.map((m,i) => `
+      <div class="note-card">
+        <div class="n-tag">MODULE ${String(i+1).padStart(2,'0')} · ~${Math.max(2, Math.round((m.size||4000)/1100))} MIN</div>
+        <h3>${pretty(m.name)}</h3>
+        <div class="n-acts">
+          ${m.quick ? `<button data-path="${m.quick}" data-kind="QUICK REVIEW">Quick review</button>` : ''}
+          ${m.full ? `<button data-path="${m.full}" data-kind="FULL NOTES">Full notes</button>` : ''}
+        </div>
+      </div>`).join('');
+    grid.querySelectorAll('button').forEach(b => b.addEventListener('click', () => openNote(b.dataset.path, b.dataset.kind)));
+  }catch(e){
+    status.innerHTML = 'github is rate-limiting us. the raw notes live <a href="https://github.com/' + REPO + '" style="color:var(--terra)">here ↗</a> in the meantime.';
+  }
+}
+
+/* ---- artistic renderer for his plaintext note format ---- */
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function renderNote(txt){
+  const lines = txt.split('\n');
+  let html = '', para = [], pre = [], title = null;
+  const flushP = () => { if(para.length){ html += '<p>' + esc(para.join(' ')) + '</p>'; para = []; } };
+  const flushPre = () => { if(pre.length){ html += '<pre>' + esc(pre.join('\n')) + '</pre>'; pre = []; } };
+  for(let i = 0; i < lines.length; i++){
+    const l = lines[i];
+    if(/^=+\s*$/.test(l)) continue;
+    if(/^-{3,}\s*$/.test(l)){
+      const h = para.pop(); flushP(); flushPre();
+      if(h) html += '<h2>' + esc(h) + '</h2>';
+      continue;
+    }
+    if(/^\s*$/.test(l)){ flushP(); flushPre(); continue; }
+    if(/^\s{2,}\S/.test(l)){ flushP(); pre.push(l.replace(/\s+$/,'')); continue; }
+    if(!title){ title = l.trim(); continue; }
+    flushPre(); para.push(l.trim());
+  }
+  flushP(); flushPre();
+  return {title: title || 'Untitled', html};
+}
+
+const rOv = document.getElementById('reader-ov'), rC = document.getElementById('r-content');
+async function openNote(path, kind){
+  rC.innerHTML = '<p style="font-family:var(--mono);font-size:12px;color:var(--muted);">FETCHING FROM GITHUB…</p>';
+  rOv.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  try{
+    const r = await fetch(`https://raw.githubusercontent.com/${REPO}/main/${encodeURIComponent(path).replace(/%2F/g,'/')}`);
+    const note = renderNote(await r.text());
+    rC.innerHTML = `<div class="r-meta">${kind} · LIVE FROM THE REPO</div><h1>${esc(note.title)}</h1>${note.html}
+      <div class="r-foot"><span>WRITTEN AT 2AM, PROBABLY</span><a href="https://github.com/${REPO}/blob/main/${path}" target="_blank" rel="noopener">VIEW RAW ON GITHUB ↗</a></div>`;
+    rOv.scrollTop = 0;
+  }catch(e){
+    rC.innerHTML = '<p>could not fetch this note. github says no. try the repo directly.</p>';
+  }
+}
+function closeReader(){ rOv.classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('r-close').addEventListener('click', closeReader);
+rOv.addEventListener('click', e => { if(e.target === rOv) closeReader(); });
+addEventListener('keydown', e => { if(e.key === 'Escape') closeReader(); });
+
+load();
+</script>
+
+</body>
+</html>
