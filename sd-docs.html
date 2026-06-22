@@ -225,10 +225,10 @@ hr { border: none; border-top: 1px solid var(--border); margin: 44px 0; }
 <!-- SIDEBAR -->
 <nav class="sidebar">
   <div class="sidebar-brand">
-    <div class="brand-icon">SD</div>
+    <a href="index.html" style="flex-shrink:0;display:flex"><img src="img/monogram-64.png" style="width:32px;height:32px;border-radius:8px;object-fit:contain;" alt="Rudra Dudhat"></a>
     <div>
       <div class="brand-name">System Design</div>
-      <div class="brand-sub">45-session curriculum</div>
+      <div class="brand-sub">45-session · <a href="index.html" style="color:var(--accent);text-decoration:none;">rudradudhat.io</a></div>
     </div>
   </div>
   <div class="sidebar-scroll">
@@ -274,7 +274,9 @@ hr { border: none; border-top: 1px solid var(--border); margin: 44px 0; }
 <!-- MAIN -->
 <div class="main">
   <header class="topbar">
-    <a href="notes.html" class="back-btn">← Field Notes</a>
+    <a href="index.html" class="back-btn">← Home</a>
+    <span class="topbar-sep">/</span>
+    <a href="notes.html" class="back-btn">Field Notes</a>
     <span class="topbar-sep">/</span>
     <div id="breadcrumb">Foundations / <span>Latency Tiers</span></div>
     <button class="search-btn" onclick="openSearch()">Search docs <kbd>⌘K</kbd></button>
