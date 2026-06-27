@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Your semantic cache is wrong 1 in 10 times · Rudra Dudhat</title>
+<meta name="description" content="Everyone caches LLM answers to save money. Almost nobody measures how often the cache serves the wrong one. So I measured it, then built the layer that stops it."/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script data-goatcounter="https://rudra.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+:root{
+  --bg:#F7F1E5; --paper:#FDFAF2;
+  --ink:#1C1812; --ink2:#594E3B; --muted:#8A7A5C;
+  --line:#E2D7BE; --line2:#D4C7A6;
+  --terra:#B5532F; --olive:#3F5A36;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;}
+::selection{background:var(--terra);color:var(--paper);}
+a{color:inherit;}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,241,229,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-in{max-width:720px;margin:0 auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;}
+.nav-name{font-family:var(--serif);font-weight:600;font-size:22px;text-decoration:none;}
+.nav-name span{color:var(--terra);}
+.back{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);text-decoration:none;}
+.back:hover{color:var(--terra);}
+
+header.post{padding:170px 0 40px;}
+header.post h1{font-family:var(--serif);font-weight:450;font-size:clamp(34px,5vw,52px);letter-spacing:-.015em;line-height:1.1;margin:16px 0 18px;}
+.meta{display:flex;gap:18px;}
+
+article{padding:14px 0 90px;}
+article p{font-size:17px;line-height:1.8;color:var(--ink2);margin-bottom:22px;}
+article p strong{color:var(--ink);}
+article h2{font-family:var(--serif);font-weight:550;font-size:28px;margin:44px 0 16px;letter-spacing:-.01em;}
+article h3{font-weight:700;font-size:19px;margin:34px 0 12px;}
+article ul,article ol{margin:0 0 22px 22px;color:var(--ink2);font-size:17px;line-height:1.8;}
+article li{margin-bottom:8px;}
+article blockquote{border-left:3px solid var(--terra);padding:6px 0 6px 22px;margin:0 0 22px;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink);}
+article code{font-family:var(--mono);font-size:14.5px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:2px 7px;}
+article pre{background:#1C1812;color:#F7F1E5;border-radius:12px;padding:22px 26px;overflow-x:auto;margin-bottom:22px;}
+article pre code{background:none;border:none;color:inherit;font-size:13.5px;line-height:1.7;padding:0;}
+article img{max-width:100%;border-radius:12px;margin-bottom:10px;border:1px solid var(--line);}
+.cap{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:26px;}
+.endmark{font-family:var(--serif);font-style:italic;color:var(--muted);margin-top:40px;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+footer .wrap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);}
+footer a{text-decoration:none;}
+footer a:hover{color:var(--terra);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="nav-name" href="../index.html">Rudra Dudhat<span>.</span></a>
+    <a class="back" href="../blog.html">← All posts</a>
+  </div>
+</nav>
+
+<header class="post">
+  <div class="wrap">
+    <div class="meta"><span class="label">CASE STUDY</span><span class="label">JUN 2026 · 7 MIN READ</span></div>
+    <h1>Your semantic cache is wrong 1 in 10 times</h1>
+    <p style="font-size:18px;color:var(--ink2);">Everyone caches LLM answers to save money. Almost nobody measures how often the cache hands back the wrong one. So I measured it, then built the layer that stops it.</p>
+  </div>
+</header>
+
+<article>
+  <div class="wrap">
+    <p>Semantic caching is the standard trick for making LLM apps cheaper. Embed the incoming question, and if it looks close enough to one you have answered before, hand back the saved answer instead of paying for the model again. Simple, effective, and quietly dangerous.</p>
+
+    <h2>The trap</h2>
+    <p>Look-alike is not the same as same-meaning:</p>
+    <blockquote>"Refund policy for Europe?" and "Refund policy for the US?" sit at ~0.92 similarity and need completely different answers.</blockquote>
+    <p>A naive cache sees the high similarity score, serves the Europe answer to the US question, and moves on. No error. No warning. Just a confidently wrong reply that nobody catches until a customer does.</p>
+    <p>The standard advice for avoiding this is "keep your similarity threshold above 0.85." Every vendor repeats it. <strong>None of them publish what 0.85 actually costs you.</strong></p>
+
+    <h2>So I measured it</h2>
+    <p>I ran a semantic cache against 5,000 human-labeled Quora Question Pairs and swept the threshold, counting how often a "hit" served an answer to a question it did not actually match.</p>
+    <img src="../img/cacheguard-curve.png" alt="False-hit rate vs similarity threshold curve"/>
+    <p class="cap">Green is savings, red is the worst case, orange is the realistic wrong-answer rate.</p>
+    <p>At the magic 0.85 threshold, the realistic false-hit rate sits at <strong>about 9 to 10 percent</strong>. Roughly one in ten reused answers is wrong.</p>
+    <p>Here is the part that made me trust the number: it lands directly on top of <strong>AWS's own published figure</strong> of ~9 percent wrong answers, from their ElastiCache docs. I did not coordinate with them. An independent source agreeing with your measurement is how you know you are measuring reality, not fitting a story you wanted to tell.</p>
+
+    <h2>Your embedding model is a free safety dial</h2>
+    <p>At the same cache hit rate, the embedding model you pick changes how many wrong answers you serve:</p>
+    <ul>
+      <li><code>all-mpnet-base-v2</code>: 6.7% wrong</li>
+      <li><code>bge-small-en-v1.5</code>: 7.5%</li>
+      <li><code>all-MiniLM-L6-v2</code> (the popular default): 8.1%</li>
+      <li><code>gte-small</code>: 9.9%</li>
+    </ul>
+    <p>Switching off the popular default cuts wrong answers about 17 percent, for free, at the same savings. Most teams never check this.</p>
+
+    <h2>The fix: verify only the gray zone</h2>
+    <p>The similarity score is reliable at the extremes and useless in the middle. So split it into three zones:</p>
+    <ul>
+      <li><strong>Clearly the same</strong> (very high similarity): reuse the answer, no questions asked.</li>
+      <li><strong>Clearly different</strong> (low similarity): call the model.</li>
+      <li><strong>The gray zone</strong> (the dangerous middle): a free LLM judge reads both questions and decides if reuse is actually safe.</li>
+    </ul>
+    <p>The judge runs only in the gray zone, so the common cases stay instant and you pay the safety check only on the risky minority. The result, with a completely free judge:</p>
+    <img src="../img/cacheguard-vs-naive.png" alt="CacheGuard vs naive cache: 61 percent fewer wrong answers, 87 percent of savings kept"/>
+    <p class="cap">61 percent fewer wrong answers, while keeping 87 percent of the cache savings.</p>
+
+    <h2>The judge was the hard part, and the honest part</h2>
+    <p>Getting the free judge to a number I trusted was a fight, and the fight is the interesting bit:</p>
+    <ol>
+      <li>A small free model scored <strong>64 percent</strong> on the hardest slice. Barely better than a coin flip.</li>
+      <li>A bigger free model with few-shot prompting reached <strong>74 percent</strong>.</li>
+      <li>A more aggressive prompt <strong>regressed to 56 percent</strong> by becoming paranoid and blocking everything. A useful failure.</li>
+      <li>An 8-configuration sweep proved the ceiling is ~71 to 74 percent. It is the adversarial task plus label noise in the data, not a prompt I had not found yet.</li>
+    </ol>
+    <p>That is when the real lesson landed: <strong>accuracy is the wrong objective for a safety tool.</strong> A false block just regenerates an answer, a small cost. A false reuse serves a wrong answer, the thing you are trying to prevent. Those are not equally bad, so optimizing for raw accuracy is optimizing for the wrong thing.</p>
+    <blockquote>I almost shipped an 85 percent accuracy target. The honest move was admitting it was both unreachable and the wrong metric, and validating the number a user actually feels: end-to-end wrong-answer reduction.</blockquote>
+    <p>So I locked the judge to the config that catches the most traps, and gated the whole thing on the 61 percent reduction above. No number in this project was reverse-engineered to look good. Where a target turned out wrong, I replaced it in the open.</p>
+
+    <h2>When this is worth it, and when it isn't</h2>
+    <p>This is a safety layer, not a cost optimizer. The gray-zone check adds a bounded overhead, so be honest about who needs it:</p>
+    <ul>
+      <li><strong>Worth it</strong> for correctness-sensitive apps, like refunds, support, healthcare, legal, and finance, where one confidently wrong answer costs far more than a sub-second check.</li>
+      <li><strong>Not worth it</strong> for a casual chatbot where a slightly-off cached answer is harmless. There, a plain cache is fine.</li>
+    </ul>
+    <p>Knowing the difference, and saying it out loud, is the point.</p>
+
+    <h2>The code</h2>
+    <p>It is free, runs locally, plugs into LiteLLM, and emits OpenTelemetry so it drops into the observability stack you already run. The full benchmark, the safety layer, and every reproducible script are here:</p>
+    <p><a href="https://github.com/RudraDudhat2509/cacheguard" style="color:var(--terra);font-weight:600;">github.com/RudraDudhat2509/cacheguard</a></p>
+
+    <p class="endmark">Rudra, measuring the things vendors hand-wave.</p>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 RUDRA DUDHAT</span>
+    <a href="../blog.html">MORE LORE</a>
+  </div>
+</footer>
+
+</body>
+</html>
