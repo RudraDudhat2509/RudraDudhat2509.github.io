@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Brok: a blunt blacksmith for your architecture · Rudra Dudhat</title>
+<meta name="description" content="Claude Code will design you a backend that quietly falls over and never mention it. So I built a small, deterministic MCP that does the napkin math, finds the wall, prices the bill, and roasts the design."/>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<script data-goatcounter="https://rudra.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+:root{
+  --bg:#F7F1E5; --paper:#FDFAF2;
+  --ink:#1C1812; --ink2:#594E3B; --muted:#8A7A5C;
+  --line:#E2D7BE; --line2:#D4C7A6;
+  --terra:#B5532F; --olive:#3F5A36;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;}
+::selection{background:var(--terra);color:var(--paper);}
+a{color:inherit;}
+.wrap{max-width:720px;margin:0 auto;padding:0 28px;}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,241,229,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-in{max-width:720px;margin:0 auto;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;}
+.nav-name{font-family:var(--serif);font-weight:600;font-size:22px;text-decoration:none;}
+.nav-name span{color:var(--terra);}
+.back{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);text-decoration:none;}
+.back:hover{color:var(--terra);}
+
+header.post{padding:170px 0 40px;}
+header.post h1{font-family:var(--serif);font-weight:450;font-size:clamp(34px,5vw,52px);letter-spacing:-.015em;line-height:1.1;margin:16px 0 18px;}
+.meta{display:flex;gap:18px;}
+
+article{padding:14px 0 90px;}
+article p{font-size:17px;line-height:1.8;color:var(--ink2);margin-bottom:22px;}
+article p strong{color:var(--ink);}
+article h2{font-family:var(--serif);font-weight:550;font-size:28px;margin:44px 0 16px;letter-spacing:-.01em;}
+article h3{font-weight:700;font-size:19px;margin:34px 0 12px;}
+article ul,article ol{margin:0 0 22px 22px;color:var(--ink2);font-size:17px;line-height:1.8;}
+article li{margin-bottom:8px;}
+article blockquote{border-left:3px solid var(--terra);padding:6px 0 6px 22px;margin:0 0 22px;font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink);}
+article code{font-family:var(--mono);font-size:14.5px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:2px 7px;}
+article pre{background:#1C1812;color:#F7F1E5;border-radius:12px;padding:22px 26px;overflow-x:auto;margin-bottom:22px;}
+article pre code{background:none;border:none;color:inherit;font-size:13.5px;line-height:1.7;padding:0;}
+article img{max-width:100%;border-radius:12px;margin-bottom:10px;border:1px solid var(--line);}
+.cap{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:26px;}
+.endmark{font-family:var(--serif);font-style:italic;color:var(--muted);margin-top:40px;}
+footer{border-top:1px solid var(--line);padding:30px 0;}
+footer .wrap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);}
+footer a{text-decoration:none;}
+footer a:hover{color:var(--terra);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="nav-name" href="../index.html">Rudra Dudhat<span>.</span></a>
+    <a class="back" href="../blog.html">← All posts</a>
+  </div>
+</nav>
+
+<header class="post">
+  <div class="wrap">
+    <div class="meta"><span class="label">BUILD LOG</span><span class="label">JUN 2026 · 8 MIN READ</span></div>
+    <h1>Brok: a blunt blacksmith for your architecture</h1>
+    <p style="font-size:18px;color:var(--ink2);">Claude Code will design you a backend that quietly falls over at 12,000 users, and never mention it. So I built a small, deterministic MCP that does the napkin math, finds the wall, prices the bill, and roasts the design. Named after a dwarf who deserved better.</p>
+  </div>
+</header>
+
+<article>
+  <div class="wrap">
+    <p>Watch an AI coding assistant design a backend and you notice something. It produces a clean architecture in seconds, the code runs, and nowhere in that confident output does it tell you the design caps out at 12,000 users, that the single Postgres is the wall, or that the egress bill is four figures a month. It never did the back-of-envelope math, because nobody made it, and it would not have been grounded if it had.</p>
+
+    <h2>The wrapper trap</h2>
+    <p>The obvious fix is to ask the model: is this architecture good? That gets you fluent, generic, ungrounded advice. Frontier models are mediocre at capacity estimation and small local ones are worse, so the naive build is a wrapper that returns plausible-sounding nonsense with total confidence.</p>
+    <p>I wanted the opposite. <strong>In Brok, the model never reasons about the system. Deterministic code does, against real cited numbers.</strong> The calling assistant is allowed exactly one job: turn your prose or your docker-compose into a structured list of components. From there no model touches the judgment.</p>
+    <blockquote>If the intelligence is in the data and the arithmetic, the tool cannot hallucinate a verdict. That is the entire design.</blockquote>
+
+    <h2>What it actually does</h2>
+    <p>You point Brok at an architecture and tell it the scale you expect. It gives you the bottleneck, the user count the design holds, a latency warning when a component is past its queueing knee, a rough monthly bill, the trade-offs each component is making, and the whole thing phrased in a dry voice. A real card looks like this:</p>
+    <pre><code>BROK: CUTTING IT CLOSE
+
+orders-db is running 85% hot. Under the cap, sure, but past the knee,
+so queueing already puts latency near 6.7x idle. Real headroom is about
+700,000 users, not 1,000,000. shard it by a high cardinality key, or put
+a write queue in front.
+
+Receipts:
+  api:        ~1,400/sec vs ~2,000 ceiling
+  orders-db:    ~850/sec vs ~1,000 ceiling
+
+THE TRADE-OFFS YOU ARE MAKING:
+  relational_db: fine under about 500 writes/sec, one machine of data.
+    cost: a single point of failure, writes cap near 1k/sec. outgrow it:
+    read-heavy add replicas, write-bound shard by a high cardinality key.
+
+WHAT IT COSTS (rough monthly):
+  compute $180, egress $1,240, total $1,420.
+  about 13,800 GB/month leaving the system, order-of-magnitude.</code></pre>
+    <p>Every number traces to a cited source. Postgres at roughly 1,000 writes a second, Redis at roughly 100,000 ops a second, an app instance in the low thousands of requests a second. The conservative low end of each range is what the verdict uses. Hand Brok a component it has no cited number for and it says so instead of guessing.</p>
+
+    <h2>It is benchmarked, and the benchmark is honest</h2>
+    <p>Brok scores 100 percent on bottleneck accuracy and capacity-within-2x on a curated golden set, with zero off-by-100x misses. That sounds like a brag, so here is the honest framing: the benchmark checks that the engine is internally consistent with its own cited ceilings, that it abstains on unknowns, and that it does not cry wolf on a hobby app. Real systems like Instagram, which sharded for data volume rather than throughput, are included as documented out-of-model cases and excluded from scoring, because a single-instance throughput model has no business judging them. The claim is precise: consistent, well-behaved, and honest about what it cannot see. It is not a claim that it predicts every real-world scaling wall.</p>
+
+    <h2>The lenses, and what I refused to build</h2>
+    <p>The first version only did capacity, and it felt thin. The realization that fixed it: Claude Code will not write a blocking socket inside an async handler, it knows the syntax cold. What it does not reliably know are the <strong>quantitative trade-offs</strong>. So the lenses are about feeding it the judgment it lacks, not the syntax it already has.</p>
+    <ul>
+      <li><strong>Trade-offs.</strong> A curated, cited table: when each component is fine, what it costs you, and the move when you outgrow it. Shard versus add replicas, why a CDN is useless for writes, when a cache is actually earning its keep.</li>
+      <li><strong>Latency.</strong> Naive capacity says "fine until 100 percent." Queueing theory says no: latency climbs as <code>1 / (1 - utilization)</code>, so a component at 80 percent load is already paying about 5x its idle latency. Brok now flags the knee at around 70 percent. But it reports a <strong>multiplier, never a millisecond</strong>, because an absolute latency needs per-handler compute time and cache hit rates I cannot know. The honest refusal is the feature.</li>
+      <li><strong>Cost.</strong> A mid-tier compute table plus egress computed from the traffic Brok already has. Egress is the one that surprises people. In one example, compute was 260 dollars a month and egress was 7,700. Order of magnitude, assumptions stated, not a billing forecast.</li>
+    </ul>
+    <p>What I deliberately did not build matters as much as what I did. No absolute latency in milliseconds. No Universal Scalability Law curve with coefficients I would have to invent. No memory model. Each of those needs a number I could only fabricate, and fabricating numbers is the exact thing this tool exists to avoid.</p>
+
+    <h2>Why it is named Brok</h2>
+    <p>Brok is the blunt, foul-mouthed dwarf blacksmith from God of War, and Brokkr from Norse myth long before that. He forges the best weapons in the nine realms and has no patience for sloppy work. In Ragnarok he dies, and it lands harder than almost any death in the game, because he was the most human character in it. Naming a tool that respects work which holds, and has no patience for the lazy kind, after him is a small tribute to a dwarf who deserved better.</p>
+    <p>To be clear about the line: the name is Norse myth and public domain, the dry bluntness is the homage, and every line of the voice is my own writing. Nothing is copied from the game. He is named Sindri's brother in the lore, and Sindri was this project's first name, until Brok turned out to be the funnier, blunter one. Fitting.</p>
+
+    <h2>When it is worth it, and when it isn't</h2>
+    <p>This is a back-of-envelope sanity check, the one you would otherwise skip. Be honest about the fit:</p>
+    <ul>
+      <li><strong>Worth it</strong> while designing or scaling, or when an assistant has just drafted an architecture and you want a grounded second opinion before you commit to it.</li>
+      <li><strong>Not worth it</strong> as a load test, a billing forecast, or production capacity planning. It is single-instance throughput math with an order-of-magnitude bar. It will not catch a missing index or a hot partition.</li>
+    </ul>
+    <p>Knowing the difference, and saying it in the README instead of hiding it, is the point.</p>
+
+    <h2>The code</h2>
+    <p>It is free, runs locally, needs no API key, and contains no model on the critical path, so it gives the same answer every time. The engine, the benchmark, the voice, and every reproducible test are here:</p>
+    <p><a href="https://github.com/RudraDudhat2509/brok" style="color:var(--terra);font-weight:600;">github.com/RudraDudhat2509/brok</a></p>
+
+    <p class="endmark">Rudra, doing the napkin math the model skips.</p>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 RUDRA DUDHAT</span>
+    <a href="../blog.html">MORE LORE</a>
+  </div>
+</footer>
+
+</body>
+</html>
