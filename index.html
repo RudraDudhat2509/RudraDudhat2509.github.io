@@ -662,22 +662,20 @@ hs.childNodes[0].textContent = status[0];
 hs.querySelector('small').textContent = status[1];
 
 /* ---------- live OSS feed ---------- */
-const FALLBACK = [
-  {repo:'NVIDIA/garak', title:'Add AgentHarm-based agentic harness probes', state:'open', url:'https://github.com/NVIDIA/garak/pull/974', when:'2026'},
-  {repo:'BerriAI/litellm', title:'Fix model deletion endpoint behavior', state:'merged', url:'https://github.com/BerriAI/litellm/pull/28560', when:'2026'},
-];
+/* only PRs to repos that are not mine: contributions to someone else's
+   project, the third-party-validated signal. fetched live, nothing hardcoded. */
+const MY_ACCOUNTS = new Set(['rudradudhat2509', 'rudradudhataltagic']);
 const grid = document.getElementById('pr-grid');
 const prStatus = document.getElementById('pr-status');
-function renderPRs(list, live){
+function renderPRs(list){
   grid.innerHTML = list.map(p => `
     <a class="pr" href="${p.url}" target="_blank" rel="noopener">
       <div class="top"><span class="repo">${p.repo}</span><span class="badge ${p.state}">${p.state}</span></div>
       <h3>${p.title}</h3>
       <div class="meta">${p.when}</div>
     </a>`).join('');
-  prStatus.textContent = live ? 'live from the github api · updates itself' : 'github api rate limited · showing the greatest hits';
 }
-fetch('https://api.github.com/search/issues?q=author:RudraDudhat2509+type:pr&sort=created&order=desc&per_page=8')
+fetch('https://api.github.com/search/issues?q=author:RudraDudhat2509+type:pr&sort=created&order=desc&per_page=100')
   .then(r => { if(!r.ok) throw 0; return r.json(); })
   .then(d => {
     const list = d.items.map(i => ({
@@ -686,10 +684,11 @@ fetch('https://api.github.com/search/issues?q=author:RudraDudhat2509+type:pr&sor
       state: i.pull_request && i.pull_request.merged_at ? 'merged' : i.state === 'closed' ? 'closed' : 'open',
       url: i.html_url,
       when: new Date(i.created_at).toLocaleDateString('en-IN',{month:'short',year:'numeric'})
-    }));
-    renderPRs(list.length ? list : FALLBACK, list.length > 0);
+    })).filter(p => !MY_ACCOUNTS.has(p.repo.split('/')[0].toLowerCase())).slice(0, 9);
+    renderPRs(list);
+    prStatus.textContent = list.length ? 'live from the github api · contributions to external repos' : 'no external PRs found right now';
   })
-  .catch(() => renderPRs(FALLBACK, false));
+  .catch(() => { prStatus.textContent = 'github api rate limited · check back in a bit'; });
 
 /* ---------- toast ---------- */
 function toast(title, msg){
