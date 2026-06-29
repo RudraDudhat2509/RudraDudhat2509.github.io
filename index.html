@@ -684,7 +684,7 @@ fetch('https://api.github.com/search/issues?q=author:RudraDudhat2509+type:pr&sor
       state: i.pull_request && i.pull_request.merged_at ? 'merged' : i.state === 'closed' ? 'closed' : 'open',
       url: i.html_url,
       when: new Date(i.created_at).toLocaleDateString('en-IN',{month:'short',year:'numeric'})
-    })).filter(p => !MY_ACCOUNTS.has(p.repo.split('/')[0].toLowerCase())).slice(0, 9);
+    })).filter(p => p.state !== 'closed' && !MY_ACCOUNTS.has(p.repo.split('/')[0].toLowerCase())).slice(0, 9);
     renderPRs(list);
     prStatus.textContent = list.length ? 'live from the github api · contributions to external repos' : 'no external PRs found right now';
   })
