@@ -122,34 +122,39 @@ section{padding:88px 0;}
 
 /* ============ WORK ============ */
 #work{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-.flagship{display:grid;grid-template-columns:1.3fr 1fr;gap:0;background:var(--paper);color:var(--ink);border:1px solid var(--line2);border-radius:20px;overflow:hidden;margin-bottom:18px;box-shadow:0 20px 50px rgba(60,45,20,.12);}
-.flag-left{padding:44px 46px;}
-.flag-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--terra);text-transform:uppercase;margin-bottom:16px;}
-.flag-name{font-family:var(--serif);font-weight:500;font-size:40px;margin-bottom:14px;letter-spacing:-.01em;}
-.flag-desc{font-size:15.5px;line-height:1.7;color:var(--ink2);margin-bottom:26px;max-width:430px;}
-.pipbar{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:13px;background:var(--ink);border:1px solid var(--ink);border-radius:10px;padding:12px 18px;color:var(--bg);}
-.pipbar .p{color:var(--brass);}
-.flag-right{border-left:1px solid var(--line);padding:44px 38px;display:flex;flex-direction:column;justify-content:center;gap:20px;}
-.flag-stat .n{font-family:var(--serif);font-size:30px;color:var(--terra);}
-.flag-stat .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;margin-top:2px;}
-.hscroll{overflow-x:auto;padding:6px 2px 18px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--line2) transparent;}
-.hscroll-track{display:flex;gap:16px;width:max-content;}
-.proj{scroll-snap-align:start;width:330px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:26px;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s;}
-.proj:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(60,45,20,.13);}
-.proj .tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--terra);text-transform:uppercase;margin-bottom:12px;}
-.proj h3{font-family:var(--serif);font-weight:550;font-size:22px;margin-bottom:8px;}
-.proj p{font-size:14px;color:var(--ink2);line-height:1.6;margin-bottom:14px;}
-.proj .tech{font-family:var(--mono);font-size:11px;color:var(--muted);}
-.proj .outcome{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:11px;color:var(--olive);line-height:1.6;}
-.proj .outcome b{color:var(--terra);font-weight:500;}
-.proj{cursor:pointer;}
-a.proj{display:block;color:inherit;text-decoration:none;}
-.proj.sq{width:280px;padding:22px;}
-.proj.sq h3{font-size:19px;}
-.proj.sq p{font-size:13px;margin-bottom:12px;}
-.proj.sq .tech{font-size:10px;}
-.proj:hover .repo{color:var(--terra);}
-.proj .repo{margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);transition:color .2s;}
+.work-win{background:var(--paper);border:1px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(60,45,20,.12);}
+.win-titlebar{display:flex;align-items:center;gap:7px;background:var(--bg3);padding:11px 16px;border-bottom:1px solid var(--line);}
+.win-dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+.win-path{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-left:5px;}
+.win-tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--ink);overflow-x:auto;scrollbar-width:none;}
+.win-tabs::-webkit-scrollbar{display:none;}
+.win-tab{font-family:var(--mono);font-size:12px;color:var(--muted);padding:12px 20px;border-right:1px solid var(--line);cursor:pointer;white-space:nowrap;position:relative;transition:color .15s,background .15s;}
+.win-tab:hover{color:var(--ink);background:var(--bg);}
+.win-tab.active{background:var(--paper);color:var(--ink);font-weight:700;}
+.win-tab.active::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--terra);}
+.tab-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--olive);margin-right:7px;animation:pulseD 2.2s ease-in-out infinite;}
+@keyframes pulseD{0%,100%{opacity:1;}50%{opacity:.35;}}
+.win-pane{display:none;padding:36px 40px 32px;}
+.win-pane.active{display:block;animation:paneIn .25s ease;cursor:pointer;}
+@keyframes paneIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
+.win-prompt{font-family:var(--mono);font-size:13px;color:var(--olive);margin-bottom:14px;}
+.win-cursor{display:inline-block;width:7px;height:13px;background:var(--terra);margin-left:2px;animation:blink 1s step-end infinite;vertical-align:middle;}
+@keyframes blink{50%{opacity:0;}}
+.win-status{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);border:1px solid var(--line2);border-radius:100px;padding:5px 13px;margin-bottom:16px;}
+.win-pane h4{font-family:var(--serif);font-weight:550;font-size:28px;margin-bottom:10px;letter-spacing:-.01em;}
+.win-pane>p{font-size:15px;line-height:1.7;color:var(--ink2);max-width:520px;margin-bottom:18px;}
+.win-stats{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:20px;}
+.win-stat b{display:block;font-family:var(--serif);font-size:19px;color:var(--ink);}
+.win-stat span{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+.win-links{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;}
+.win-links a{color:var(--terra);text-decoration:none;border-bottom:1px solid var(--line2);padding-bottom:2px;position:relative;z-index:1;}
+.win-links a:hover{border-color:var(--terra);}
+.win-more{color:var(--muted);}
+.work-win.sq .win-pane{padding:22px 26px 20px;}
+.work-win.sq .win-pane h4{font-size:18px;margin-bottom:6px;}
+.work-win.sq .win-pane>p{font-size:13px;margin-bottom:10px;}
+.work-win.sq .win-prompt{font-size:12px;margin-bottom:8px;}
+.work-win.sq .win-tab{padding:10px 16px;font-size:11px;}
 
 /* ============ DETAIL MODAL ============ */
 .modal-ov{position:fixed;inset:0;z-index:200;background:rgba(28,24,18,.45);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:24px;}
@@ -168,12 +173,8 @@ a.proj{display:block;color:inherit;text-decoration:none;}
 .m-links a{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--terra);text-decoration:none;border-bottom:1px solid var(--line2);padding-bottom:2px;}
 .m-links a:hover{border-color:var(--terra);}
 .xp{cursor:pointer;}
-.flag-links{display:flex;gap:18px;margin-top:18px;}
-.flag-links a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--terra);text-decoration:none;border-bottom:1px solid var(--line2);padding-bottom:2px;}
-.flag-links a:hover{border-color:var(--terra);}
-.pipbar{cursor:pointer;user-select:none;transition:transform .15s;}
-.pipbar:active{transform:scale(.97);}
-.hscroll-hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;}
+.win-prompt.copyable{cursor:pointer;user-select:none;transition:opacity .15s;}
+.win-prompt.copyable:active{opacity:.6;}
 
 /* ============ EXPERIENCE ============ */
 .xp-list{display:grid;gap:14px;}
@@ -309,10 +310,10 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 
 /* ============ RESPONSIVE ============ */
 @media(max-width:900px){
-  .hero-grid,.flagship,.pr-grid,.takes-grid,.lyric-grid,.oss-stats{grid-template-columns:1fr;}
+  .hero-grid,.pr-grid,.takes-grid,.lyric-grid,.oss-stats{grid-template-columns:1fr;}
   .xp{grid-template-columns:1fr;gap:10px;}
   .xp .when{order:-1;}
-  .flag-right{border-left:none;border-top:1px solid var(--line);}
+  .win-pane{padding:26px 22px 24px;}
   .nav-links{display:none;}
   .ct{height:140px;}
   .about-grid{grid-template-columns:1fr;}
@@ -394,47 +395,74 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 <section id="work">
   <div class="wrap">
     <div class="sec-head reveal"><h2 class="sec-title">The work</h2><span class="label">SHIPPED, NOT PROTOTYPED</span></div>
-    <p class="sec-intro reveal">One flagship library, a stack of deployed systems, and an internship under NDA. Every card reads like a case study: the problem, the build, what shipped.</p>
+    <p class="sec-intro reveal">Four builds, each with a published result. Click a tab to open the file, click through for the full case study.</p>
 
-    <div class="flagship reveal" data-detail="diffprompt" style="cursor:pointer;">
-      <div class="flag-left">
-        <div class="flag-tag">Flagship · Live on PyPI</div>
-        <div class="flag-name">diffprompt</div>
-        <p class="flag-desc">Behavioral prompt regression testing. LLM-as-judge cascades score divergence between prompt versions, HDBSCAN clustering surfaces semantic drift. Catches the regressions that break production AI quietly.</p>
-        <div class="pipbar" id="pipbar" title="click to copy"><span class="p">$</span> pip install diffprompt</div>
-        <div class="flag-links">
-          <a href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener">PyPI ↗</a>
-          <a href="https://github.com/RudraDudhat2509/diffprompt" target="_blank" rel="noopener">GitHub ↗</a>
-        </div>
+    <div class="work-win reveal" id="work-win-main">
+      <div class="win-titlebar">
+        <span class="win-dot" style="background:var(--terra)"></span><span class="win-dot" style="background:var(--brass)"></span><span class="win-dot" style="background:var(--olive)"></span>
+        <span class="win-path">~/the-work/</span>
       </div>
-      <div class="flag-right">
-        <div class="flag-stat"><div class="n">LLM-as-judge</div><div class="l">cascade scoring</div></div>
-        <div class="flag-stat"><div class="n">HDBSCAN</div><div class="l">semantic drift clustering</div></div>
-        <div class="flag-stat"><div class="n">CLI + library</div><div class="l">CI-ready</div></div>
+      <div class="win-tabs">
+        <div class="win-tab active" data-tab="diffprompt"><span class="tab-dot"></span>diffprompt.py</div>
+        <div class="win-tab" data-tab="brok">brok.py</div>
+        <div class="win-tab" data-tab="cacheguard">cacheguard.py</div>
+        <div class="win-tab" data-tab="optiquant">optiquant.py</div>
+      </div>
+
+      <div class="win-pane active" data-pane="diffprompt" data-detail="diffprompt">
+        <div class="win-prompt copyable" id="pipbar" title="click to copy">$ pip install diffprompt<span class="win-cursor"></span></div>
+        <div class="win-status">LIVE ON PYPI</div>
+        <h4>diffprompt</h4>
+        <p>"git diff for your prompt's behavior." LLM-as-judge cascades score behavioral divergence between prompt versions; HDBSCAN clustering surfaces semantic drift so a regression shows up as a cluster shift, not a cosine number nobody trusts.</p>
+        <div class="win-stats"><div class="win-stat"><b>48</b><span>tests</span></div><div class="win-stat"><b>3.10–3.12</b><span>CI matrix</span></div><div class="win-stat"><b>CLI + lib</b><span>CI-ready</span></div></div>
+        <div class="win-links"><a href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener">PYPI ↗</a><a href="https://github.com/RudraDudhat2509/diffprompt" target="_blank" rel="noopener">GITHUB ↗</a><span class="win-more">FULL CASE STUDY →</span></div>
+      </div>
+      <div class="win-pane" data-pane="brok" data-detail="brok">
+        <div class="win-prompt">$ brok review system.yaml<span class="win-cursor"></span></div>
+        <div class="win-status">PUBLIC · LAUNCH-READY</div>
+        <h4>Brok</h4>
+        <p>MCP that reviews system designs with zero LLM in the reasoning path: a 53-entry cited capacity knowledge base, Little's Law estimation, latency/cost lenses, and a 5-rule anti-pattern linter. Abstains instead of guessing.</p>
+        <div class="win-stats"><div class="win-stat"><b>100/100/0/100/100</b><span>golden-set</span></div><div class="win-stat"><b>0</b><span>LLM calls in engine</span></div></div>
+        <div class="win-links"><a href="https://github.com/RudraDudhat2509/brok" target="_blank" rel="noopener">GITHUB ↗</a><span class="win-more">FULL CASE STUDY →</span></div>
+      </div>
+      <div class="win-pane" data-pane="cacheguard" data-detail="cacheguard">
+        <div class="win-prompt">$ cacheguard bench qqp<span class="win-cursor"></span></div>
+        <div class="win-status">OPEN BENCHMARK</div>
+        <h4>CacheGuard</h4>
+        <p>First independent open benchmark of semantic cache false-hit rates. Ships as a drop-in LiteLLM hook with OpenTelemetry spans, using a free local judge that fails safe.</p>
+        <div class="win-stats"><div class="win-stat"><b>10.5%</b><span>wrong @ 0.80 thresh</span></div><div class="win-stat"><b>−61.2%</b><span>wrong hits, after fix</span></div><div class="win-stat"><b>86.9%</b><span>legit hits kept</span></div></div>
+        <div class="win-links"><a href="https://github.com/RudraDudhat2509/cacheguard" target="_blank" rel="noopener">GITHUB ↗</a><span class="win-more">FULL CASE STUDY →</span></div>
+      </div>
+      <div class="win-pane" data-pane="optiquant" data-detail="optiquant">
+        <div class="win-prompt">$ python backtest.py --live<span class="win-cursor"></span></div>
+        <div class="win-status">DEPLOYED · STREAMLIT CLOUD</div>
+        <h4>OptiQuant</h4>
+        <p>LightGBM + CatBoost ensemble with SHAP explainability. Backtested, Dockerised with CI/CD, and actually deployed — not backtested and abandoned.</p>
+        <div class="win-stats"><div class="win-stat"><b>28.16%</b><span>CAGR</span></div><div class="win-stat"><b>1.05</b><span>Sharpe</span></div></div>
+        <div class="win-links"><a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank" rel="noopener">GITHUB ↗</a><span class="win-more">FULL CASE STUDY →</span></div>
       </div>
     </div>
 
-    <div class="sec-head" style="margin-top:42px;"><span class="label">MORE BUILDS</span><span class="hscroll-hint">SCROLL SIDEWAYS →</span></div>
-    <div class="hscroll reveal">
-      <div class="hscroll-track">
-        <div class="proj" data-detail="cascade"><div class="tag">Multi-agent backend</div><h3>Cascade AI</h3><p>Problem: multi-agent backends die quietly when one route fails. Build: LLM orchestration on Firebase with self-healing routing and per-user Firestore memory.</p><div class="tech">LangChain · Firebase · GCP</div><div class="outcome"><b>SHIPPED:</b> recovers from routing failures on its own, live on Firebase</div></div>
-        <div class="proj" data-detail="optiquant"><div class="tag">ML trading</div><h3>OptiQuant</h3><p>Problem: black-box trading models nobody can explain. Build: LightGBM + CatBoost ensemble with SHAP explainability, Dockerised with CI/CD, live signal scoring on Streamlit Cloud.</p><div class="tech">LightGBM · CatBoost · SHAP · AWS</div><div class="outcome"><b>SHIPPED:</b> 28.16% CAGR · 1.05 Sharpe · deployed, not backtested-and-abandoned</div><div class="repo">ARCHITECTURE + REPO ↗</div></div>
-        <div class="proj" data-detail="outreach"><div class="tag">Agentic automation</div><h3>Personal Outreach Engine</h3><p>Problem: cold outreach at scale without sounding like a bot. Build: LangGraph pipeline that scrapes, filters by role criteria, drafts personalised emails, and waits for human approval in Gmail before anything sends.</p><div class="tech">LangGraph · Groq · Gmail API</div><div class="outcome"><b>SHIPPED:</b> runs my actual outreach, every email approved by a human (me)</div><div class="repo">ARCHITECTURE + REPO ↗</div></div>
-        <div class="proj" data-detail="altagic"><div class="tag">@ Altagic · under NDA</div><h3>Automation Systems</h3><p>What I can say: agentic automation systems with AI in the loop, built for reliability and scale, running in production. What I can't say: everything else. The NDA is doing its job.</p><div class="tech">n8n · WhatsApp Business API · Claude · CloseBot</div><div class="outcome"><b>SHIPPED:</b> in production, running daily. That's all you get.</div></div>
-        <div class="proj" data-detail="drapeme"><div class="tag">Content pipeline</div><h3>Commerce Content Engine</h3><p>Problem: product listicles take hours of manual copy and layout. Build: storefront-to-HTML generator covering copywriting, images and rendering end to end.</p><div class="tech">GPT · Shopify · Python</div><div class="outcome"><b>SHIPPED:</b> listicle production automated start to finish</div></div>
+    <div class="sec-head" style="margin-top:42px;"><span class="label">SIDE QUESTS · BUILT FOR THE PLOT</span></div>
+    <div class="work-win sq reveal" id="work-win-sq">
+      <div class="win-titlebar">
+        <span class="win-dot" style="background:var(--terra)"></span><span class="win-dot" style="background:var(--brass)"></span><span class="win-dot" style="background:var(--olive)"></span>
+        <span class="win-path">~/side-quests/</span>
       </div>
-    </div>
-
-    <div class="sec-head" style="margin-top:42px;"><span class="label">SIDE QUESTS · BUILT FOR THE PLOT</span><span class="hscroll-hint">SCROLL SIDEWAYS →</span></div>
-    <div class="hscroll reveal">
-      <div class="hscroll-track">
-        <a class="proj sq" href="https://github.com/RudraDudhat2509/ragbait" target="_blank" rel="noopener"><div class="tag">Shame-driven productivity</div><h3>ragbait</h3><p>"You opened Instagram again. Enjoy your McDonald's application." Watches your active window; catch yourself doomscrolling and your study doc flies open while the terminal roasts you. No timers, no graphs, just consequences.</p><div class="tech">Python · psutil · zero mercy</div><div class="repo">REPO ↗</div></a>
-        <a class="proj sq" href="https://github.com/RudraDudhat2509/iceman" target="_blank" rel="noopener"><div class="tag">Drake forecasting division</div><h3>iceman</h3><p>A model that predicts when Drake drops Icemannnnn. Yes, this is a real repo. Yes, it counts as data science. No, I will not be taking questions.</p><div class="tech">Python · faith</div><div class="repo">REPO ↗</div></a>
-        <a class="proj sq" href="https://github.com/RudraDudhat2509/ctxbridge" target="_blank" rel="noopener"><div class="tag">LLM utility</div><h3>ctxbridge</h3><p>Compress any LLM conversation into one portable context prompt. Paste it into a fresh session and continue exactly where you left off. ChatGPT and Claude share links supported.</p><div class="tech">Python · CLI + browser UI</div><div class="repo">REPO ↗</div></a>
-        <a class="proj sq" href="https://github.com/RudraDudhat2509/LinkedInNetworkAnalysis" target="_blank" rel="noopener"><div class="tag">Network intelligence</div><h3>LinkedIn Network Analysis</h3><p>Turns exported connection data into growth velocity, company concentration and structural leverage metrics. The 1.5L impressions were not an accident.</p><div class="tech">Python · Pandas · NetworkX</div><div class="repo">REPO ↗</div></a>
-        <a class="proj sq" href="https://github.com/RudraDudhat2509/fifamarketvalue-ml" target="_blank" rel="noopener"><div class="tag">Football x ML</div><h3>FIFA Market Value</h3><p>Feature engineering on the FIFA dataset: parsing positions, traits and contracts into features that actually predict player market value. FIFA rage, productively channeled.</p><div class="tech">Python · feature engineering</div><div class="repo">REPO ↗</div></a>
-        <a class="proj sq" href="https://github.com/RudraDudhat2509/friendship_graph" target="_blank" rel="noopener"><div class="tag">Graph theory</div><h3>friendship_graph</h3><p>Maps a real classroom's friendships as a graph: hidden communities, centrality scores, and which students secretly hold the whole network together.</p><div class="tech">Python · NetworkX</div><div class="repo">REPO ↗</div></a>
+      <div class="win-tabs">
+        <div class="win-tab active" data-tab="mimic">mimic-eval.py</div>
+        <div class="win-tab" data-tab="nojargon">nojargon.ts</div>
+        <div class="win-tab" data-tab="ragbait">ragbait.py</div>
+        <div class="win-tab" data-tab="iceman">iceman.py</div>
+        <div class="win-tab" data-tab="ctxbridge">ctxbridge.py</div>
+        <div class="win-tab" data-tab="network">network.ipynb</div>
       </div>
+      <div class="win-pane active" data-pane="mimic"><div class="win-prompt">$ mimic eval --against gpt-4<span class="win-cursor"></span></div><h4>mimic-eval</h4><p>Distills expensive LLM-judge decisions into cheap deterministic code — agrees with the real judge ~90-95% of the time. HaluEval kappa 0.96.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/mimic-eval" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
+      <div class="win-pane" data-pane="nojargon"><div class="win-prompt">$ nojargon scan --tab active<span class="win-cursor"></span></div><h4>nojargon</h4><p>Browser extension: on-page due-diligence lens that flags empty buzzwords and tells you what a company actually does.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/nojargon" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
+      <div class="win-pane" data-pane="ragbait"><div class="win-prompt">$ ragbait watch<span class="win-cursor"></span></div><h4>ragbait</h4><p>"You opened Instagram again. Enjoy your McDonald's application." Watches your active window, no mercy.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/ragbait" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
+      <div class="win-pane" data-pane="iceman"><div class="win-prompt">$ iceman predict<span class="win-cursor"></span></div><h4>iceman</h4><p>A model that predicts when Drake drops Icemannnnn. Yes, this is a real repo. Yes, it counts as data science.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/iceman" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
+      <div class="win-pane" data-pane="ctxbridge"><div class="win-prompt">$ ctxbridge compress<span class="win-cursor"></span></div><h4>ctxbridge</h4><p>Compress any LLM conversation into one portable context prompt, pick up exactly where you left off in a new session.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/ctxbridge" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
+      <div class="win-pane" data-pane="network"><div class="win-prompt">$ python analyze.py<span class="win-cursor"></span></div><h4>LinkedIn Network Analysis</h4><p>Growth velocity, company concentration, structural leverage from exported connection data. The 1.5L impressions were not an accident.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/LinkedInNetworkAnalysis" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
     </div>
   </div>
 </section>
@@ -756,14 +784,66 @@ document.querySelectorAll('.car-row').forEach(r => {
 })();
 
 /* ---------- pipbar copy ---------- */
-document.getElementById('pipbar').addEventListener('click', () => {
+document.getElementById('pipbar').addEventListener('click', e => {
+  e.stopPropagation();
   navigator.clipboard.writeText('pip install diffprompt').then(() =>
     toast('COPIED', 'pip install diffprompt. You know what to do.'));
 });
 
+/* ---------- work-win tabs (delegated, so auto-detected tabs work too) ---------- */
+document.querySelectorAll('.work-win').forEach(win => {
+  win.addEventListener('click', e => {
+    const tab = e.target.closest('.win-tab');
+    if(!tab || !win.contains(tab)) return;
+    const key = tab.dataset.tab;
+    win.querySelectorAll('.win-tab').forEach(t => t.classList.toggle('active', t === tab));
+    win.querySelectorAll('.win-pane').forEach(p => p.classList.toggle('active', p.dataset.pane === key));
+  });
+});
+
+/* ---------- auto-detected projects: tag any repo with a topic, it shows up here, no edits needed ----------
+   topic "flagship"  -> extra tab in ~/the-work/
+   topic "showcase"  -> extra tab in ~/side-quests/
+   already-hardcoded repos are skipped so a tag never creates a duplicate tab. */
+(function autoDetectProjects(){
+  const EXT = {Python:'py', TypeScript:'ts', JavaScript:'js', 'Jupyter Notebook':'ipynb', HTML:'html', Go:'go', Rust:'rs'};
+  const HARDCODED = {
+    'work-win-main': new Set(['diffprompt', 'brok', 'cacheguard', 'OptiQuant']),
+    'work-win-sq': new Set(['mimic-eval', 'nojargon', 'ragbait', 'iceman', 'ctxbridge', 'LinkedInNetworkAnalysis'])
+  };
+  function addTab(winId, repo){
+    const win = document.getElementById(winId);
+    if(!win || HARDCODED[winId].has(repo.name)) return;
+    const key = 'auto-' + repo.name;
+    const ext = EXT[repo.language] || 'md';
+    win.querySelector('.win-tabs').insertAdjacentHTML('beforeend',
+      `<div class="win-tab" data-tab="${key}">${repo.name}.${ext}</div>`);
+    win.insertAdjacentHTML('beforeend', `
+      <div class="win-pane" data-pane="${key}">
+        <div class="win-prompt">$ open ${repo.name}<span class="win-cursor"></span></div>
+        <h4>${repo.name}</h4>
+        <p>${repo.description || 'No description yet.'}</p>
+        <div class="win-links"><a href="${repo.html_url}" target="_blank" rel="noopener">GITHUB ↗</a></div>
+      </div>`);
+  }
+  fetch('https://api.github.com/users/RudraDudhat2509/repos?per_page=100')
+    .then(r => { if(!r.ok) throw 0; return r.json(); })
+    .then(repos => {
+      repos
+        .filter(r => !r.fork && !r.archived)
+        .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+        .forEach(r => {
+          const topics = r.topics || [];
+          if(topics.includes('flagship')) addTab('work-win-main', r);
+          if(topics.includes('showcase')) addTab('work-win-sq', r);
+        });
+    })
+    .catch(() => {});
+})();
+
 /* ---------- detail modals ---------- */
 const DETAILS = {
-  diffprompt: {tag:'FLAGSHIP · LIVE ON PYPI', title:'diffprompt', html:`
+  diffprompt: {tag:'LIVE ON PYPI', title:'diffprompt', html:`
     <h4>The problem</h4><p>Prompt changes ship without tests. A reworded system prompt can silently change behavior across thousands of requests, and nobody notices until users do.</p>
     <h4>Architecture</h4><ul>
       <li>Prompt versions run against a fixed test suite of inputs, outputs captured per version.</li>
@@ -776,17 +856,28 @@ const DETAILS = {
       <li>Clustering over pairwise cosine distance: maps to how humans perceive behavior change.</li>
     </ul>
     <div class="m-links"><a href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener">PyPI ↗</a><a href="https://github.com/RudraDudhat2509/diffprompt" target="_blank" rel="noopener">GitHub ↗</a></div>`},
-  cascade: {tag:'MULTI-AGENT BACKEND', title:'Cascade AI', html:`
-    <h4>The problem</h4><p>Multi-agent backends die quietly: one route degrades and the whole pipeline returns garbage with a 200 status.</p>
+  brok: {tag:'PUBLIC · DETERMINISTIC MCP', title:'Brok', html:`
+    <h4>The problem</h4><p>Most "AI architecture review" is an LLM guessing at capacity numbers it was never grounded in — confident-sounding, unverifiable, wrong half the time.</p>
     <h4>Architecture</h4><ul>
-      <li>Router agent on Firebase classifies each request and dispatches to specialist agents.</li>
-      <li><b>Self-healing routing</b>: every route is health-scored; when one degrades, the router re-dispatches to a fallback path instead of failing the request.</li>
-      <li><b>Per-user memory</b> in Firestore namespaces, so context survives across sessions and agents.</li>
+      <li><b>Zero LLM in the reasoning path</b>: a 53-entry cited capacity knowledge base plus Little's Law estimation does the actual math. The caller handles natural-language parsing; the core engine stays fully deterministic.</li>
+      <li>Latency and cost lenses translate raw estimates into what an engineer actually decides on.</li>
+      <li>A 5-rule anti-pattern linter flags common design mistakes before they ship.</li>
+      <li><b>Abstains instead of guessing</b>: when a design falls outside its model, Brok says so instead of hallucinating a number.</li>
     </ul>
     <h4>Key decisions</h4><ul>
-      <li>Routing table as data, not code: agents can be swapped without redeploying.</li>
-      <li>Firestore over in-memory state: durability beats latency for user memory.</li>
-    </ul>`},
+      <li>Deterministic engine over an LLM judge: reviewable, reproducible, free to run.</li>
+      <li>Published an honest golden-set benchmark (100/100/0/100/100) and a three-way comparison against LLM baselines instead of just asserting it works.</li>
+    </ul>
+    <div class="m-links"><a href="https://github.com/RudraDudhat2509/brok" target="_blank" rel="noopener">GitHub ↗</a></div>`},
+  cacheguard: {tag:'OPEN BENCHMARK · LITELLM HOOK', title:'CacheGuard', html:`
+    <h4>The problem</h4><p>Semantic caches return "close enough" answers silently. Nobody had measured how often "close enough" is actually wrong.</p>
+    <h4>Architecture</h4><ul>
+      <li>Built the <b>first independent open benchmark</b> of semantic cache false-hit rates, on QQP: 10.5% wrong answers at a 0.80 similarity threshold — consistent with AWS's own published ~9% figure.</li>
+      <li>Ships as a <b>drop-in LiteLLM hook</b> with OpenTelemetry spans, so it plugs into an existing cache layer instead of replacing it.</li>
+      <li>A free local judge sits in front of cache hits and fails safe when it's unsure.</li>
+    </ul>
+    <h4>Results</h4><p>Cuts wrong cached answers 61.2% while keeping 86.9% of legitimate hits.</p>
+    <div class="m-links"><a href="https://github.com/RudraDudhat2509/cacheguard" target="_blank" rel="noopener">GitHub ↗</a></div>`},
   optiquant: {tag:'ML TRADING', title:'OptiQuant', html:`
     <h4>The problem</h4><p>Trading models that nobody can explain do not survive contact with real money.</p>
     <h4>Architecture</h4><ul>
@@ -798,31 +889,6 @@ const DETAILS = {
     </ul>
     <h4>Results</h4><p>28.16% CAGR, 1.05 Sharpe. Deployed, not backtested-and-abandoned.</p>
     <div class="m-links"><a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank" rel="noopener">GitHub ↗</a></div>`},
-  outreach: {tag:'AGENTIC AUTOMATION', title:'Personal Outreach Engine', html:`
-    <h4>The problem</h4><p>Cold outreach at scale either sounds like a bot or takes hours per batch.</p>
-    <h4>Architecture</h4><p>A LangGraph state machine with a hard human gate:</p><ul>
-      <li>Scraper node pulls LinkedIn and company pages for context.</li>
-      <li>Filter node applies role criteria, dropping bad-fit targets early.</li>
-      <li>Drafting node (Groq for fast, cheap generation) writes a personalised email per target.</li>
-      <li><b>Human-in-the-loop gate</b>: every draft lands in Gmail for approval. Nothing sends without sign-off.</li>
-    </ul>
-    <h4>Key decisions</h4><ul>
-      <li>Approval inside Gmail instead of a custom UI: zero new tools to check.</li>
-      <li>Human gate as a graph node, not an afterthought: the machine cannot bypass it.</li>
-    </ul>
-    <div class="m-links"><a href="https://github.com/RudraDudhat2509/personal-outreach-engine" target="_blank" rel="noopener">GitHub ↗</a></div>`},
-  altagic: {tag:'@ ALTAGIC · UNDER NDA', title:'Automation Systems', html:`
-    <h4>What can be said</h4><p>Agentic automation systems with AI in the loop, built for reliability and running in production, daily, for real operations.</p>
-    <h4>Stack</h4><p>n8n · WhatsApp Business API · Claude · CloseBot</p>
-    <h4>What cannot be said</h4><p>Clients, metrics, internals, architecture. The NDA is thorough and I intend to outlive it.</p>`},
-  drapeme: {tag:'CONTENT PIPELINE', title:'Commerce Content Engine', html:`
-    <h4>The problem</h4><p>Product listicles take hours of manual copywriting and layout per piece.</p>
-    <h4>Architecture</h4><ul>
-      <li>Storefront product feed in: titles, images, attributes.</li>
-      <li>GPT copywriting per product, tone-matched to the brand.</li>
-      <li>Image generation and HTML rendering produce a publish-ready listicle.</li>
-    </ul>
-    <h4>Outcome</h4><p>End-to-end automated: feed in, finished listicle out, no manual steps in between.</p>`},
   'xp-altagic': {tag:'MAY 2026 → NOW · REMOTE', title:'AI Automations Intern, Altagic', html:`
     <h4>What I do</h4><ul>
       <li>Design and ship agentic automation workflows that run in production daily.</li>
@@ -865,7 +931,7 @@ addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 /* ---------- recruiter speedrun ---------- */
 const SR_STOPS = [
   ['.hero-card',  'THE ESSENTIALS · IIT BHILAI · CGPA 9.06'],
-  ['.flagship',   'FLAGSHIP · DIFFPROMPT, LIVE ON PYPI'],
+  ['.work-win',   'THE WORK · 4 SHIPPED BUILDS'],
   ['.oss-stats',  'PROOF OF WORK · OSS + 1.5L IMPRESSIONS'],
   ['.xp-list',    'EXPERIENCE · ALTAGIC + 2 LEAD ROLES'],
   ['#contact',    'FINAL BOSS · THE INBOX']
