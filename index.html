@@ -23,7 +23,14 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden;font-optical-sizing:auto;font-kerning:normal;font-variant-ligatures:common-ligatures contextual;}
+/* Fraunces carries an opsz 9..144 axis that was already being downloaded and
+   never used. Display sizes take the high end for finer hairlines; small text
+   takes the low end so it stays sturdy. */
+.hero-h1,.sec-title{font-variation-settings:'opsz' 120;text-wrap:balance;}
+.label,.mono,.status-pill{font-variant-numeric:tabular-nums;}
+/* Stops a single word dangling on the last line of a paragraph. */
+p,blockquote,.mdesc,.sec-intro{text-wrap:pretty;}
 ::selection{background:var(--terra);color:var(--paper);}
 img{display:block;}
 a{color:inherit;}
@@ -349,9 +356,9 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
   <div class="deco blob slow" style="width:120px;height:120px;bottom:12%;left:-30px;"></div>
   <div class="wrap hero-grid" style="position:relative;z-index:1;">
     <div>
-      <div class="status-pill reveal in"><span class="dot"></span><span id="status-line">SHIPPING AT ALTAGIC · IIT BHILAI '28</span></div>
+      <div class="status-pill reveal in"><span class="dot"></span><span id="status-line">SHIPPING AT ALTAGIC · IIT BHILAI ’28</span></div>
       <h1 class="hero-h1"><span class="ln"><span>I build AI agents.</span></span><span class="ln"><span>Then I break them<span class="punct">,</span></span></span><span class="ln"><span><em>professionally.</em></span></span></h1>
-      <p class="hero-sub reveal in d2">I take AI from demo to production: agents, automations, and the unglamorous debugging in between. Author of <strong>diffprompt</strong>, live on PyPI. Friends call me funny, ambitious, and delusional. They're right about all three.</p>
+      <p class="hero-sub reveal in d2">I take AI from demo to production: agents, automations, and the unglamorous debugging in between. Author of <strong>diffprompt</strong>, live on PyPI. Friends call me funny, ambitious, and delusional. They’re right about all three.</p>
       <div class="hero-acts reveal in d3">
         <a class="btn" href="#work">See the work →</a>
         <a class="btn-ghost mono" href="https://pypi.org/project/diffprompt/" target="_blank">$ pip install diffprompt</a>
@@ -359,9 +366,9 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
     </div>
     <div class="hero-card reveal in d2">
       <div class="row"><span class="k">Currently</span><span class="v">AI Automations Intern<small>Altagic · remote</small></span></div>
-      <div class="row"><span class="k">Studying</span><span class="v">DSAI, IIT Bhilai<small>CGPA 9.06 · class of '28</small></span></div>
+      <div class="row"><span class="k">Studying</span><span class="v">DSAI, IIT Bhilai<small>CGPA 9.06 · class of ’28</small></span></div>
       <div class="row"><span class="k">Focus</span><span class="v">Production AI<small>agents · automation · debugging at 2am</small></span></div>
-      <div class="row"><span class="k">Status</span><span class="v" id="hero-status">probably awake<small>it's always 2am somewhere</small></span></div>
+      <div class="row"><span class="k">Status</span><span class="v" id="hero-status">probably awake<small>it’s always 2am somewhere</small></span></div>
     </div>
   </div>
 </section>
@@ -380,7 +387,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
     <div class="about-grid">
     <div class="about-copy reveal d1">
       <p class="first">Second year at IIT Bhilai, studying Data Science &amp; AI. I got into this field the normal way: built things, broke things, then realised the actual job is keeping things alive <strong>in production</strong>. Now I build AI systems end to end: agents, automations, data pipelines, and the 2am debugging sessions nobody posts about.</p>
-      <p>By day I ship client-facing systems at <strong>Altagic</strong>. By night I maintain <strong>diffprompt</strong>, contribute to open source AI tooling, and queue Valorant with the boys. Everything I build gets stress-tested before it ships, because I'd rather break it than let a user do it.</p>
+      <p>By day I ship client-facing systems at <strong>Altagic</strong>. By night I maintain <strong>diffprompt</strong>, contribute to open source AI tooling, and queue Valorant with the boys. Everything I build gets stress-tested before it ships, because I’d rather break it than let a user do it.</p>
       <p>I coordinate placements for 200+ students at CCPS, lead the AI/ML domain at OpenLake, and hold the strong opinion that DSA grind scores tell you almost nothing about whether someone can actually build.</p>
     </div>
     <div class="photo-stack reveal d2">
@@ -413,7 +420,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
         <div class="win-prompt copyable" id="pipbar" title="click to copy">$ pip install diffprompt<span class="win-cursor"></span></div>
         <div class="win-status">LIVE ON PYPI</div>
         <h4>diffprompt</h4>
-        <p>"git diff for your prompt's behavior." LLM-as-judge cascades score behavioral divergence between prompt versions; HDBSCAN clustering surfaces semantic drift so a regression shows up as a cluster shift, not a cosine number nobody trusts.</p>
+        <p>“git diff for your prompt’s behavior.” LLM-as-judge cascades score behavioral divergence between prompt versions; HDBSCAN clustering surfaces semantic drift so a regression shows up as a cluster shift, not a cosine number nobody trusts.</p>
         <div class="win-stats"><div class="win-stat"><b>48</b><span>tests</span></div><div class="win-stat"><b>3.10–3.12</b><span>CI matrix</span></div><div class="win-stat"><b>CLI + lib</b><span>CI-ready</span></div></div>
         <div class="win-links"><a href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener">PYPI ↗</a><a href="https://github.com/RudraDudhat2509/diffprompt" target="_blank" rel="noopener">GITHUB ↗</a><span class="win-more">FULL CASE STUDY →</span></div>
       </div>
@@ -421,7 +428,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
         <div class="win-prompt">$ brok review system.yaml<span class="win-cursor"></span></div>
         <div class="win-status">PUBLIC · LAUNCH-READY</div>
         <h4>Brok</h4>
-        <p>MCP that reviews system designs with zero LLM in the reasoning path: a 53-entry cited capacity knowledge base, Little's Law estimation, latency/cost lenses, and a 5-rule anti-pattern linter. Abstains instead of guessing.</p>
+        <p>MCP that reviews system designs with zero LLM in the reasoning path: a 53-entry cited capacity knowledge base, Little’s Law estimation, latency/cost lenses, and a 5-rule anti-pattern linter. Abstains instead of guessing.</p>
         <div class="win-stats"><div class="win-stat"><b>100/100/0/100/100</b><span>golden-set</span></div><div class="win-stat"><b>0</b><span>LLM calls in engine</span></div></div>
         <div class="win-links"><a href="https://github.com/RudraDudhat2509/brok" target="_blank" rel="noopener">GITHUB ↗</a><span class="win-more">FULL CASE STUDY →</span></div>
       </div>
@@ -459,7 +466,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
       </div>
       <div class="win-pane active" data-pane="mimic"><div class="win-prompt">$ mimic eval --against gpt-4<span class="win-cursor"></span></div><h4>mimic-eval</h4><p>Distills expensive LLM-judge decisions into cheap deterministic code — agrees with the real judge ~90-95% of the time. HaluEval kappa 0.96.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/mimic-eval" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
       <div class="win-pane" data-pane="nojargon"><div class="win-prompt">$ nojargon scan --tab active<span class="win-cursor"></span></div><h4>nojargon</h4><p>Browser extension: on-page due-diligence lens that flags empty buzzwords and tells you what a company actually does.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/nojargon" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
-      <div class="win-pane" data-pane="ragbait"><div class="win-prompt">$ ragbait watch<span class="win-cursor"></span></div><h4>ragbait</h4><p>"You opened Instagram again. Enjoy your McDonald's application." Watches your active window, no mercy.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/ragbait" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
+      <div class="win-pane" data-pane="ragbait"><div class="win-prompt">$ ragbait watch<span class="win-cursor"></span></div><h4>ragbait</h4><p>“You opened Instagram again. Enjoy your McDonald’s application.” Watches your active window, no mercy.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/ragbait" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
       <div class="win-pane" data-pane="iceman"><div class="win-prompt">$ iceman predict<span class="win-cursor"></span></div><h4>iceman</h4><p>A model that predicts when Drake drops Icemannnnn. Yes, this is a real repo. Yes, it counts as data science.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/iceman" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
       <div class="win-pane" data-pane="ctxbridge"><div class="win-prompt">$ ctxbridge compress<span class="win-cursor"></span></div><h4>ctxbridge</h4><p>Compress any LLM conversation into one portable context prompt, pick up exactly where you left off in a new session.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/ctxbridge" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
       <div class="win-pane" data-pane="network"><div class="win-prompt">$ python analyze.py<span class="win-cursor"></span></div><h4>LinkedIn Network Analysis</h4><p>Growth velocity, company concentration, structural leverage from exported connection data. The 1.5L impressions were not an accident.</p><div class="win-links"><a href="https://github.com/RudraDudhat2509/LinkedInNetworkAnalysis" target="_blank" rel="noopener">GITHUB ↗</a></div></div>
@@ -481,7 +488,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
     <div class="xp-list">
       <div class="xp reveal" data-detail="xp-altagic"><div class="org">Altagic<small>AI Automations Intern</small></div><div class="what">Building production automation systems: agentic workflows, AI-in-the-loop pipelines, internal tooling. Stack: n8n, WhatsApp Business API, Claude, CloseBot. <span class="nda">[ specifics under NDA ]</span></div><div class="when">MAY 2026 → NOW</div></div>
       <div class="xp reveal d1" data-detail="xp-ccps"><div class="org">CCPS, IIT Bhilai<small>Placement Coordinator</small></div><div class="what">Coordinating placements for 200+ students across 30+ companies. Equal parts logistics, diplomacy, and crisis management at scale.</div><div class="when">2025 → NOW</div></div>
-      <div class="xp reveal d2" data-detail="xp-openlake"><div class="org">OpenLake, IIT Bhilai<small>Domain Lead, AI/ML</small></div><div class="what">Leading the AI/ML domain of IIT Bhilai's open source community. Mentoring builds, reviewing code, recruiting contributors into open source.</div><div class="when">2025 → NOW</div></div>
+      <div class="xp reveal d2" data-detail="xp-openlake"><div class="org">OpenLake, IIT Bhilai<small>Domain Lead, AI/ML</small></div><div class="what">Leading the AI/ML domain of IIT Bhilai’s open source community. Mentoring builds, reviewing code, recruiting contributors into open source.</div><div class="when">2025 → NOW</div></div>
     </div>
   </div>
 </section>
@@ -490,7 +497,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 <section id="oss">
   <div class="wrap">
     <div class="sec-head reveal"><h2 class="sec-title">Open source</h2><span class="label">LIVE FROM THE GITHUB API</span></div>
-    <p class="sec-intro reveal">Where I'm contributing right now: AI tooling and infrastructure used by real teams. This list updates itself, because hardcoding your own PRs is embarrassing.</p>
+    <p class="sec-intro reveal">Where I’m contributing right now: AI tooling and infrastructure used by real teams. This list updates itself, because hardcoding your own PRs is embarrassing.</p>
     <div class="oss-stats reveal">
       <a class="oss-stat" href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" rel="noopener"><div class="n">1.5L+</div><div class="l">LinkedIn impressions · last 90 days ↗</div></a>
       <a class="oss-stat" href="https://github.com/RudraDudhat2509" target="_blank" rel="noopener"><div class="n">garak · LiteLLM</div><div class="l">upstream contributions ↗</div></a>
@@ -572,18 +579,18 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
       <div class="menu-block">
         <div class="mi"><div class="menu-item"><span class="name">Paneer Tikka Masala</span><span class="dots"></span><span class="tag">Signature</span></div><span class="mdesc">the standard against which all restaurants are judged</span></div>
         <div class="mi"><div class="menu-item"><span class="name">Butter Garlic Naan</span><span class="dots"></span><span class="tag">Non-negotiable</span></div><span class="mdesc">ordered in pairs. minimum.</span></div>
-        <div class="mi"><div class="menu-item"><span class="name">McDonald's</span><span class="dots"></span><span class="tag">The go-to</span></div><span class="mdesc">a fine dining establishment, and I'm tired of pretending it's not</span></div>
+        <div class="mi"><div class="menu-item"><span class="name">McDonald’s</span><span class="dots"></span><span class="tag">The go-to</span></div><span class="mdesc">a fine dining establishment, and I’m tired of pretending it’s not</span></div>
         <div class="mi"><div class="menu-item"><span class="name">Diet Coke</span><span class="dots"></span><span class="tag">Pairing</span></div><span class="mdesc">chilled. pairs with everything above. yes, everything.</span></div>
         <div class="mi"><div class="menu-item"><span class="name">Samosa, mayo &amp; ketchup</span><span class="dots"></span><span class="tag" style="color:var(--olive);">House controversy</span></div><span class="mdesc">he will defend this combination in court</span></div>
         <div class="mi"><div class="menu-item"><span class="name">Chai</span><span class="dots"></span><span class="tag">Bottomless</span></div><span class="mdesc">the real production database</span></div>
       </div>
       <div class="menu-specials">
-        <div class="sp-head">TODAY'S SPECIALS · AVAILABILITY</div>
+        <div class="sp-head">TODAY’S SPECIALS · AVAILABILITY</div>
         <div class="sp-grid">
           <div class="mi"><div class="menu-item"><span class="name">Winter Internship 2026</span><span class="dots"></span><span class="tag" style="color:var(--terra);">Taking orders</span></div><span class="mdesc">AI engineering, FDE, production systems. 6 months, remote or on-site.</span></div>
           <div class="mi"><div class="menu-item"><span class="name">AI automation builds</span><span class="dots"></span><span class="tag">Limited seats</span></div><span class="mdesc">freelance, scoped, shipped. inquire within.</span></div>
           <div class="mi"><div class="menu-item"><span class="name">Open source collabs</span><span class="dots"></span><span class="tag" style="color:var(--olive);">Always on</span></div><span class="mdesc">agents, evals, infra. PRs over promises.</span></div>
-          <div class="mi"><div class="menu-item"><span class="name">Tea chats</span><span class="dots"></span><span class="tag" style="color:var(--olive);">Free</span></div><span class="mdesc">the tea is metaphorical unless you're in Navi Mumbai</span></div>
+          <div class="mi"><div class="menu-item"><span class="name">Tea chats</span><span class="dots"></span><span class="tag" style="color:var(--olive);">Free</span></div><span class="mdesc">the tea is metaphorical unless you’re in Navi Mumbai</span></div>
         </div>
       </div>
       <div class="menu-foot">FUELED BY TEA · COFFEE IS A PERSONALITY, TEA IS A LIFESTYLE<br/>SERVICE HOURS: 11AM TO 2AM, SHARP</div>
@@ -597,8 +604,8 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
   <div class="wrap">
     <div class="sec-head reveal"><h2 class="sec-title">The takes desk <em>served hot</em></h2><span class="label">OPINIONS ARE MY OWN, UNFORTUNATELY FOR EVERYONE</span></div>
     <div class="takes-grid">
-      <div class="take reveal"><span class="label">TECH · FILED UNDER: HIRING</span><blockquote>"DSA grind scores tell you almost nothing about whether someone can actually build and ship."</blockquote><p class="defense">Exhibit A: everything on this page was built, not LeetCoded.</p></div>
-      <div class="take reveal d1"><span class="label">CULINARY · FILED UNDER: COURAGE</span><blockquote>"Samosa with mayo and ketchup is genuinely good and the backlash is performative."</blockquote><p class="defense">Try it before you report me.</p></div>
+      <div class="take reveal"><span class="label">TECH · FILED UNDER: HIRING</span><blockquote>“DSA grind scores tell you almost nothing about whether someone can actually build and ship.”</blockquote><p class="defense">Exhibit A: everything on this page was built, not LeetCoded.</p></div>
+      <div class="take reveal d1"><span class="label">CULINARY · FILED UNDER: COURAGE</span><blockquote>“Samosa with mayo and ketchup is genuinely good and the backlash is performative.”</blockquote><p class="defense">Try it before you report me.</p></div>
     </div>
   </div>
 </section>
@@ -620,12 +627,12 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
     <div class="lyric-grid">
       <div class="lyric terra reveal">
         <div class="head"><div class="art">01</div><div><div class="track">LOCK IN (feat. Deadlines)</div><div class="artist">Rudra Dudhat · Singles, 2026</div></div></div>
-        <div class="bars"><span class="dim">They asked how the grind's going</span>Stick to the plan. Not your mood.<span class="dim">On repeat since semester one</span></div>
+        <div class="bars"><span class="dim">They asked how the grind’s going</span>Stick to the plan. Not your mood.<span class="dim">On repeat since semester one</span></div>
         <div class="brandrow"><span class="note">♪</span>RD·FM</div>
       </div>
       <div class="lyric olive reveal d1">
         <div class="head"><div class="art">02</div><div><div class="track">PROVE THEM WRONG</div><div class="artist">Rudra Dudhat · Singles, 2026</div></div></div>
-        <div class="bars"><span class="dim">Alarm went off at 8</span>Didn't wake up to be average.<span class="dim">(snoozed it anyway)</span></div>
+        <div class="bars"><span class="dim">Alarm went off at 8</span>Didn’t wake up to be average.<span class="dim">(snoozed it anyway)</span></div>
         <div class="brandrow"><span class="note">♪</span>RD·FM</div>
       </div>
       <div class="lyric brass reveal d2">
@@ -641,7 +648,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 <footer id="contact">
   <div class="wrap">
     <h2 class="foot-h reveal">Unapologetically<br/><em>myself.</em></h2>
-    <p class="foot-sub reveal d1">That's the whole pitch. If you're building AI that has to survive real users, or just want to argue about the samosa thing, my inbox is open.</p>
+    <p class="foot-sub reveal d1">That’s the whole pitch. If you’re building AI that has to survive real users, or just want to argue about the samosa thing, my inbox is open.</p>
     <div class="foot-links reveal d2">
       <a href="mailto:contact.rdudhat@gmail.com">Email</a>
       <a href="https://github.com/RudraDudhat2509" target="_blank">GitHub</a>
@@ -859,7 +866,7 @@ const DETAILS = {
   brok: {tag:'PUBLIC · DETERMINISTIC MCP', title:'Brok', html:`
     <h4>The problem</h4><p>Most "AI architecture review" is an LLM guessing at capacity numbers it was never grounded in — confident-sounding, unverifiable, wrong half the time.</p>
     <h4>Architecture</h4><ul>
-      <li><b>Zero LLM in the reasoning path</b>: a 53-entry cited capacity knowledge base plus Little's Law estimation does the actual math. The caller handles natural-language parsing; the core engine stays fully deterministic.</li>
+      <li><b>Zero LLM in the reasoning path</b>: a 53-entry cited capacity knowledge base plus Little’s Law estimation does the actual math. The caller handles natural-language parsing; the core engine stays fully deterministic.</li>
       <li>Latency and cost lenses translate raw estimates into what an engineer actually decides on.</li>
       <li>A 5-rule anti-pattern linter flags common design mistakes before they ship.</li>
       <li><b>Abstains instead of guessing</b>: when a design falls outside its model, Brok says so instead of hallucinating a number.</li>
