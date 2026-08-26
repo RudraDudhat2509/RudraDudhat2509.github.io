@@ -260,27 +260,20 @@ a.oss-stat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(60,45,20
 .lyric.slate .art{background:#33424A;color:#EAF0F2;}
 
 /* ============ MENU ============ */
-#menu{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+#availability{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .menu-card{max-width:940px;margin:0 auto;background:var(--paper);border:1px solid var(--line2);border-radius:4px;padding:54px 62px;box-shadow:0 24px 60px rgba(60,45,20,.12);position:relative;}
-.menu-block,.menu-specials .sp-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:64px;row-gap:4px;align-items:start;}
+.menu-block{display:grid;grid-template-columns:1fr 1fr;column-gap:64px;row-gap:4px;align-items:start;}
 .mi{margin-bottom:18px;}
 .mi .menu-item{margin-bottom:0;}
 .mi .mdesc{display:block;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink2);margin-top:3px;}
-@media(max-width:760px){.menu-block,.menu-specials .sp-grid{grid-template-columns:1fr;}}
+@media(max-width:760px){.menu-block{grid-template-columns:1fr;}}
 .menu-card::before{content:'';position:absolute;inset:10px;border:1px solid var(--line);border-radius:2px;pointer-events:none;}
-.menu-specials{margin-top:34px;padding-top:28px;border-top:3px double var(--line2);}
-.menu-specials .sp-head{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--terra);text-align:center;margin-bottom:24px;}
-.menu-head{text-align:center;margin-bottom:36px;}
-.menu-head .est{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;}
-.menu-head h3{font-family:var(--serif);font-weight:500;font-size:34px;margin:10px 0 6px;}
-.menu-head .sub{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--muted);}
 .menu-item{display:flex;align-items:baseline;gap:12px;margin-bottom:22px;}
 .menu-item .name{font-family:var(--serif);font-weight:550;font-size:18px;white-space:nowrap;}
 .menu-item .dots{flex:1;border-bottom:2px dotted var(--line2);transform:translateY(-4px);}
 .menu-item .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--terra);text-transform:uppercase;white-space:nowrap;}
 .menu-item .desc{display:block;font-size:14px;color:var(--ink2);font-style:italic;margin-top:4px;font-family:var(--serif);}
 .menu-block{margin-bottom:22px;}
-.menu-foot{text-align:center;margin-top:34px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;}
 
 /* ============ HOT TAKES ============ */
 .takes-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
@@ -343,7 +336,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
       <li><a href="#work">Work</a></li>
       <li><a href="#oss">OSS</a></li>
       <li><a href="#collection">Collection</a></li>
-      <li><a href="#menu">Menu</a></li>
+      <li><a href="#availability">Availability</a></li>
       <li><a href="blog.html">Lore</a></li>
       <li><a href="notes.html">Notes</a></li>
       <li><a href="#" id="speedrun-btn">▸ Recruiter mode</a></li>
@@ -567,35 +560,17 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 </section>
 
 <!-- ════════ MENU ════════ -->
-<section id="menu">
-  <div class="deco ring" style="width:480px;height:480px;bottom:-260px;left:-200px;"></div>
+<section id="availability">
   <div class="deco blob slow" style="width:160px;height:160px;top:10%;right:4%;"></div>
   <div class="wrap">
-    <div class="sec-head reveal"><h2 class="sec-title">The Menu</h2><span class="label">CHEF DOES NOT TAKE FEEDBACK</span></div>
+    <div class="sec-head reveal"><h2 class="sec-title">Availability</h2><span class="label">WHAT I’M OPEN TO RIGHT NOW</span></div>
     <div class="menu-card reveal">
-      <div class="menu-head">
-        <div class="est">EST. 2006 · NAVI MUMBAI · DELIVERY ONLY</div>
-        <h3>Chef Rudra</h3>
-        <div class="sub">a tasting menu of strong opinions</div>
-      </div>
       <div class="menu-block">
-        <div class="mi"><div class="menu-item"><span class="name">Paneer Tikka Masala</span><span class="dots"></span><span class="tag">Signature</span></div><span class="mdesc">the standard against which all restaurants are judged</span></div>
-        <div class="mi"><div class="menu-item"><span class="name">Butter Garlic Naan</span><span class="dots"></span><span class="tag">Non-negotiable</span></div><span class="mdesc">ordered in pairs. minimum.</span></div>
-        <div class="mi"><div class="menu-item"><span class="name">McDonald’s</span><span class="dots"></span><span class="tag">The go-to</span></div><span class="mdesc">a fine dining establishment, and I’m tired of pretending it’s not</span></div>
-        <div class="mi"><div class="menu-item"><span class="name">Diet Coke</span><span class="dots"></span><span class="tag">Pairing</span></div><span class="mdesc">chilled. pairs with everything above. yes, everything.</span></div>
-        <div class="mi"><div class="menu-item"><span class="name">Samosa, mayo &amp; ketchup</span><span class="dots"></span><span class="tag" style="color:var(--olive);">House controversy</span></div><span class="mdesc">he will defend this combination in court</span></div>
-        <div class="mi"><div class="menu-item"><span class="name">Chai</span><span class="dots"></span><span class="tag">Bottomless</span></div><span class="mdesc">the real production database</span></div>
+        <div class="mi"><div class="menu-item"><span class="name">Winter Internship 2026</span><span class="dots"></span><span class="tag" style="color:var(--terra);">Taking orders</span></div><span class="mdesc">AI engineering, FDE, production systems. 6 months, remote or on-site.</span></div>
+        <div class="mi"><div class="menu-item"><span class="name">AI automation builds</span><span class="dots"></span><span class="tag">Limited seats</span></div><span class="mdesc">freelance, scoped, shipped. inquire within.</span></div>
+        <div class="mi"><div class="menu-item"><span class="name">Open source collabs</span><span class="dots"></span><span class="tag" style="color:var(--olive);">Always on</span></div><span class="mdesc">agents, evals, infra. PRs over promises.</span></div>
+        <div class="mi"><div class="menu-item"><span class="name">Tea chats</span><span class="dots"></span><span class="tag" style="color:var(--olive);">Free</span></div><span class="mdesc">the tea is metaphorical unless you’re in Navi Mumbai</span></div>
       </div>
-      <div class="menu-specials">
-        <div class="sp-head">TODAY’S SPECIALS · AVAILABILITY</div>
-        <div class="sp-grid">
-          <div class="mi"><div class="menu-item"><span class="name">Winter Internship 2026</span><span class="dots"></span><span class="tag" style="color:var(--terra);">Taking orders</span></div><span class="mdesc">AI engineering, FDE, production systems. 6 months, remote or on-site.</span></div>
-          <div class="mi"><div class="menu-item"><span class="name">AI automation builds</span><span class="dots"></span><span class="tag">Limited seats</span></div><span class="mdesc">freelance, scoped, shipped. inquire within.</span></div>
-          <div class="mi"><div class="menu-item"><span class="name">Open source collabs</span><span class="dots"></span><span class="tag" style="color:var(--olive);">Always on</span></div><span class="mdesc">agents, evals, infra. PRs over promises.</span></div>
-          <div class="mi"><div class="menu-item"><span class="name">Tea chats</span><span class="dots"></span><span class="tag" style="color:var(--olive);">Free</span></div><span class="mdesc">the tea is metaphorical unless you’re in Navi Mumbai</span></div>
-        </div>
-      </div>
-      <div class="menu-foot">FUELED BY TEA · COFFEE IS A PERSONALITY, TEA IS A LIFESTYLE<br/>SERVICE HOURS: 11AM TO 2AM, SHARP</div>
     </div>
   </div>
 </section>
@@ -745,7 +720,7 @@ const ACH = {
   konami:  ['KONAMI CODE', 'You absolute legend. The samosa take is now legally binding.'],
   complete:['100% COMPLETION', 'You scrolled the whole thing. Gen Z attention span: disproven.'],
   poke:    ['STOP POKING', 'The name does nothing. The samosa take remains canon.'],
-  menu:    ['TABLE FOR ONE', 'You read the menu. The chef thanks you. The chef is me.'],
+  avail:   ['STILL READING', 'You read the whole availability list. Most people just scroll past.'],
   taste:   ['CERTIFIED TASTE', 'You paused the carousel to actually look. Respect.'],
   speedrun:['RECRUITER ANY%', 'Full candidate review in 12 seconds. HR could never.']
 };
@@ -775,8 +750,8 @@ addEventListener('scroll', () => {
 /* name poking */
 let pokes = 0;
 document.querySelector('.nav-name').addEventListener('click', () => { if(++pokes >= 5){ pokes = 0; unlock('poke'); } });
-/* menu read */
-new IntersectionObserver((es,obs) => es.forEach(e => { if(e.isIntersecting){ setTimeout(() => unlock('menu'), 2500); obs.disconnect(); } }), {threshold:.6}).observe(document.querySelector('.menu-card'));
+/* availability read */
+new IntersectionObserver((es,obs) => es.forEach(e => { if(e.isIntersecting){ setTimeout(() => unlock('avail'), 2500); obs.disconnect(); } }), {threshold:.6}).observe(document.querySelector('.menu-card'));
 /* carousel pause */
 document.querySelectorAll('.car-row').forEach(r => {
   let h; r.addEventListener('mouseenter', () => h = setTimeout(() => unlock('taste'), 2000));
