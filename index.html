@@ -238,7 +238,7 @@ a.oss-stat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(60,45,20
 #repeat .sec-title{color:var(--bg);}
 #repeat .label{color:rgba(247,241,229,.5);}
 #repeat .sec-intro{color:rgba(247,241,229,.6);}
-.lyric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.lyric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
 .lyric{border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:26px;min-height:330px;transition:transform .3s cubic-bezier(.22,1,.36,1);}
 .lyric:hover{transform:translateY(-6px) rotate(-.5deg);}
 .lyric .head{display:flex;align-items:center;gap:11px;}
@@ -255,6 +255,9 @@ a.oss-stat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(60,45,20
 .lyric.olive .art{background:#2C4126;color:#EDF3E8;}
 .lyric.brass{background:#2A2118;color:#F0DDA8;}
 .lyric.brass .art{background:#C8922F;color:#2A2118;}
+/* Not --ink: the section itself is --ink, so that colour is invisible here. */
+.lyric.slate{background:#4A5A63;color:#EAF0F2;}
+.lyric.slate .art{background:#33424A;color:#EAF0F2;}
 
 /* ============ MENU ============ */
 #menu{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -621,23 +624,28 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 <!-- ════════ ON REPEAT ════════ -->
 <section id="repeat">
   <div class="wrap">
-    <div class="sec-head reveal"><h2 class="sec-title">On repeat</h2><span class="label">RD·FM · SELF-RELEASED · 2026</span></div>
-    <p class="sec-intro reveal">The internal soundtrack. Three singles, zero streams, full conviction.</p>
+    <div class="sec-head reveal"><h2 class="sec-title">On repeat</h2><span class="label">ACTUAL ROTATION · 2026</span></div>
+    <p class="sec-intro reveal">Four tracks I have not gotten tired of. No curation, just what is stuck.</p>
     <div class="lyric-grid">
       <div class="lyric terra reveal">
-        <div class="head"><div class="art">01</div><div><div class="track">LOCK IN (feat. Deadlines)</div><div class="artist">Rudra Dudhat · Singles, 2026</div></div></div>
-        <div class="bars"><span class="dim">They asked how the grind’s going</span>Stick to the plan. Not your mood.<span class="dim">On repeat since semester one</span></div>
-        <div class="brandrow"><span class="note">♪</span>RD·FM</div>
+        <div class="head"><div class="art">01</div><div><div class="track">Forever</div><div class="artist">Drake, Kanye West, Lil Wayne &amp; Eminem</div></div></div>
+        <div class="bars">“Last name ever, first name greatest.”</div>
+        <div class="brandrow"><span class="note">♪</span>ON REPEAT</div>
       </div>
       <div class="lyric olive reveal d1">
-        <div class="head"><div class="art">02</div><div><div class="track">PROVE THEM WRONG</div><div class="artist">Rudra Dudhat · Singles, 2026</div></div></div>
-        <div class="bars"><span class="dim">Alarm went off at 8</span>Didn’t wake up to be average.<span class="dim">(snoozed it anyway)</span></div>
-        <div class="brandrow"><span class="note">♪</span>RD·FM</div>
+        <div class="head"><div class="art">02</div><div><div class="track">Till I Collapse</div><div class="artist">Eminem feat. Nate Dogg</div></div></div>
+        <div class="bars">“Sometimes you just feel tired, feel weak, and when you feel weak you feel like you wanna just give up.”</div>
+        <div class="brandrow"><span class="note">♪</span>ON REPEAT</div>
       </div>
       <div class="lyric brass reveal d2">
-        <div class="head"><div class="art">03</div><div><div class="track">UNAPOLOGETICALLY MYSELF</div><div class="artist">Rudra Dudhat · Singles, 2026</div></div></div>
-        <div class="bars"><span class="dim">They said pick two</span>Funny, delusional, ambitious.<span class="dim">I kept all three</span></div>
-        <div class="brandrow"><span class="note">♪</span>RD·FM</div>
+        <div class="head"><div class="art">03</div><div><div class="track">Can’t Tell Me Nothing</div><div class="artist">Kanye West</div></div></div>
+        <div class="bars">“When I woke up I spent that on a necklace.”</div>
+        <div class="brandrow"><span class="note">♪</span>ON REPEAT</div>
+      </div>
+      <div class="lyric slate reveal d2">
+        <div class="head"><div class="art">04</div><div><div class="track">False Prophets</div><div class="artist">J. Cole</div></div></div>
+        <div class="bars">“He’s so bitter he can’t see his own blessings.”</div>
+        <div class="brandrow"><span class="note">♪</span>ON REPEAT</div>
       </div>
     </div>
   </div>
