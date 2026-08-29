@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" sizes="64x64" href="img/monogram-64.png?v=2"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet"/>
 <script data-goatcounter="https://rudra.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
 :root{
@@ -68,6 +68,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,241,229,
 @keyframes drift{0%,100%{transform:translateY(0) translateX(0);}50%{transform:translateY(-30px) translateX(14px);}}
 section{position:relative;overflow:hidden;}
 section > .wrap{position:relative;z-index:1;}
+
+/* ============ PERSONALITY MARKS (three total, on purpose) ============ */
+/* Absolutely NOT placed over .car-row: that element sits outside .wrap and
+   never gets the z-index:1 boost above, so anything overlapping it visibly
+   collides with the moving cards. These live in header whitespace instead. */
+.deco-stamp{position:absolute;pointer-events:none;z-index:0;}
+.deco-stamp rect{fill:none;stroke:var(--terra);stroke-width:2.4;}
+.deco-stamp .st-t{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.6px;fill:var(--terra);}
+.deco-stamp .st-n{font-family:var(--mono);font-size:19px;font-weight:700;letter-spacing:.6px;fill:var(--terra);}
+.deco-ray{position:absolute;pointer-events:none;z-index:0;opacity:.14;}
+.deco-ps{position:absolute;pointer-events:none;z-index:0;opacity:.5;}
+.deco-tag{position:absolute;pointer-events:none;z-index:0;font-family:'Permanent Marker',cursive;font-size:2.4rem;line-height:1;color:var(--terra);opacity:.22;width:max-content;}
 
 /* ============ HERO ============ */
 #hero{padding:170px 0 80px;position:relative;overflow:hidden;}
@@ -394,6 +406,12 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 
 <!-- ════════ WORK ════════ -->
 <section id="work">
+  <svg class="deco-stamp" style="width:104px;height:76px;top:34px;right:36px;opacity:.5;transform:rotate(-6deg);" viewBox="0 0 104 76">
+    <rect x="2" y="2" width="100" height="72"/>
+    <text x="52" y="24" class="st-t" text-anchor="middle">SHIPPED</text>
+    <text x="52" y="46" class="st-n" text-anchor="middle">&#215;4</text>
+    <text x="52" y="62" class="st-t" text-anchor="middle">IN PROD</text>
+  </svg>
   <div class="wrap">
     <div class="sec-head reveal"><h2 class="sec-title">The work</h2><span class="label">SHIPPED, NOT PROTOTYPED</span></div>
     <p class="sec-intro reveal">Four builds, each with a published result. Click a tab to open the file, click through for the full case study.</p>
@@ -503,6 +521,15 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 
 <!-- ════════ COLLECTION ════════ -->
 <section id="collection">
+  <img class="deco-ray" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/384.png"
+       alt="" style="width:130px;top:8px;right:24px;transform:rotate(8deg);">
+  <svg class="deco-ps" style="width:120px;height:30px;top:24px;left:30px;transform:rotate(-3deg);" viewBox="0 0 120 30">
+    <polygon points="15,3 26,24 4,24" fill="none" stroke="#4A9B7F" stroke-width="2.2" stroke-linejoin="round"/>
+    <circle cx="49" cy="15" r="11" fill="none" stroke="#B5532F" stroke-width="2.2"/>
+    <line x1="70" y1="5" x2="87" y2="24" stroke="#5B7FA6" stroke-width="2.4" stroke-linecap="round"/>
+    <line x1="87" y1="5" x2="70" y2="24" stroke="#5B7FA6" stroke-width="2.4" stroke-linecap="round"/>
+    <rect x="98" y="5" width="16" height="16" fill="none" stroke="#A6588A" stroke-width="2.2"/>
+  </svg>
   <div class="wrap">
     <div class="sec-head reveal"><h2 class="sec-title">The Collection</h2><span class="label">ALBUMS · GAMES · ATHLETES · MACHINES</span></div>
     <p class="sec-intro reveal">The taste section. Three lanes, alternating directions, hover to pause and read the commentary.</p>
@@ -574,7 +601,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 
 <!-- ════════ HOT TAKES ════════ -->
 <section id="takes">
-  <div class="deco blob" style="width:140px;height:140px;top:18%;right:7%;"></div>
+  <div class="deco-tag" style="top:20px;right:40px;transform:rotate(-6deg);">RD</div>
   <div class="wrap">
     <div class="sec-head reveal"><h2 class="sec-title">The takes desk <em>served hot</em></h2><span class="label">OPINIONS ARE MY OWN, UNFORTUNATELY FOR EVERYONE</span></div>
     <div class="takes-grid">
@@ -951,6 +978,21 @@ document.querySelectorAll('.ct').forEach(c => {
   c.addEventListener('mouseleave', () => c.style.transform = '');
 });
 /* console */
+/* personality marks: clear the real header text, not a guessed offset.
+   the fixed nav (79px) sits above everything at scroll position zero, so a
+   small hardcoded top risked landing under it on top of also risking the
+   heading. measuring .sec-intro's actual bottom clears both at once. */
+(function () {
+  var intro = document.querySelector('#collection .sec-intro');
+  var ray = document.querySelector('#collection .deco-ray');
+  var ps = document.querySelector('#collection .deco-ps');
+  if (intro && ray && ps) {
+    var y = intro.offsetTop + intro.offsetHeight + 14;
+    ray.style.top = y + 'px';
+    ps.style.top = (y + 4) + 'px';
+  }
+})();
+
 console.log('%cOi. Inspecting, are we?', 'font-size:18px;font-weight:bold;color:#B5532F;');
 console.log('%cEverything here is hand-built. The PRs are real, the CGPA is real, the samosa take is unfortunately also real.\\n→ github.com/RudraDudhat2509', 'font-size:12px;color:#594E3B;');
 </script>
