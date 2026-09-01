@@ -226,8 +226,15 @@ section{padding:88px 0;}
 .car-track{display:flex;gap:16px;width:max-content;animation:carL 45s linear infinite;}
 .car-track.rev{animation-name:carR;animation-duration:52s;}
 .car-row:hover .car-track{animation-play-state:paused;}
-@keyframes carL{to{transform:translateX(-50%);}}
-@keyframes carR{from{transform:translateX(-50%);}to{transform:translateX(0);}}
+/* will-change only while the row is actually on screen (toggled by JS via
+   IntersectionObserver below) -- holding it permanently reserves a GPU layer
+   for three long-running tracks even while scrolled far out of view. */
+.car-track.in-view{will-change:transform;}
+@keyframes carL{to{transform:translate3d(-50%,0,0);}}
+@keyframes carR{from{transform:translate3d(-50%,0,0);}to{transform:translate3d(0,0,0);}}
+@media (prefers-reduced-motion: reduce){
+  .car-track{animation:none!important;}
+}
 .ct{position:relative;flex:none;height:190px;border-radius:8px;overflow:hidden;box-shadow:0 12px 30px rgba(40,30,12,.22);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s;}
 .ct:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 22px 50px rgba(40,30,12,.32);z-index:5;}
 .ct img{height:100%;width:auto;display:block;}
@@ -522,7 +529,8 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 <!-- ════════ COLLECTION ════════ -->
 <section id="collection">
   <img class="deco-ray" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/384.png"
-       alt="" style="width:130px;top:8px;right:24px;transform:rotate(8deg);">
+       alt="" width="475" height="475" loading="lazy"
+       style="width:130px;height:130px;top:8px;right:24px;transform:rotate(8deg);">
   <svg class="deco-ps" style="width:120px;height:30px;top:24px;left:30px;transform:rotate(-3deg);" viewBox="0 0 120 30">
     <polygon points="15,3 26,24 4,24" fill="none" stroke="#4A9B7F" stroke-width="2.2" stroke-linejoin="round"/>
     <circle cx="49" cy="15" r="11" fill="none" stroke="#B5532F" stroke-width="2.2"/>
@@ -538,47 +546,47 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
   <!-- lane 1: the rotation -->
   <div class="car-row reveal">
     <div class="car-track" id="car1">
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/d2/53/62/d2536245-b94c-b3fd-7168-9512f655f6d4/00602527899091.rgb.jpg/600x600bb.jpg" alt="Take Care"/><div class="cap">TAKE CARE · the blueprint, honestly</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/60/e8/d1/60e8d144-2b8e-cbdc-9ff8-beaf9f4868b1/00602537542345.rgb.jpg/600x600bb.jpg" alt="Nothing Was the Same"/><div class="cap">NWTS · deploy soundtrack</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/95/f5/87/95f587f7-21c3-d5f9-d81a-4350f9caa020/16UMGIM27643.rgb.jpg/600x600bb.jpg" alt="Views"/><div class="cap">VIEWS · 6 god energy</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e7/49/8f/e7498f65-df8f-bead-d6e3-2a8d4d642a79/886447235317.jpg/600x600bb.jpg" alt="Astroworld"/><div class="cap">ASTROWORLD · wish we could leave too</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/6d/fb/f1/6dfbf17d-4032-f585-35ad-f3f9b6859cd9/886445460421.jpg/600x600bb.jpg" alt="Rodeo"/><div class="cap">RODEO · underrated tape</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bb/6d/8f/bb6d8f67-6d04-10b5-dd62-eb5809ac54fc/00602567879152.rgb.jpg/600x600bb.jpg" alt="Scorpion"/><div class="cap">SCORPION · side B supremacy</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/18/9d/b8/189db80b-bfa8-89d1-1514-5fcb7e5cf8f4/00602557611526.rgb.jpg/600x600bb.jpg" alt="More Life"/><div class="cap">MORE LIFE · a playlist, technically</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/7d/4f/94/7d4f9468-56e1-3a2d-7186-c8088170ef58/196871341899.jpg/600x600bb.jpg" alt="Utopia"/><div class="cap">UTOPIA · in my chrome heart era</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/37/da/7c/37da7cc5-2b6f-9bb8-30ba-8a8c3be3e16a/00602527584973.rgb.jpg/600x600bb.jpg" alt="My Beautiful Dark Twisted Fantasy"/><div class="cap">MBDTF · the ceiling, unmatched</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/39/25/2d/39252d65-2d50-b991-0962-f7a98a761271/00602517483507.rgb.jpg/600x600bb.jpg" alt="Graduation"/><div class="cap">GRADUATION · bear era supremacy</div></div>
-      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/ee/28/67/ee286794-6c33-a8c2-5c37-c04f1cb5e8a6/21UM1IM54415.rgb.jpg/600x600bb.jpg" alt="2014 Forest Hills Drive"/><div class="cap">2014 FOREST HILLS DRIVE · no features, no filler</div></div>
-      <div class="ct logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Claude_AI_symbol.svg/500px-Claude_AI_symbol.svg.png" alt="Claude"/><div class="cap">CLAUDE · listed as emergency contact</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/d2/53/62/d2536245-b94c-b3fd-7168-9512f655f6d4/00602527899091.rgb.jpg/600x600bb.jpg" alt="Take Care" width="190" height="190" loading="lazy"/><div class="cap">TAKE CARE · the blueprint, honestly</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/60/e8/d1/60e8d144-2b8e-cbdc-9ff8-beaf9f4868b1/00602537542345.rgb.jpg/600x600bb.jpg" alt="Nothing Was the Same" width="190" height="190" loading="lazy"/><div class="cap">NWTS · deploy soundtrack</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/95/f5/87/95f587f7-21c3-d5f9-d81a-4350f9caa020/16UMGIM27643.rgb.jpg/600x600bb.jpg" alt="Views" width="190" height="190" loading="lazy"/><div class="cap">VIEWS · 6 god energy</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/e7/49/8f/e7498f65-df8f-bead-d6e3-2a8d4d642a79/886447235317.jpg/600x600bb.jpg" alt="Astroworld" width="190" height="190" loading="lazy"/><div class="cap">ASTROWORLD · wish we could leave too</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/6d/fb/f1/6dfbf17d-4032-f585-35ad-f3f9b6859cd9/886445460421.jpg/600x600bb.jpg" alt="Rodeo" width="190" height="190" loading="lazy"/><div class="cap">RODEO · underrated tape</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/bb/6d/8f/bb6d8f67-6d04-10b5-dd62-eb5809ac54fc/00602567879152.rgb.jpg/600x600bb.jpg" alt="Scorpion" width="190" height="190" loading="lazy"/><div class="cap">SCORPION · side B supremacy</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/18/9d/b8/189db80b-bfa8-89d1-1514-5fcb7e5cf8f4/00602557611526.rgb.jpg/600x600bb.jpg" alt="More Life" width="190" height="190" loading="lazy"/><div class="cap">MORE LIFE · a playlist, technically</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/7d/4f/94/7d4f9468-56e1-3a2d-7186-c8088170ef58/196871341899.jpg/600x600bb.jpg" alt="Utopia" width="190" height="190" loading="lazy"/><div class="cap">UTOPIA · in my chrome heart era</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/37/da/7c/37da7cc5-2b6f-9bb8-30ba-8a8c3be3e16a/00602527584973.rgb.jpg/600x600bb.jpg" alt="My Beautiful Dark Twisted Fantasy" width="190" height="190" loading="lazy"/><div class="cap">MBDTF · the ceiling, unmatched</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/39/25/2d/39252d65-2d50-b991-0962-f7a98a761271/00602517483507.rgb.jpg/600x600bb.jpg" alt="Graduation" width="190" height="190" loading="lazy"/><div class="cap">GRADUATION · bear era supremacy</div></div>
+      <div class="ct"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/ee/28/67/ee286794-6c33-a8c2-5c37-c04f1cb5e8a6/21UM1IM54415.rgb.jpg/600x600bb.jpg" alt="2014 Forest Hills Drive" width="190" height="190" loading="lazy"/><div class="cap">2014 FOREST HILLS DRIVE · no features, no filler</div></div>
+      <div class="ct logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Claude_AI_symbol.svg/500px-Claude_AI_symbol.svg.png" alt="Claude" width="190" height="190" loading="lazy"/><div class="cap">CLAUDE · listed as emergency contact</div></div>
     </div>
   </div>
 
   <!-- lane 2: the library -->
   <div class="car-row reveal">
     <div class="car-track rev" id="car2">
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/1/1a/Uncharted_4_box_artwork.jpg" alt="Uncharted 4"/><div class="cap">UNCHARTED 4 · no notes. perfect game.</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/b/b6/Ghost_of_Tsushima.jpg" alt="Ghost of Tsushima"/><div class="cap">GHOST OF TSUSHIMA · art direction final boss</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg" alt="God of War"/><div class="cap">GOD OF WAR · boy.</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/e/e1/Spider-Man_PS4_cover.jpg" alt="Marvel's Spider-Man"/><div class="cap">SPIDER-MAN · with great power, etc.</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg" alt="RDR2"/><div class="cap">RDR2 · arthur deserved better</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/a/a6/FIFA_23_Cover.jpg" alt="FIFA 23"/><div class="cap">FIFA 23 · rage quit certified</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/6/6c/FIFA_22_Cover.jpg" alt="FIFA 22"/><div class="cap">FIFA 22 · kickoff, straight to career mode</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Valorant_Clove_Agent25_KeyArt-1024x576-1.jpg/960px-Valorant_Clove_Agent25_KeyArt-1024x576-1.jpg" alt="Valorant"/><div class="cap">VALORANT · queueing with the boys</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/1/1a/Uncharted_4_box_artwork.jpg" alt="Uncharted 4" width="145" height="190" loading="lazy"/><div class="cap">UNCHARTED 4 · no notes. perfect game.</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/b/b6/Ghost_of_Tsushima.jpg" alt="Ghost of Tsushima" width="142" height="190" loading="lazy"/><div class="cap">GHOST OF TSUSHIMA · art direction final boss</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg" alt="God of War" width="142" height="190" loading="lazy"/><div class="cap">GOD OF WAR · boy.</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/e/e1/Spider-Man_PS4_cover.jpg" alt="Marvel's Spider-Man" width="149" height="190" loading="lazy"/><div class="cap">SPIDER-MAN · with great power, etc.</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg" alt="RDR2" width="154" height="190" loading="lazy"/><div class="cap">RDR2 · arthur deserved better</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/a/a6/FIFA_23_Cover.jpg" alt="FIFA 23" width="152" height="190" loading="lazy"/><div class="cap">FIFA 23 · rage quit certified</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/6/6c/FIFA_22_Cover.jpg" alt="FIFA 22" width="127" height="190" loading="lazy"/><div class="cap">FIFA 22 · kickoff, straight to career mode</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Valorant_Clove_Agent25_KeyArt-1024x576-1.jpg/960px-Valorant_Clove_Agent25_KeyArt-1024x576-1.jpg" alt="Valorant" width="338" height="190" loading="lazy"/><div class="cap">VALORANT · queueing with the boys</div></div>
     </div>
   </div>
 
   <!-- lane 3: the athletes & the machines -->
   <div class="car-row reveal">
     <div class="car-track" id="car3" style="animation-duration:60s;">
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Cristiano_Ronaldo_Al-Nassr_2023.jpg" alt="Cristiano Ronaldo"/><div class="cap">CR7 · the standard</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Sergio_Ramos_Confederations_Cup_2013_%28cropped%29.jpg/960px-Sergio_Ramos_Confederations_Cup_2013_%28cropped%29.jpg" alt="Sergio Ramos"/><div class="cap">RAMOS · minute 92:48</div></div>
-      <div class="ct" style="background:var(--paper);"><img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Luka_Modric_2018.png" alt="Luka Modric"/><div class="cap">MODRIĆ · midfield royalty</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/LeBron_James_Layup_%28Cleveland_vs_Brooklyn_2018%29.jpg/960px-LeBron_James_Layup_%28Cleveland_vs_Brooklyn_2018%29.jpg" alt="LeBron James"/><div class="cap">BRON · witness.</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Justin_Jefferson_Commanders_vs_Vikings_NOV2022.jpg/960px-Justin_Jefferson_Commanders_vs_Vikings_NOV2022.jpg" alt="Justin Jefferson"/><div class="cap">JETTAS · griddy season</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Saquon_Barkley_Giants_2018.jpg/960px-Saquon_Barkley_Giants_2018.jpg" alt="Saquon Barkley"/><div class="cap">SAQUON · gravity is optional</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Bugatti_Chiron%2C_GIMS_2018%2C_Le_Grand-Saconnex_%281X7A1765%29.jpg/960px-Bugatti_Chiron%2C_GIMS_2018%2C_Le_Grand-Saconnex_%281X7A1765%29.jpg" alt="Bugatti Chiron"/><div class="cap">CHIRON · 1500 horses, zero chill</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Lamborghini_Aventador%2C_Motortreff_Bella_Italia_2024%2C_Munich_%28P1190389-RR%29.jpg/960px-Lamborghini_Aventador%2C_Motortreff_Bella_Italia_2024%2C_Munich_%28P1190389-RR%29.jpg" alt="Lamborghini Aventador"/><div class="cap">AVENTADOR · the poster car</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Koenigsegg_Agera%2C_GIMS_2018_07.jpg/960px-Koenigsegg_Agera%2C_GIMS_2018_07.jpg" alt="Koenigsegg Agera"/><div class="cap">AGERA · swedish physics violation</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Cristiano_Ronaldo_Al-Nassr_2023.jpg" alt="Cristiano Ronaldo" width="144" height="190" loading="lazy"/><div class="cap">CR7 · the standard</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Sergio_Ramos_Confederations_Cup_2013_%28cropped%29.jpg/960px-Sergio_Ramos_Confederations_Cup_2013_%28cropped%29.jpg" alt="Sergio Ramos" width="110" height="190" loading="lazy"/><div class="cap">RAMOS · minute 92:48</div></div>
+      <div class="ct" style="background:var(--paper);"><img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Luka_Modric_2018.png" alt="Luka Modric" width="136" height="190" loading="lazy"/><div class="cap">MODRIĆ · midfield royalty</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/LeBron_James_Layup_%28Cleveland_vs_Brooklyn_2018%29.jpg/960px-LeBron_James_Layup_%28Cleveland_vs_Brooklyn_2018%29.jpg" alt="LeBron James" width="255" height="190" loading="lazy"/><div class="cap">BRON · witness.</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Justin_Jefferson_Commanders_vs_Vikings_NOV2022.jpg/960px-Justin_Jefferson_Commanders_vs_Vikings_NOV2022.jpg" alt="Justin Jefferson" width="127" height="190" loading="lazy"/><div class="cap">JETTAS · griddy season</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Saquon_Barkley_Giants_2018.jpg/960px-Saquon_Barkley_Giants_2018.jpg" alt="Saquon Barkley" width="147" height="190" loading="lazy"/><div class="cap">SAQUON · gravity is optional</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Bugatti_Chiron%2C_GIMS_2018%2C_Le_Grand-Saconnex_%281X7A1765%29.jpg/960px-Bugatti_Chiron%2C_GIMS_2018%2C_Le_Grand-Saconnex_%281X7A1765%29.jpg" alt="Bugatti Chiron" width="285" height="190" loading="lazy"/><div class="cap">CHIRON · 1500 horses, zero chill</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Lamborghini_Aventador%2C_Motortreff_Bella_Italia_2024%2C_Munich_%28P1190389-RR%29.jpg/960px-Lamborghini_Aventador%2C_Motortreff_Bella_Italia_2024%2C_Munich_%28P1190389-RR%29.jpg" alt="Lamborghini Aventador" width="285" height="190" loading="lazy"/><div class="cap">AVENTADOR · the poster car</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Koenigsegg_Agera%2C_GIMS_2018_07.jpg/960px-Koenigsegg_Agera%2C_GIMS_2018_07.jpg" alt="Koenigsegg Agera" width="253" height="190" loading="lazy"/><div class="cap">AGERA · swedish physics violation</div></div>
     </div>
   </div>
 </section>
@@ -683,6 +691,17 @@ document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
 
 /* ---------- tickers + carousels: duplicate content for seamless loop ---------- */
 ['ticker1','ticker2','car1','car2','car3'].forEach(id => { const t = document.getElementById(id); t.innerHTML += t.innerHTML; });
+
+/* will-change:transform only while a car-track is actually in view. Three
+   tracks holding a GPU compositing layer permanently, most of it scrolled
+   far off screen, is the kind of thing that shows up in a profiler for no
+   reason. */
+if ('IntersectionObserver' in window) {
+  const carVisibility = new IntersectionObserver((entries) => {
+    entries.forEach((e) => e.target.classList.toggle('in-view', e.isIntersecting));
+  }, {rootMargin: '200px'});
+  document.querySelectorAll('.car-track').forEach((t) => carVisibility.observe(t));
+}
 
 /* ---------- scroll progress bar ---------- */
 const prog = document.getElementById('progress');
