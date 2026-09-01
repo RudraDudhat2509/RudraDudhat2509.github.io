@@ -285,13 +285,26 @@ a.oss-stat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(60,45,20
 
 /* ============ FOOTER ============ */
 footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
+.foot-grid{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;margin-bottom:64px;}
 .foot-h{font-family:var(--serif);font-weight:430;font-size:clamp(34px,5vw,56px);letter-spacing:-.01em;line-height:1.05;margin-bottom:14px;}
 .foot-h em{font-style:italic;color:var(--brass);}
 .foot-sub{color:rgba(247,241,229,.65);font-size:16px;max-width:440px;margin-bottom:36px;}
-.foot-links{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:64px;}
-.foot-links a{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--bg);text-decoration:none;border-bottom:1px solid rgba(247,241,229,.25);padding-bottom:3px;transition:color .2s,border-color .2s;}
-.foot-links a:hover{color:var(--brass);border-color:var(--brass);}
+/* inbox rows replace the old inline link list: reads as something you'd
+   click INTO, not just a row of underlined text. */
+.inbox{display:flex;flex-direction:column;border-top:1px solid rgba(247,241,229,.14);max-width:440px;}
+.inbox-row{display:flex;align-items:center;gap:16px;padding:14px 4px;border-bottom:1px solid rgba(247,241,229,.14);text-decoration:none;color:var(--bg);transition:padding-left .2s,background .2s;}
+.inbox-row:hover{padding-left:10px;background:rgba(247,241,229,.05);}
+.inbox-row .ir-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);width:76px;flex:none;}
+.inbox-row .ir-val{font-family:var(--mono);font-size:14px;color:var(--bg);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.inbox-row .ir-go{font-family:var(--mono);font-size:14px;color:rgba(247,241,229,.4);transition:transform .2s,color .2s;}
+.inbox-row:hover .ir-go{color:var(--brass);transform:translateX(3px);}
+/* the stamp motif from #work, recoloured for the dark footer: fills the
+   dead space next to the pitch instead of leaving it empty. */
+.deco-stamp.foot-stamp{position:static;flex:none;width:130px;height:96px;opacity:.6;}
+.deco-stamp.foot-stamp rect{stroke:var(--brass);}
+.deco-stamp.foot-stamp .st-t,.deco-stamp.foot-stamp .st-n{fill:var(--brass);}
 .colophon{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(247,241,229,.14);padding-top:26px;font-family:var(--mono);font-size:11px;color:rgba(247,241,229,.45);flex-wrap:wrap;gap:10px;}
+@media(max-width:640px){.foot-stamp{display:none;}.inbox-row .ir-val{display:none;}}
 
 /* ============ LORE (latest writing) ============ */
 #lore{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -627,13 +640,23 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 <!-- ════════ FOOTER ════════ -->
 <footer id="contact">
   <div class="wrap">
-    <h2 class="foot-h reveal">Unapologetically<br/><em>myself.</em></h2>
-    <p class="foot-sub reveal d1">That’s the whole pitch. If you’re building AI that has to survive real users, or just want to argue about the samosa thing, my inbox is open.</p>
-    <div class="foot-links reveal d2">
-      <a href="mailto:contact.rdudhat@gmail.com">Email</a>
-      <a href="https://github.com/RudraDudhat2509" target="_blank">GitHub</a>
-      <a href="https://twitter.com/rudrabuilds" target="_blank">X / @rudrabuilds</a>
-      <a href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank">LinkedIn</a>
+    <div class="foot-grid">
+      <div>
+        <h2 class="foot-h reveal">Unapologetically<br/><em>myself.</em></h2>
+        <p class="foot-sub reveal d1">That’s the whole pitch. If you’re building AI that has to survive real users, or just want to argue about the samosa thing, my inbox is open.</p>
+        <div class="inbox reveal d2">
+          <a class="inbox-row" href="mailto:contact.rdudhat@gmail.com"><span class="ir-label">Email</span><span class="ir-val">contact.rdudhat@gmail.com</span><span class="ir-go">&rarr;</span></a>
+          <a class="inbox-row" href="https://github.com/RudraDudhat2509" target="_blank"><span class="ir-label">GitHub</span><span class="ir-val">@RudraDudhat2509</span><span class="ir-go">&rarr;</span></a>
+          <a class="inbox-row" href="https://twitter.com/rudrabuilds" target="_blank"><span class="ir-label">X</span><span class="ir-val">@rudrabuilds</span><span class="ir-go">&rarr;</span></a>
+          <a class="inbox-row" href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank"><span class="ir-label">LinkedIn</span><span class="ir-val">/in/rdudhat-iitbhilai</span><span class="ir-go">&rarr;</span></a>
+        </div>
+      </div>
+      <svg class="deco-stamp foot-stamp reveal d2" viewBox="0 0 130 96">
+        <rect x="2" y="2" width="126" height="92"/>
+        <text x="65" y="32" class="st-t" text-anchor="middle">STATUS</text>
+        <text x="65" y="58" class="st-n" text-anchor="middle">INBOX</text>
+        <text x="65" y="78" class="st-t" text-anchor="middle">OPEN</text>
+      </svg>
     </div>
     <div class="colophon">
       <span>© 2026 RUDRA DUDHAT · BUILT AT 2AM, OBVIOUSLY</span>
