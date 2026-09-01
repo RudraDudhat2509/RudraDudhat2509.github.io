@@ -285,7 +285,7 @@ a.oss-stat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(60,45,20
 
 /* ============ FOOTER ============ */
 footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
-.foot-grid{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;margin-bottom:64px;}
+.foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:40px;margin-bottom:64px;}
 .foot-h{font-family:var(--serif);font-weight:430;font-size:clamp(34px,5vw,56px);letter-spacing:-.01em;line-height:1.05;margin-bottom:14px;}
 .foot-h em{font-style:italic;color:var(--brass);}
 .foot-sub{color:rgba(247,241,229,.65);font-size:16px;max-width:440px;margin-bottom:36px;}
@@ -298,13 +298,25 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 .inbox-row .ir-val{font-family:var(--mono);font-size:14px;color:var(--bg);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .inbox-row .ir-go{font-family:var(--mono);font-size:14px;color:rgba(247,241,229,.4);transition:transform .2s,color .2s;}
 .inbox-row:hover .ir-go{color:var(--brass);transform:translateX(3px);}
-/* the stamp motif from #work, recoloured for the dark footer: fills the
-   dead space next to the pitch instead of leaving it empty. */
-.deco-stamp.foot-stamp{position:static;flex:none;width:130px;height:96px;opacity:.6;}
-.deco-stamp.foot-stamp rect{stroke:var(--brass);}
-.deco-stamp.foot-stamp .st-t,.deco-stamp.foot-stamp .st-n{fill:var(--brass);}
+/* contact form fills the space next to the pitch: an actual way to send
+   a message, not just links elsewhere. Posts straight to Formspree. */
+.contact-form{display:flex;flex-direction:column;gap:14px;width:320px;flex:none;}
+.cf-row{display:flex;flex-direction:column;gap:6px;}
+.cf-row label{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);}
+.cf-row input,.cf-row textarea{font-family:var(--sans);font-size:14px;color:var(--bg);background:rgba(247,241,229,.05);border:1px solid rgba(247,241,229,.18);border-radius:6px;padding:10px 12px;resize:vertical;transition:border-color .2s,background .2s;}
+.cf-row input:focus,.cf-row textarea:focus{outline:none;border-color:var(--brass);background:rgba(247,241,229,.08);}
+.cf-row textarea{min-height:88px;}
+.cf-submit{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--brass);border:none;border-radius:100px;padding:12px 22px;cursor:pointer;transition:background .2s;}
+.cf-submit:hover{background:#DDA53C;}
+.cf-submit:disabled{opacity:.55;cursor:default;}
+.cf-status{font-family:var(--mono);font-size:11px;color:rgba(247,241,229,.55);min-height:14px;margin:0;}
+.cf-status.err{color:#E08A6B;}
+.cf-alt{font-family:var(--mono);font-size:11px;color:rgba(247,241,229,.4);margin:0;}
+.cf-alt a{color:rgba(247,241,229,.6);}
+.cf-alt a:hover{color:var(--brass);}
+@media(max-width:760px){.contact-form{width:100%;}}
 .colophon{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(247,241,229,.14);padding-top:26px;font-family:var(--mono);font-size:11px;color:rgba(247,241,229,.45);flex-wrap:wrap;gap:10px;}
-@media(max-width:640px){.foot-stamp{display:none;}.inbox-row .ir-val{display:none;}}
+@media(max-width:640px){.inbox-row .ir-val{display:none;}}
 
 /* ============ LORE (latest writing) ============ */
 #lore{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -645,18 +657,20 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
         <h2 class="foot-h reveal">Unapologetically<br/><em>myself.</em></h2>
         <p class="foot-sub reveal d1">That’s the whole pitch. If you’re building AI that has to survive real users, or just want to argue about the samosa thing, my inbox is open.</p>
         <div class="inbox reveal d2">
-          <a class="inbox-row" href="mailto:contact.rdudhat@gmail.com"><span class="ir-label">Email</span><span class="ir-val">contact.rdudhat@gmail.com</span><span class="ir-go">&rarr;</span></a>
           <a class="inbox-row" href="https://github.com/RudraDudhat2509" target="_blank"><span class="ir-label">GitHub</span><span class="ir-val">@RudraDudhat2509</span><span class="ir-go">&rarr;</span></a>
           <a class="inbox-row" href="https://twitter.com/rudrabuilds" target="_blank"><span class="ir-label">X</span><span class="ir-val">@rudrabuilds</span><span class="ir-go">&rarr;</span></a>
           <a class="inbox-row" href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank"><span class="ir-label">LinkedIn</span><span class="ir-val">/in/rdudhat-iitbhilai</span><span class="ir-go">&rarr;</span></a>
         </div>
       </div>
-      <svg class="deco-stamp foot-stamp reveal d2" viewBox="0 0 130 96">
-        <rect x="2" y="2" width="126" height="92"/>
-        <text x="65" y="32" class="st-t" text-anchor="middle">STATUS</text>
-        <text x="65" y="58" class="st-n" text-anchor="middle">INBOX</text>
-        <text x="65" y="78" class="st-t" text-anchor="middle">OPEN</text>
-      </svg>
+      <form id="contact-form" class="contact-form reveal d2" action="https://formspree.io/f/xreakrgk" method="POST">
+        <div class="cf-row"><label for="cf-name">Name</label><input id="cf-name" name="name" type="text" required autocomplete="name"></div>
+        <div class="cf-row"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" required autocomplete="email"></div>
+        <div class="cf-row"><label for="cf-msg">Message</label><textarea id="cf-msg" name="message" required></textarea></div>
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+        <button type="submit" class="cf-submit">Send message <span>&rarr;</span></button>
+        <p class="cf-status" id="cf-status"></p>
+        <p class="cf-alt">or email directly: <a href="mailto:contact.rdudhat@gmail.com">contact.rdudhat@gmail.com</a></p>
+      </form>
     </div>
     <div class="colophon">
       <span>© 2026 RUDRA DUDHAT · BUILT AT 2AM, OBVIOUSLY</span>
@@ -786,16 +800,37 @@ document.querySelectorAll('.car-row').forEach(r => {
   let h; r.addEventListener('mouseenter', () => h = setTimeout(() => unlock('taste'), 2000));
   r.addEventListener('mouseleave', () => clearTimeout(h));
 });
-/* email row: mailto only fires if the visitor has a mail client set as
-   default, which plenty of people don't. Copy to clipboard alongside it
-   so the address is usable either way. */
-const emailRow = document.querySelector('.inbox-row[href^="mailto:"]');
-if (emailRow && navigator.clipboard) {
-  emailRow.addEventListener('click', () => {
-    const email = emailRow.href.replace('mailto:', '');
-    navigator.clipboard.writeText(email)
-      .then(() => toast('EMAIL COPIED', email + ' is on your clipboard, in case nothing opened.'))
-      .catch(() => {});
+/* contact form: posts to Formspree via fetch so a submit doesn't leave
+   the page. Falls back to a normal form POST if JS is off. */
+const cform = document.getElementById('contact-form');
+if (cform) {
+  cform.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('cf-status');
+    const btn = cform.querySelector('.cf-submit');
+    btn.disabled = true;
+    status.textContent = 'Sending…';
+    status.classList.remove('err');
+    try {
+      const res = await fetch(cform.action, {
+        method: 'POST',
+        body: new FormData(cform),
+        headers: { 'Accept': 'application/json' },
+      });
+      if (res.ok) {
+        status.textContent = '';
+        cform.reset();
+        toast('MESSAGE SENT', "It's in my inbox. I'll get back to you.");
+      } else {
+        status.textContent = 'Something went wrong. Try the email link below instead.';
+        status.classList.add('err');
+      }
+    } catch (err) {
+      status.textContent = 'Something went wrong. Try the email link below instead.';
+      status.classList.add('err');
+    } finally {
+      btn.disabled = false;
+    }
   });
 }
 
