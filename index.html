@@ -786,6 +786,18 @@ document.querySelectorAll('.car-row').forEach(r => {
   let h; r.addEventListener('mouseenter', () => h = setTimeout(() => unlock('taste'), 2000));
   r.addEventListener('mouseleave', () => clearTimeout(h));
 });
+/* email row: mailto only fires if the visitor has a mail client set as
+   default, which plenty of people don't. Copy to clipboard alongside it
+   so the address is usable either way. */
+const emailRow = document.querySelector('.inbox-row[href^="mailto:"]');
+if (emailRow && navigator.clipboard) {
+  emailRow.addEventListener('click', () => {
+    const email = emailRow.href.replace('mailto:', '');
+    navigator.clipboard.writeText(email)
+      .then(() => toast('EMAIL COPIED', email + ' is on your clipboard, in case nothing opened.'))
+      .catch(() => {});
+  });
+}
 
 /* ---------- latest lore (from posts.js) ---------- */
 (function(){
