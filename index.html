@@ -543,7 +543,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
     <p class="sec-intro reveal">Where I’m contributing right now: AI tooling and infrastructure used by real teams. This list updates itself, because hardcoding your own PRs is embarrassing.</p>
     <div class="oss-stats reveal">
       <a class="oss-stat" href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" rel="noopener"><div class="n" id="stat-impressions" data-count-to="1.5">0L+</div><div class="l">LinkedIn impressions · last 90 days ↗</div></a>
-      <a class="oss-stat" href="https://github.com/RudraDudhat2509" target="_blank" rel="noopener"><div class="n">garak · LiteLLM</div><div class="l">upstream contributions ↗</div></a>
+      <a class="oss-stat" href="https://github.com/RudraDudhat2509" target="_blank" rel="noopener"><div class="n" id="stat-commits">–</div><div class="l">commits on GitHub · last 90 days ↗</div></a>
       <a class="oss-stat" href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener"><div class="n">diffprompt</div><div class="l">authored · live on PyPI ↗</div></a>
     </div>
     <div class="pr-grid" id="pr-grid"></div>
@@ -743,6 +743,29 @@ if (impressionsStat) {
       onUpdate: (latest) => { impressionsStat.textContent = latest.toFixed(1) + 'L+'; },
     });
   }, { amount: 0.8 });
+}
+
+/* ---------- GitHub commit count stat: live, not hardcoded, same as
+   the PR list below it. Uses the public events feed (github.com/search/commits
+   works from curl but real browsers get blocked at the network level -
+   events/public doesn't have that problem, at the cost of only covering
+   the last ~90 days / 300 events, not all-time - hence the honest label. ---------- */
+const commitsStat = document.getElementById('stat-commits');
+if (commitsStat) {
+  fetch('https://api.github.com/users/RudraDudhat2509/events/public?per_page=100')
+    .then((r) => { if (!r.ok) throw 0; return r.json(); })
+    .then((events) => {
+      const total = events.filter((e) => e.type === 'PushEvent').reduce((sum, e) => sum + (e.payload.size || 0), 0);
+      commitsStat.textContent = '0';
+      inView(commitsStat, () => {
+        animate(0, total, {
+          duration: 1.4,
+          ease: 'circOut',
+          onUpdate: (latest) => { commitsStat.textContent = Math.round(latest).toLocaleString('en-IN'); },
+        });
+      }, { amount: 0.8 });
+    })
+    .catch(() => { commitsStat.textContent = '–'; });
 }
 
 /* ---------- scroll progress bar ---------- */
