@@ -227,13 +227,15 @@ section{padding:88px 0;}
 #collection{overflow:hidden;}
 /* Edge-mask fade + always-partly-visible caption + hover image zoom,
    borrowed from vatsalyd/Portfolio's Characters reel (adapted colours,
-   not copied) - keeps every card's real aspect ratio rather than
-   cropping to a uniform poster, since those were fetched deliberately. */
-.car-row{overflow:hidden;margin-bottom:18px;
+   not copied). Cards are a uniform size now (object-fit:cover crops to
+   fit) rather than each keeping its native aspect ratio - the varying
+   widths read as inconsistent more than they read as "respecting the
+   source image". More gap between cards and lanes too. */
+.car-row{overflow:hidden;margin-bottom:28px;
   mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);
   -webkit-mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);
 }
-.car-track{display:flex;gap:16px;width:max-content;animation:carL 45s linear infinite;}
+.car-track{display:flex;gap:24px;width:max-content;animation:carL 45s linear infinite;}
 .car-track.rev{animation-name:carR;animation-duration:52s;}
 .car-row:hover .car-track{animation-play-state:paused;}
 /* will-change only while the row is actually on screen (toggled by JS via
@@ -245,14 +247,20 @@ section{padding:88px 0;}
 @media (prefers-reduced-motion: reduce){
   .car-track{animation:none!important;}
 }
-.ct{position:relative;flex:none;height:190px;border-radius:10px;overflow:hidden;box-shadow:0 12px 30px rgba(40,30,12,.22),0 0 0 0 var(--brass);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s;}
+.ct{position:relative;flex:none;width:160px;height:190px;border-radius:10px;overflow:hidden;border:1px solid var(--line2);box-shadow:0 12px 30px rgba(40,30,12,.22),0 0 0 0 var(--brass);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s;}
 .ct:hover{transform:translateY(-8px) scale(1.035);box-shadow:0 24px 54px rgba(40,30,12,.34),0 0 0 2px var(--brass);z-index:5;}
-.ct img{height:100%;width:auto;display:block;transition:transform .5s ease;}
+.ct img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
 .ct:hover img{transform:scale(1.07);}
-.ct .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(20,15,8,.92) 65%);color:var(--bg);font-family:var(--mono);font-size:10px;letter-spacing:.08em;padding:34px 12px 10px;opacity:.72;transition:opacity .3s;}
+/* permanent light vignette so very different source images (album art,
+   screenshots, candid photos, studio shots) read as one cohesive set
+   instead of clashing brightness/contrast - eases up a little on hover. */
+.ct::before{content:'';position:absolute;inset:0;background:rgba(20,15,8,.16);z-index:1;pointer-events:none;transition:background .3s;}
+.ct:hover::before{background:rgba(20,15,8,.06);}
+.ct .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(20,15,8,.92) 65%);color:var(--bg);font-family:var(--mono);font-size:10px;letter-spacing:.08em;padding:34px 12px 10px;opacity:.72;transition:opacity .3s;z-index:2;}
 .ct:hover .cap{opacity:1;}
-.ct.logo{width:190px;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
-.ct.logo img{height:auto;width:54%;}
+.ct.logo{width:160px;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;}
+.ct.logo img{width:54%;height:auto;object-fit:contain;}
+.ct.logo::before{display:none;}
 
 /* ============ OSS STATS ============ */
 .oss-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:30px;}
@@ -596,7 +604,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
       <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/4/44/Red_Dead_Redemption_II.jpg" alt="RDR2" width="154" height="190" loading="lazy"/><div class="cap">RDR2 · arthur deserved better</div></div>
       <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/a/a6/FIFA_23_Cover.jpg" alt="FIFA 23" width="152" height="190" loading="lazy"/><div class="cap">FIFA 23 · rage quit certified</div></div>
       <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/en/6/6c/FIFA_22_Cover.jpg" alt="FIFA 22" width="127" height="190" loading="lazy"/><div class="cap">FIFA 22 · kickoff, straight to career mode</div></div>
-      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Valorant_Clove_Agent25_KeyArt-1024x576-1.jpg/960px-Valorant_Clove_Agent25_KeyArt-1024x576-1.jpg" alt="Valorant" width="338" height="190" loading="lazy"/><div class="cap">VALORANT · queueing with the boys</div></div>
+      <div class="ct"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Valorant_Clove_Agent25_KeyArt-1024x576-1.jpg/960px-Valorant_Clove_Agent25_KeyArt-1024x576-1.jpg" alt="Valorant" width="338" height="190" loading="lazy" style="object-position:32% center;"/><div class="cap">VALORANT · queueing with the boys</div></div>
     </div>
   </div>
 
