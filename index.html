@@ -318,7 +318,10 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 .cf-row input,.cf-row textarea{font-family:var(--sans);font-size:14px;color:var(--bg);background:rgba(247,241,229,.05);border:1px solid rgba(247,241,229,.18);border-radius:6px;padding:10px 12px;resize:vertical;transition:border-color .2s,background .2s;}
 .cf-row input:focus,.cf-row textarea:focus{outline:none;border-color:var(--brass);background:rgba(247,241,229,.08);}
 .cf-row textarea{min-height:88px;}
-.cf-submit{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--brass);border:none;border-radius:100px;padding:12px 22px;cursor:pointer;transition:background .2s;}
+.cf-submit-row{display:flex;align-items:center;gap:14px;align-self:flex-start;}
+.cf-submit{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--brass);border:none;border-radius:100px;padding:12px 22px;cursor:pointer;transition:background .2s;}
+.cf-check{width:26px;height:26px;color:var(--brass);opacity:0;flex:none;transition:opacity .2s;}
+.cf-check.show{opacity:1;}
 .cf-submit:hover{background:#DDA53C;}
 .cf-submit:disabled{opacity:.55;cursor:default;}
 .cf-status{font-family:var(--mono);font-size:11px;color:rgba(247,241,229,.55);min-height:14px;margin:0;}
@@ -536,7 +539,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
     <div class="sec-head reveal"><h2 class="sec-title">Open source</h2><span class="label">LIVE FROM THE GITHUB API</span></div>
     <p class="sec-intro reveal">Where I’m contributing right now: AI tooling and infrastructure used by real teams. This list updates itself, because hardcoding your own PRs is embarrassing.</p>
     <div class="oss-stats reveal">
-      <a class="oss-stat" href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" rel="noopener"><div class="n">1.5L+</div><div class="l">LinkedIn impressions · last 90 days ↗</div></a>
+      <a class="oss-stat" href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" rel="noopener"><div class="n" id="stat-impressions" data-count-to="1.5">0L+</div><div class="l">LinkedIn impressions · last 90 days ↗</div></a>
       <a class="oss-stat" href="https://github.com/RudraDudhat2509" target="_blank" rel="noopener"><div class="n">garak · LiteLLM</div><div class="l">upstream contributions ↗</div></a>
       <a class="oss-stat" href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener"><div class="n">diffprompt</div><div class="l">authored · live on PyPI ↗</div></a>
     </div>
@@ -679,7 +682,12 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
         <div class="cf-row"><label for="cf-email">Email</label><input id="cf-email" name="email" type="email" required autocomplete="email"></div>
         <div class="cf-row"><label for="cf-msg">Message</label><textarea id="cf-msg" name="message" required></textarea></div>
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
-        <button type="submit" class="cf-submit">Send message <span>&rarr;</span></button>
+        <div class="cf-submit-row">
+          <button type="submit" class="cf-submit">Send message <span>&rarr;</span></button>
+          <svg class="cf-check" id="cf-check" viewBox="0 0 24 24" aria-hidden="true">
+            <path id="cf-check-path" d="M4 12.5L9.5 18L20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <p class="cf-status" id="cf-status"></p>
         <p class="cf-alt">or email directly: <a href="mailto:contact.rdudhat@gmail.com">contact.rdudhat@gmail.com</a></p>
       </form>
@@ -699,7 +707,10 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 <div id="toast"><span class="t" id="toast-title">ACHIEVEMENT UNLOCKED</span><span id="toast-msg"></span></div>
 
 <script src="posts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@13.2.0/dist/motion.js"></script>
 <script>
+const { animate, scroll, inView, stagger } = Motion;
+const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ---------- reveal on scroll ---------- */
 const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.12});
 document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
@@ -716,6 +727,19 @@ if ('IntersectionObserver' in window) {
     entries.forEach((e) => e.target.classList.toggle('in-view', e.isIntersecting));
   }, {rootMargin: '200px'});
   document.querySelectorAll('.car-track').forEach((t) => carVisibility.observe(t));
+}
+
+/* ---------- OSS stat count-up ---------- */
+const impressionsStat = document.getElementById('stat-impressions');
+if (impressionsStat) {
+  inView(impressionsStat, () => {
+    const to = parseFloat(impressionsStat.dataset.countTo);
+    animate(0, to, {
+      duration: 1.4,
+      ease: 'circOut',
+      onUpdate: (latest) => { impressionsStat.textContent = latest.toFixed(1) + 'L+'; },
+    });
+  }, { amount: 0.8 });
 }
 
 /* ---------- scroll progress bar ---------- */
@@ -735,6 +759,16 @@ const hs = document.getElementById('hero-status');
 hs.childNodes[0].textContent = status[0];
 hs.querySelector('small').textContent = status[1];
 
+/* ---------- hero parallax: text and stats card drift at different rates
+   as the hero scrolls out, instead of just cutting to the next section ---------- */
+if (!prefersReducedMotion) {
+  const heroSection = document.getElementById('hero');
+  const heroCols = heroSection.querySelectorAll('.hero-grid > *');
+  const heroOffset = ['start start', 'end start'];
+  if (heroCols[0]) scroll(animate(heroCols[0], { y: [0, -40], opacity: [1, 0.35] }, { ease: 'linear' }), { target: heroSection, offset: heroOffset });
+  if (heroCols[1]) scroll(animate(heroCols[1], { y: [0, -70], opacity: [1, 0.35] }, { ease: 'linear' }), { target: heroSection, offset: heroOffset });
+}
+
 /* ---------- live OSS feed ---------- */
 /* only PRs to repos that are not mine: contributions to someone else's
    project, the third-party-validated signal. fetched live, nothing hardcoded. */
@@ -743,11 +777,19 @@ const grid = document.getElementById('pr-grid');
 const prStatus = document.getElementById('pr-status');
 function renderPRs(list){
   grid.innerHTML = list.map(p => `
-    <a class="pr" href="${p.url}" target="_blank" rel="noopener">
+    <a class="pr" href="${p.url}" target="_blank" rel="noopener" style="opacity:0;">
       <div class="top"><span class="repo">${p.repo}</span><span class="badge ${p.state}">${p.state}</span></div>
       <h3>${p.title}</h3>
       <div class="meta">${p.when}</div>
     </a>`).join('');
+  const cards = grid.querySelectorAll('.pr');
+  if (prefersReducedMotion) {
+    cards.forEach((c) => { c.style.opacity = 1; });
+  } else {
+    inView(grid, () => {
+      animate(cards, { opacity: [0, 1], y: [16, 0] }, { duration: 0.5, delay: stagger(0.06) });
+    }, { amount: 0.15 });
+  }
 }
 fetch('https://api.github.com/search/issues?q=author:RudraDudhat2509+type:pr&sort=created&order=desc&per_page=100')
   .then(r => { if(!r.ok) throw 0; return r.json(); })
@@ -833,6 +875,10 @@ if (cform) {
         status.textContent = '';
         cform.reset();
         toast('MESSAGE SENT', "It's in my inbox. I'll get back to you.");
+        document.getElementById('cf-check').classList.add('show');
+        if (!prefersReducedMotion) {
+          animate(document.getElementById('cf-check-path'), { pathLength: [0, 1] }, { duration: 0.6, ease: [0.22, 1, 0.36, 1] });
+        }
       } else {
         status.textContent = 'Something went wrong. Try the email link below instead.';
         status.classList.add('err');
@@ -876,6 +922,21 @@ document.querySelectorAll('.work-win').forEach(win => {
     win.querySelectorAll('.win-pane').forEach(p => p.classList.toggle('active', p.dataset.pane === key));
   });
 });
+
+/* ---------- work-win cursor tilt: a few degrees, not a gimmick ---------- */
+if (!prefersReducedMotion) {
+  document.querySelectorAll('.work-win').forEach((win) => {
+    win.addEventListener('mousemove', (e) => {
+      const r = win.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      animate(win, { transform: `perspective(1200px) rotateY(${(px * 5).toFixed(2)}deg) rotateX(${(-py * 5).toFixed(2)}deg)` }, { duration: 0.4, ease: 'easeOut' });
+    });
+    win.addEventListener('mouseleave', () => {
+      animate(win, { transform: 'perspective(1200px) rotateY(0deg) rotateX(0deg)' }, { duration: 0.5, ease: 'easeOut' });
+    });
+  });
+}
 
 /* ---------- auto-detected projects: tag any repo with a topic, it shows up here, no edits needed ----------
    topic "flagship"  -> extra tab in ~/the-work/
