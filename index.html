@@ -208,6 +208,9 @@ section{padding:88px 0;}
 /* ============ OSS ============ */
 #oss{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+/* card count is live/dynamic, so an odd total leaves one dangling in the
+   last row - span it full width instead of leaving it lopsided. */
+.pr-grid > .pr:last-child:nth-child(odd){grid-column:1 / -1;}
 .pr{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px 24px;text-decoration:none;display:block;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s;}
 .pr:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(60,45,20,.12);}
 .pr .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
