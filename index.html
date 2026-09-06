@@ -235,18 +235,11 @@ section{padding:88px 0;}
   mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);
   -webkit-mask-image:linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);
 }
-.car-track{display:flex;gap:26px;width:max-content;animation:carL 45s linear infinite;}
-.car-track.rev{animation-name:carR;animation-duration:52s;}
-.car-row:hover .car-track{animation-play-state:paused;}
+.car-track{display:flex;gap:26px;width:max-content;}
 /* will-change only while the row is actually on screen (toggled by JS via
    IntersectionObserver below) -- holding it permanently reserves a GPU layer
    for three long-running tracks even while scrolled far out of view. */
 .car-track.in-view{will-change:transform;}
-@keyframes carL{to{transform:translate3d(-50%,0,0);}}
-@keyframes carR{from{transform:translate3d(-50%,0,0);}to{transform:translate3d(0,0,0);}}
-@media (prefers-reduced-motion: reduce){
-  .car-track{animation:none!important;}
-}
 .ct{position:relative;flex:none;width:260px;background:var(--paper);border:1px solid var(--line2);border-radius:16px;padding:14px 14px 18px;box-shadow:0 14px 34px rgba(40,30,12,.18),0 0 0 0 var(--brass);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s;}
 .ct:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 30px 64px rgba(40,30,12,.3),0 0 0 2px var(--brass);z-index:5;}
 .ct-frame{position:relative;width:100%;aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:#18161a;}
@@ -258,6 +251,9 @@ section{padding:88px 0;}
 .ct-cap{margin-top:14px;padding:0 2px;font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);letter-spacing:.005em;line-height:1.25;}
 .ct.logo .ct-frame{background:var(--paper);display:flex;align-items:center;justify-content:center;}
 .ct.logo .ct-frame img{width:54%;height:54%;object-fit:contain;}
+/* album covers are natively square - the shared 2:3 poster frame was
+   cropping the top/bottom off every one of them. Lane 1 only. */
+#car1 .ct-frame{aspect-ratio:1/1;}
 
 /* ============ OSS STATS ============ */
 .oss-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:30px;}
@@ -586,7 +582,12 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
       <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/7d/4f/94/7d4f9468-56e1-3a2d-7186-c8088170ef58/196871341899.jpg/600x600bb.jpg" alt="Utopia" loading="lazy"/><div class="ct-overlay"><span>in my chrome heart era</span></div></div><div class="ct-cap">UTOPIA</div></div>
       <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/37/da/7c/37da7cc5-2b6f-9bb8-30ba-8a8c3be3e16a/00602527584973.rgb.jpg/600x600bb.jpg" alt="My Beautiful Dark Twisted Fantasy" loading="lazy"/><div class="ct-overlay"><span>the ceiling, unmatched</span></div></div><div class="ct-cap">MBDTF</div></div>
       <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/39/25/2d/39252d65-2d50-b991-0962-f7a98a761271/00602517483507.rgb.jpg/600x600bb.jpg" alt="Graduation" loading="lazy"/><div class="ct-overlay"><span>bear era supremacy</span></div></div><div class="ct-cap">GRADUATION</div></div>
+      <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ec/fd/e0/ecfde04e-6db2-e55e-41fe-83c87a52b16e/00602547908339.rgb.jpg/600x600bb.jpg" alt="The Life of Pablo" loading="lazy"/><div class="ct-overlay"><span>a good ass job with a good ass day</span></div></div><div class="ct-cap">THE LIFE OF PABLO</div></div>
+      <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4d/75/2d/4d752db1-022d-f65d-40a1-a2390f01427a/13UAEIM26465.rgb.jpg/600x600bb.jpg" alt="808s & Heartbreak" loading="lazy"/><div class="ct-overlay"><span>the pivot nobody saw coming</span></div></div><div class="ct-cap">808S &amp; HEARTBREAK</div></div>
       <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/ee/28/67/ee286794-6c33-a8c2-5c37-c04f1cb5e8a6/21UM1IM54415.rgb.jpg/600x600bb.jpg" alt="2014 Forest Hills Drive" loading="lazy"/><div class="ct-overlay"><span>no features, no filler</span></div></div><div class="ct-cap">2014 FOREST HILLS DRIVE</div></div>
+      <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/7a/8e/9d/7a8e9dcb-128c-aeaa-540d-eea733637695/18UMGIM22943.rgb.jpg/600x600bb.jpg" alt="KOD" loading="lazy"/><div class="ct-overlay"><span>a self-therapy session, honestly</span></div></div><div class="ct-cap">KOD</div></div>
+      <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/53/ed/40/53ed4078-7d2a-076e-f9b9-ffb29e776c42/886448747703.jpg/600x600bb.jpg" alt="Savage Mode II" loading="lazy"/><div class="ct-overlay"><span>metro made it, savage owns it</span></div></div><div class="ct-cap">SAVAGE MODE II</div></div>
+      <div class="ct"><div class="ct-frame"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/e1/6e/6a/e16e6a89-3e6d-1936-1a9c-b51680bcd4c1/22UM1IM29132.rgb.jpg/600x600bb.jpg" alt="Her Loss" loading="lazy"/><div class="ct-overlay"><span>two eras colliding, one album</span></div></div><div class="ct-cap">HER LOSS</div></div>
       <div class="ct logo"><div class="ct-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Claude_AI_symbol.svg/500px-Claude_AI_symbol.svg.png" alt="Claude" loading="lazy"/><div class="ct-overlay"><span>listed as emergency contact</span></div></div><div class="ct-cap">CLAUDE</div></div>
     </div>
   </div>
@@ -607,7 +608,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 
   <!-- lane 3: the films -->
   <div class="car-row reveal">
-    <div class="car-track" id="car3" style="animation-duration:60s;">
+    <div class="car-track" id="car3">
       <div class="ct"><div class="ct-frame"><img src="https://upload.wikimedia.org/wikipedia/en/1/1c/Godfather_ver1.jpg" alt="The Godfather" loading="lazy"/><div class="ct-overlay"><span>an offer nobody refused</span></div></div><div class="ct-cap">THE GODFATHER</div></div>
       <div class="ct"><div class="ct-frame"><img src="https://upload.wikimedia.org/wikipedia/en/9/90/The_Odyssey_%282026_film%29_poster.jpg" alt="The Odyssey" loading="lazy"/><div class="ct-overlay"><span>a film by christopher nolan</span></div></div><div class="ct-cap">THE ODYSSEY</div></div>
       <div class="ct"><div class="ct-frame"><img src="https://upload.wikimedia.org/wikipedia/en/4/4a/Oppenheimer_%28film%29.jpg" alt="Oppenheimer" loading="lazy"/><div class="ct-overlay"><span>now I am become death</span></div></div><div class="ct-cap">OPPENHEIMER</div></div>
@@ -732,6 +733,46 @@ if ('IntersectionObserver' in window) {
     entries.forEach((e) => e.target.classList.toggle('in-view', e.isIntersecting));
   }, {rootMargin: '200px'});
   document.querySelectorAll('.car-track').forEach((t) => carVisibility.observe(t));
+}
+
+/* ---------- marquee: rAF-driven with velocity easing, so hovering a
+   row glides it to a stop instead of the flat animation-play-state
+   snap a CSS keyframe animation gives you. Per-track speed is derived
+   from its own (already-duplicated) width so the pacing matches what
+   the old keyframes looked like, just smoother in and out of hover. ---------- */
+if (!prefersReducedMotion) {
+  const marqueeTracks = [
+    { id: 'car1', reverse: false, duration: 45 },
+    { id: 'car2', reverse: true, duration: 52 },
+    { id: 'car3', reverse: false, duration: 60 },
+  ].map(({ id, reverse, duration }) => {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    const half = el.scrollWidth / 2;
+    return { el, reverse, half, speed: half / duration, x: reverse ? -half : 0, v: 0, hovered: false };
+  }).filter(Boolean);
+
+  marqueeTracks.forEach((t) => {
+    const row = t.el.closest('.car-row');
+    row.addEventListener('mouseenter', () => { t.hovered = true; });
+    row.addEventListener('mouseleave', () => { t.hovered = false; });
+  });
+
+  let marqueeLast = performance.now();
+  function marqueeFrame(now) {
+    const dt = Math.min(now - marqueeLast, 50) / 1000;
+    marqueeLast = now;
+    marqueeTracks.forEach((t) => {
+      const target = t.hovered ? 0 : t.speed;
+      t.v += (target - t.v) * Math.min(dt * 3, 1);
+      t.x += (t.reverse ? 1 : -1) * t.v * dt;
+      if (!t.reverse && t.x <= -t.half) t.x += t.half;
+      if (t.reverse && t.x >= 0) t.x -= t.half;
+      t.el.style.transform = `translate3d(${t.x.toFixed(2)}px,0,0)`;
+    });
+    requestAnimationFrame(marqueeFrame);
+  }
+  requestAnimationFrame(marqueeFrame);
 }
 
 /* ---------- OSS stat count-up ---------- */
