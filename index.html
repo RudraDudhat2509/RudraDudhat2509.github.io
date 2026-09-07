@@ -79,6 +79,9 @@ section > .wrap{position:relative;z-index:1;}
 .deco-stamp .st-n{font-family:var(--mono);font-size:19px;font-weight:700;letter-spacing:.6px;fill:var(--terra);}
 .deco-ray{position:absolute;pointer-events:none;z-index:0;opacity:.14;}
 .deco-ps{position:absolute;pointer-events:none;z-index:0;opacity:.5;}
+.collection-controller{position:absolute;top:-58px;right:0;width:130px;height:130px;z-index:1;pointer-events:none;}
+.collection-controller canvas{width:100%;height:100%;display:block;}
+@media (max-width:900px){.collection-controller{display:none;}}
 .deco-tag{position:absolute;pointer-events:none;z-index:0;font-family:'Permanent Marker',cursive;font-size:2.4rem;line-height:1;color:var(--terra);opacity:.22;width:max-content;}
 
 /* ============ HERO ============ */
@@ -102,12 +105,17 @@ section > .wrap{position:relative;z-index:1;}
 .btn-ghost{display:inline-block;font-family:var(--mono);font-size:12.5px;color:var(--ink2);padding:14px 20px;text-decoration:none;border-radius:100px;border:1px solid transparent;transition:all .25s;}
 .btn-ghost:hover{border-color:var(--line2);background:var(--paper);}
 .hero-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:48px;align-items:center;}
-.hero-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:0 18px 50px rgba(60,45,20,.1);}
-.hero-card .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;}
-.hero-card .row:last-child{border-bottom:none;}
-.hero-card .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;padding-top:3px;}
-.hero-card .v{color:var(--ink);font-weight:500;text-align:right;}
-.hero-card .v small{display:block;font-weight:400;color:var(--muted);font-size:12px;}
+
+/* ============ ID BADGE (hero visual: lanyard swings in, settles, sways) ============ */
+/* opacity:0 lives on .badge-rig, not .badge-scene - the existing hero
+   parallax script animates .badge-scene's own opacity/y on scroll (it
+   targets every direct child of .hero-grid), so the entrance fade has to
+   run on a nested element or the two animations fight over one property */
+.badge-scene{position:relative;width:100%;max-width:300px;margin:0 auto;}
+.badge-rig{position:relative;width:100%;transform-origin:50% 0;opacity:0;}
+.strap{width:34px;height:110px;margin:0 auto;background:linear-gradient(90deg,var(--terra) 0 14px,var(--brass) 14px 19px,var(--terra) 19px 34px);border-radius:3px;box-shadow:0 4px 10px rgba(40,30,12,.15);}
+.clip{width:28px;height:20px;margin:-4px auto 0;background:linear-gradient(180deg,#DCD3BE,#B8AC8E);border-radius:5px;position:relative;box-shadow:0 3px 6px rgba(40,30,12,.25);}
+.clip::after{content:'';position:absolute;left:50%;top:100%;width:13px;height:13px;margin-left:-6.5px;background:#C9BFA6;border-radius:50%;box-shadow:0 3px 6px rgba(40,30,12,.2);}
 
 /* ============ TICKER ============ */
 .ticker{background:var(--ink);color:var(--bg);padding:14px 0;overflow:hidden;}
@@ -138,6 +146,39 @@ section{padding:88px 0;}
 .polaroid .pcap{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);margin-top:9px;text-align:center;}
 .about-copy p strong{color:var(--ink);font-weight:600;}
 .about-copy .first::first-letter{font-family:var(--serif);font-size:52px;float:left;line-height:.85;margin:4px 10px 0 0;color:var(--terra);}
+
+/* ============ ID BADGE card face (hangs off .badge-rig in the hero) ============ */
+.id-card{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;box-shadow:0 30px 60px rgba(40,30,12,.28);max-width:300px;width:100%;margin-top:6px;transition:transform .35s cubic-bezier(.22,1,.36,1);}
+.id-top{display:flex;gap:10px;}
+.id-photo-box{width:96px;height:96px;border-radius:8px;flex:none;overflow:hidden;border:1.5px solid var(--line2);}
+.id-photo-box img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block;}
+.id-verified{flex:1;background:var(--ink);color:var(--bg);border-radius:8px;padding:9px 10px 8px;transform:rotate(-1.4deg);align-self:flex-start;}
+.id-verified .vtitle{font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.09em;text-transform:uppercase;}
+.id-verified .vsub{font-family:var(--sans);font-size:9px;color:var(--brass);margin-top:3px;}
+.id-verified .vstripes{height:5px;margin-top:7px;background:repeating-linear-gradient(45deg,var(--terra) 0 4px,transparent 4px 8px);border-radius:2px;}
+.id-fields{margin-top:12px;}
+.id-field{padding:8px 0;border-bottom:1px solid var(--line);}
+.id-field .fk{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.id-field .fv{font-weight:600;font-size:13px;color:var(--ink);margin-top:2px;}
+.id-field .fv small{display:block;font-weight:400;color:var(--muted);font-size:11px;margin-top:2px;}
+.id-namesig{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);}
+.id-namesig .namecol{flex:1;min-width:0;}
+.id-namesig .nk{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.id-namesig .nv{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--ink);margin-top:3px;}
+.id-namesig .sigcol{width:76px;flex:none;border-left:1px solid var(--line2);padding-left:9px;text-align:center;}
+.id-namesig .sigcol svg{width:100%;height:24px;}
+.id-namesig .sk{display:block;font-family:var(--mono);font-size:7.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.id-footer3{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-top:12px;align-items:center;}
+.id-footer3 .fcol{display:flex;flex-direction:column;gap:8px;}
+.id-footer3 .fcol.mid{align-items:center;justify-content:center;}
+.id-footer3 .frow .fk{font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+.id-footer3 .frow .fv{font-size:10px;color:var(--ink2);margin-top:1px;}
+.id-monogram{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:600;font-size:11px;color:var(--ink);}
+.id-stripebar{margin-top:14px;background:var(--ink);color:var(--bg);border-radius:7px;padding:8px 10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.id-stripebar .tag{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;position:relative;z-index:1;}
+.id-stripebar::before,.id-stripebar::after{content:'';position:absolute;top:0;bottom:0;width:28px;background:repeating-linear-gradient(45deg,var(--terra) 0 4px,transparent 4px 8px);}
+.id-stripebar::before{left:0;}
+.id-stripebar::after{right:0;}
 
 /* ============ WORK ============ */
 #work{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -403,11 +444,49 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
         <a class="btn-ghost mono" href="https://pypi.org/project/diffprompt/" target="_blank">$ pip install diffprompt</a>
       </div>
     </div>
-    <div class="hero-card reveal in d2">
-      <div class="row"><span class="k">Currently</span><span class="v">AI Automations Intern<small>Altagic · remote</small></span></div>
-      <div class="row"><span class="k">Studying</span><span class="v">DSAI, IIT Bhilai<small>CGPA 9.06 · class of ’28</small></span></div>
-      <div class="row"><span class="k">Focus</span><span class="v">Production AI<small>agents · automation · debugging at 2am</small></span></div>
-      <div class="row"><span class="k">Status</span><span class="v" id="hero-status">probably awake<small>it’s always 2am somewhere</small></span></div>
+    <div class="badge-scene" id="badge-scene">
+      <div class="badge-rig" id="badge-rig">
+        <div class="strap"></div>
+        <div class="clip"></div>
+        <div class="id-card" id="badge-card">
+          <div class="id-top">
+            <div class="id-photo-box"><img src="img/id-photo.png" alt="Rudra Dudhat" onerror="this.parentElement.style.display='none'"/></div>
+            <div class="id-verified">
+              <div class="vtitle">Verified</div>
+              <div class="vsub">21 merged OSS PRs</div>
+              <div class="vstripes"></div>
+            </div>
+          </div>
+          <div class="id-fields">
+            <div class="id-field"><div class="fk">Studying</div><div class="fv">DSAI &middot; IIT Bhilai</div></div>
+            <div class="id-field"><div class="fk">Status</div><div class="fv" id="hero-status">probably awake<small>it’s always 2am somewhere</small></div></div>
+          </div>
+          <div class="id-namesig">
+            <div class="namecol">
+              <div class="nk">Name</div>
+              <div class="nv">RUDRA DUDHAT</div>
+            </div>
+            <div class="sigcol">
+              <svg viewBox="0 0 100 40" fill="none" stroke="#B5532F" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6,30 C6,12 20,10 20,20 C20,30 30,30 28,17 C33,26 40,30 46,22 C50,15 56,14 58,22 M64,30 C64,12 84,10 86,20 C87,27 78,30 72,24"/>
+              </svg>
+              <span class="sk">Signature</span>
+            </div>
+          </div>
+          <div class="id-footer3">
+            <div class="fcol">
+              <div class="frow"><div class="fk">Focus</div><div class="fv">Production AI</div></div>
+              <div class="frow"><div class="fk">Location</div><div class="fv">Navi Mumbai</div></div>
+            </div>
+            <div class="fcol mid"><div class="id-monogram">RD</div></div>
+            <div class="fcol" style="text-align:right;">
+              <div class="frow"><div class="fk">GitHub</div><div class="fv">@RudraDudhat2509</div></div>
+              <div class="frow"><div class="fk">X</div><div class="fv">@rudrabuilds</div></div>
+            </div>
+          </div>
+          <div class="id-stripebar"><span class="tag">/ Building in public /</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -565,6 +644,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
     <rect x="98" y="5" width="16" height="16" fill="none" stroke="#A6588A" stroke-width="2.2"/>
   </svg>
   <div class="wrap">
+    <div class="collection-controller" id="collection-controller-wrap"><canvas id="collection-controller-canvas"></canvas></div>
     <div class="sec-head reveal"><h2 class="sec-title">The Collection</h2><span class="label">ALBUMS · GAMES · FILMS</span></div>
     <p class="sec-intro reveal">The taste section. Three lanes, alternating directions, hover to pause and read the commentary.</p>
   </div>
@@ -717,6 +797,9 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 
 <script src="posts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/motion@13.2.0/dist/motion.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 const { animate, scroll, inView, stagger } = Motion;
 const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -839,6 +922,33 @@ if (!prefersReducedMotion) {
   const heroOffset = ['start start', 'end start'];
   if (heroCols[0]) scroll(animate(heroCols[0], { y: [0, -40], opacity: [1, 0.35] }, { ease: 'linear' }), { target: heroSection, offset: heroOffset });
   if (heroCols[1]) scroll(animate(heroCols[1], { y: [0, -70], opacity: [1, 0.35] }, { ease: 'linear' }), { target: heroSection, offset: heroOffset });
+}
+
+/* ---------- ID badge: swings in on load, idle-sways, tilts toward the cursor ---------- */
+const badgeRig = document.getElementById('badge-rig');
+const badgeCard = document.getElementById('badge-card');
+if (badgeRig && badgeCard) {
+  if (prefersReducedMotion) {
+    badgeRig.style.opacity = '1';
+  } else {
+    animate(badgeRig, { x: [-360, 0], rotate: [-26, 0], opacity: [0, 1] }, { type: 'spring', stiffness: 60, damping: 11, delay: .3 });
+
+    let badgeSway;
+    function startBadgeSway(){
+      badgeSway = animate(badgeRig, { rotate: [-3, 3] }, { duration: 2.6, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' });
+    }
+    setTimeout(startBadgeSway, 1900);
+
+    badgeCard.addEventListener('mouseenter', () => { if (badgeSway) badgeSway.pause(); });
+    badgeCard.addEventListener('mousemove', (e) => {
+      const r = badgeCard.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      animate(badgeRig, { rotate: px * 14 }, { duration: .3, ease: 'easeOut' });
+    });
+    badgeCard.addEventListener('mouseleave', () => {
+      animate(badgeRig, { rotate: 0 }, { duration: .5, ease: 'easeOut' }).finished.then(() => { if (badgeSway) badgeSway.play(); });
+    });
+  }
 }
 
 /* ---------- live OSS feed ---------- */
@@ -1132,7 +1242,7 @@ addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 
 /* ---------- recruiter speedrun ---------- */
 const SR_STOPS = [
-  ['.hero-card',  'THE ESSENTIALS · IIT BHILAI · CGPA 9.06'],
+  ['.badge-scene', 'THE ESSENTIALS · IIT BHILAI · CGPA 9.06'],
   ['.work-win',   'THE WORK · 4 SHIPPED BUILDS'],
   ['.oss-stats',  'PROOF OF WORK · OSS + 1.5L IMPRESSIONS'],
   ['.xp-list',    'EXPERIENCE · ALTAGIC + 2 LEAD ROLES'],
@@ -1192,6 +1302,93 @@ document.querySelectorAll('.ct').forEach(c => {
 
 console.log('%cOi. Inspecting, are we?', 'font-size:18px;font-weight:bold;color:#B5532F;');
 console.log('%cEverything here is hand-built. The PRs are real, the CGPA is real, the samosa take is unfortunately also real.\\n→ github.com/RudraDudhat2509', 'font-size:12px;color:#594E3B;');
+</script>
+
+<!-- ════════ COLLECTION 3D CONTROLLER ════════ -->
+<script>
+(function () {
+  var wrap = document.getElementById('collection-controller-wrap');
+  var canvasEl = document.getElementById('collection-controller-canvas');
+  if (!wrap || !canvasEl || typeof THREE === 'undefined') return;
+
+  var section = document.getElementById('collection');
+  var baseRotY = -1.05; // turned so the grips trail off to the left
+  var scene, camera, renderer, pad;
+
+  try {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(30, 1, 0.01, 100);
+    renderer = new THREE.WebGLRenderer({ canvas: canvasEl, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+    scene.add(new THREE.AmbientLight(0xfff4e0, 1.1));
+    var key = new THREE.DirectionalLight(0xffffff, 1.1);
+    key.position.set(3, 6, 4);
+    scene.add(key);
+    var fill = new THREE.DirectionalLight(0xE2D7BE, 0.4);
+    fill.position.set(-4, 1, 2);
+    scene.add(fill);
+
+    pad = new THREE.Group();
+    scene.add(pad);
+
+    var draco = new THREE.DRACOLoader();
+    draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');
+    var loader = new THREE.GLTFLoader();
+    loader.setDRACOLoader(draco);
+
+    loader.load('models/dualsense.glb', function (gltf) {
+      var model = gltf.scene;
+      var box = new THREE.Box3().setFromObject(model);
+      var size = new THREE.Vector3();
+      var center = new THREE.Vector3();
+      box.getSize(size);
+      box.getCenter(center);
+      model.position.sub(center);
+      pad.add(model);
+      pad.rotation.y = baseRotY;
+
+      var maxDim = Math.max(size.x, size.y, size.z);
+      var dist = maxDim * 2.7;
+      camera.position.set(0, maxDim * 0.35, dist);
+      camera.lookAt(0, 0, 0);
+      camera.near = dist / 100;
+      camera.far = dist * 20;
+      camera.updateProjectionMatrix();
+
+      resize();
+      tick();
+    }, undefined, function () {
+      wrap.style.display = 'none';
+    });
+  } catch (e) {
+    wrap.style.display = 'none';
+    return;
+  }
+
+  function resize(){
+    var w = wrap.clientWidth || 130, h = wrap.clientHeight || 130;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  addEventListener('resize', resize);
+
+  /* slow, scroll-tied turn: as the section drifts through the viewport,
+     the controller eases further round from its base angle and back -
+     no free-running animation, it only moves because you're scrolling */
+  function tick(){
+    if (!prefersReducedMotion && section && pad) {
+      var rect = section.getBoundingClientRect();
+      var vh = innerHeight || document.documentElement.clientHeight;
+      var progress = (vh / 2 - (rect.top + rect.height / 2)) / (vh / 2 + rect.height / 2);
+      progress = Math.max(-1, Math.min(1, progress));
+      pad.rotation.y = baseRotY + progress * 0.3;
+    }
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+})();
 </script>
 </body>
 </html>
