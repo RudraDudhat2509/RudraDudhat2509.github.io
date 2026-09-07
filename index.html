@@ -346,12 +346,12 @@ a.oss-stat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(60,45,20
 .lyric.slate{border-left-color:var(--slate);}
 .lyric.slate .brandrow{color:var(--slate);}
 
-/* ============ HOT TAKES ============ */
-.takes-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.take{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--terra);border-radius:14px;padding:30px 34px;}
-.take .label{margin-bottom:14px;display:block;}
-.take blockquote{font-family:var(--serif);font-size:23px;line-height:1.4;font-weight:450;letter-spacing:-.005em;}
-.take .defense{margin-top:14px;font-size:14px;color:var(--muted);font-style:italic;}
+/* ============ FIELD NOTES (teaser) ============ */
+.notes-chip-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;}
+.notes-chip{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line2);border-radius:100px;padding:11px 20px;font-size:14px;color:var(--ink2);text-decoration:none;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,border-color .2s;}
+.notes-chip:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(60,45,20,.14);border-color:var(--terra);color:var(--ink);}
+.notes-chip .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
+.notes-chip.skeleton{background:var(--bg3);color:transparent;border-color:var(--bg3);width:150px;height:38px;animation:pulseD 1.6s ease-in-out infinite;}
 
 /* ============ FOOTER ============ */
 footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
@@ -412,7 +412,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 
 /* ============ RESPONSIVE ============ */
 @media(max-width:900px){
-  .hero-grid,.pr-grid,.takes-grid,.lyric-grid,.oss-stats{grid-template-columns:1fr;}
+  .hero-grid,.pr-grid,.lyric-grid,.oss-stats{grid-template-columns:1fr;}
   .xp{grid-template-columns:1fr;gap:10px;}
   .xp .when{order:-1;}
   .win-pane{padding:26px 22px 24px;}
@@ -719,14 +719,16 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
   </div>
 </section>
 
-<!-- ════════ HOT TAKES ════════ -->
-<section id="takes">
+<!-- ════════ FIELD NOTES (teaser) ════════ -->
+<section id="notes-teaser">
   <div class="deco-tag" style="top:20px;right:40px;transform:rotate(-6deg);">RD</div>
   <div class="wrap">
-    <div class="sec-head reveal"><h2 class="sec-title">The takes desk <em>served hot</em></h2><span class="label">OPINIONS ARE MY OWN, UNFORTUNATELY FOR EVERYONE</span></div>
-    <div class="takes-grid">
-      <div class="take reveal"><span class="label">TECH · FILED UNDER: HIRING</span><blockquote>“DSA grind scores tell you almost nothing about whether someone can actually build and ship.”</blockquote><p class="defense">Exhibit A: everything on this page was built, not LeetCoded.</p></div>
-      <div class="take reveal d1"><span class="label">CULINARY · FILED UNDER: COURAGE</span><blockquote>“Samosa with mayo and ketchup is genuinely good and the backlash is performative.”</blockquote><p class="defense">Try it before you report me.</p></div>
+    <div class="sec-head reveal"><h2 class="sec-title">Field notes <em>from the repo</em></h2><a class="label" href="notes.html" style="text-decoration:none;">READ THEM →</a></div>
+    <p class="sec-intro reveal">Working notes on agentic AI, synced straight from GitHub. New module lands in the repo, it shows up there - no rebuild, no deploy.</p>
+    <div class="notes-chip-row reveal" id="notes-chip-row">
+      <span class="notes-chip skeleton"></span>
+      <span class="notes-chip skeleton"></span>
+      <span class="notes-chip skeleton"></span>
     </div>
   </div>
 </section>
@@ -1115,6 +1117,32 @@ if (cform) {
       <h3>${p.title}</h3>
       <p>${p.hook}</p>
     </a>`).join('');
+})();
+
+/* ---------- field notes teaser: live from the same ai_notes repo
+   notes.html reads, not hardcoded (same reasoning as the OSS stats -
+   this is a live-data site, hardcoding your own module list is
+   embarrassing). just chips linking through, the actual reader lives
+   on notes.html - no point duplicating that whole UI here. ---------- */
+(function(){
+  const row = document.getElementById('notes-chip-row');
+  if (!row) return;
+  const ACR = { rag: 'RAG', llm: 'LLM', jwt: 'JWT', api: 'API', fastapi: 'FastAPI', ai: 'AI' };
+  const pretty = (name) => name.replace(/\.txt$/, '').replace(/^module_/, '').split('_')
+    .map((w) => ACR[w] || w[0].toUpperCase() + w.slice(1)).join(' ');
+
+  fetch('https://api.github.com/repos/RudraDudhat2509/ai_notes/git/trees/main?recursive=1')
+    .then((r) => { if (!r.ok) throw 0; return r.json(); })
+    .then((data) => {
+      const names = [...new Set(data.tree.filter((t) => t.path.endsWith('.txt')).map((t) => t.path.split('/').pop()))];
+      if (!names.length) throw 0;
+      row.innerHTML = names.slice(0, 4).map((n) =>
+        `<a class="notes-chip" href="notes.html"><span class="tag">Module</span>${pretty(n)}</a>`
+      ).join('') + `<a class="notes-chip" href="notes.html"><span class="tag">+ more</span>See all →</a>`;
+    })
+    .catch(() => {
+      row.innerHTML = `<a class="notes-chip" href="notes.html">GitHub is rate-limiting us - read them directly →</a>`;
+    });
 })();
 
 /* ---------- pipbar copy ---------- */
