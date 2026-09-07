@@ -77,11 +77,20 @@ section > .wrap{position:relative;z-index:1;}
 .deco-stamp rect{fill:none;stroke:var(--terra);stroke-width:2.4;}
 .deco-stamp .st-t{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.6px;fill:var(--terra);}
 .deco-stamp .st-n{font-family:var(--mono);font-size:19px;font-weight:700;letter-spacing:.6px;fill:var(--terra);}
-.deco-ps{position:absolute;pointer-events:none;z-index:0;opacity:.5;}
-.collection-controller{position:absolute;top:-40px;right:10px;width:220px;height:220px;z-index:1;cursor:grab;touch-action:none;}
+.collection-head-row{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:20px;margin-bottom:36px;}
+.collection-controller{position:relative;width:400px;height:400px;flex:none;cursor:grab;touch-action:none;}
 .collection-controller:active{cursor:grabbing;}
-.collection-controller canvas{width:100%;height:100%;display:block;}
-@media (max-width:900px){.collection-controller{display:none;}}
+.collection-controller canvas{width:100%;height:100%;display:block;position:relative;z-index:1;}
+.collection-controller::after{content:'';position:absolute;left:12%;right:12%;bottom:6%;height:16%;background:radial-gradient(ellipse at center, rgba(28,24,18,.24), transparent 72%);border-radius:50%;z-index:0;}
+.collection-head-text .sec-head{justify-content:flex-end;gap:20px;}
+.collection-head-text .sec-intro{margin-left:auto;text-align:left;}
+@media (max-width:900px){
+  .collection-head-row{grid-template-columns:1fr;justify-items:center;}
+  .collection-controller{width:260px;height:260px;}
+  .collection-head-text{text-align:center;}
+  .collection-head-text .sec-head{justify-content:center;flex-direction:column;gap:6px;}
+  .collection-head-text .sec-intro{margin-left:auto;margin-right:auto;text-align:center;}
+}
 .deco-tag{position:absolute;pointer-events:none;z-index:0;font-family:'Permanent Marker',cursive;font-size:2.4rem;line-height:1;color:var(--terra);opacity:.22;width:max-content;}
 
 /* ============ HERO ============ */
@@ -265,7 +274,7 @@ section{padding:88px 0;}
 #pr-status{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:14px;}
 
 /* ============ COLLECTION (carousel) ============ */
-#collection{overflow:hidden;padding-top:160px;}
+#collection{overflow:hidden;}
 /* Mat-frame poster cards: a paper card with padding around the image
    (like a framed print), a persistent title below, and commentary that
    only appears on hover, over the image itself - not baked in at rest.
@@ -633,17 +642,14 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
 
 <!-- ════════ COLLECTION ════════ -->
 <section id="collection">
-  <svg class="deco-ps" style="width:120px;height:30px;top:24px;left:30px;transform:rotate(-3deg);" viewBox="0 0 120 30">
-    <polygon points="15,3 26,24 4,24" fill="none" stroke="#4A9B7F" stroke-width="2.2" stroke-linejoin="round"/>
-    <circle cx="49" cy="15" r="11" fill="none" stroke="#B5532F" stroke-width="2.2"/>
-    <line x1="70" y1="5" x2="87" y2="24" stroke="#5B7FA6" stroke-width="2.4" stroke-linecap="round"/>
-    <line x1="87" y1="5" x2="70" y2="24" stroke="#5B7FA6" stroke-width="2.4" stroke-linecap="round"/>
-    <rect x="98" y="5" width="16" height="16" fill="none" stroke="#A6588A" stroke-width="2.2"/>
-  </svg>
   <div class="wrap">
-    <div class="collection-controller" id="collection-controller-wrap"><canvas id="collection-controller-canvas"></canvas></div>
-    <div class="sec-head reveal"><h2 class="sec-title">The Collection</h2><span class="label">ALBUMS · GAMES · FILMS</span></div>
-    <p class="sec-intro reveal">The taste section. Three lanes, alternating directions, hover to pause and read the commentary.</p>
+    <div class="collection-head-row">
+      <div class="collection-controller" id="collection-controller-wrap"><canvas id="collection-controller-canvas"></canvas></div>
+      <div class="collection-head-text">
+        <div class="sec-head reveal"><h2 class="sec-title">The Collection</h2><span class="label">ALBUMS · GAMES · FILMS</span></div>
+        <p class="sec-intro reveal">The taste section. Three lanes, alternating directions, hover to pause and read the commentary.</p>
+      </div>
+    </div>
   </div>
 
   <!-- lane 1: the rotation -->
@@ -1282,19 +1288,6 @@ document.querySelectorAll('.ct').forEach(c => {
   c.addEventListener('mouseleave', () => c.style.transform = '');
 });
 /* console */
-/* personality marks: clear the real header text, not a guessed offset.
-   the fixed nav (79px) sits above everything at scroll position zero, so a
-   small hardcoded top risked landing under it on top of also risking the
-   heading. measuring .sec-intro's actual bottom clears both at once. */
-(function () {
-  var intro = document.querySelector('#collection .sec-intro');
-  var ps = document.querySelector('#collection .deco-ps');
-  if (intro && ps) {
-    var y = intro.offsetTop + intro.offsetHeight + 14;
-    ps.style.top = (y + 4) + 'px';
-  }
-})();
-
 console.log('%cOi. Inspecting, are we?', 'font-size:18px;font-weight:bold;color:#B5532F;');
 console.log('%cEverything here is hand-built. The PRs are real, the CGPA is real, the samosa take is unfortunately also real.\\n→ github.com/RudraDudhat2509', 'font-size:12px;color:#594E3B;');
 </script>
@@ -1347,8 +1340,12 @@ console.log('%cEverything here is hand-built. The PRs are real, the CGPA is real
       // generous margin: the base yaw plus the scroll swing plus manual
       // drag can all present a wider diagonal silhouette than the
       // axis-aligned bounding box, so a tight fit crops it at the extremes
-      var dist = maxDim * 4.2;
-      camera.position.set(0, maxDim * 0.35, dist);
+      var dist = maxDim * 3.6;
+      // steep-ish elevation - reads like it's resting on a surface, viewed
+      // from above, but still angled enough to see the button relief
+      // (the first pass was ~5° off horizontal, basically edge-on)
+      var elevation = 46 * Math.PI / 180;
+      camera.position.set(0, dist * Math.sin(elevation), dist * Math.cos(elevation));
       camera.lookAt(0, 0, 0);
       camera.near = dist / 100;
       camera.far = dist * 20;
@@ -1365,7 +1362,7 @@ console.log('%cEverything here is hand-built. The PRs are real, the CGPA is real
   }
 
   function resize(){
-    var w = wrap.clientWidth || 220, h = wrap.clientHeight || 220;
+    var w = wrap.clientWidth || 400, h = wrap.clientHeight || 400;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
