@@ -633,7 +633,7 @@ footer{background:var(--ink);color:var(--bg);padding:88px 0 40px;}
     <p class="sec-intro reveal">Where I’m contributing right now: AI tooling and infrastructure used by real teams. This list updates itself, because hardcoding your own PRs is embarrassing.</p>
     <div class="oss-stats reveal">
       <a class="oss-stat" href="https://www.linkedin.com/in/rdudhat-iitbhilai/" target="_blank" rel="noopener"><div class="n" id="stat-impressions" data-count-to="1.5">0L+</div><div class="l">LinkedIn impressions · last 90 days ↗</div></a>
-      <a class="oss-stat" href="https://github.com/RudraDudhat2509" target="_blank" rel="noopener"><div class="n" id="stat-commits">–</div><div class="l">commits on GitHub · last 90 days ↗</div></a>
+      <a class="oss-stat" href="https://github.com/RudraDudhat2509" target="_blank" rel="noopener"><div class="n" id="stat-commits">–</div><div class="l" id="stat-commits-label">pushes to GitHub · recent activity ↗</div></a>
       <a class="oss-stat" href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener"><div class="n">diffprompt</div><div class="l">authored · live on PyPI ↗</div></a>
     </div>
     <div class="pr-grid" id="pr-grid"></div>
@@ -885,27 +885,40 @@ if (impressionsStat) {
   }, { amount: 0.8 });
 }
 
-/* ---------- GitHub commit count stat: live, not hardcoded, same as
+/* ---------- GitHub push count stat: live, not hardcoded, same as
    the PR list below it. Uses the public events feed (github.com/search/commits
    works from curl but real browsers get blocked at the network level -
-   events/public doesn't have that problem, at the cost of only covering
-   the last ~90 days / 300 events, not all-time - hence the honest label. ---------- */
+   events/public doesn't have that problem). Counts PushEvents, not commits:
+   GitHub dropped the `size` field from PushEvent payloads at some point, so
+   every push now reports payload.size === undefined - summing that always
+   gave 0, which is the actual bug here, not a fetch failure. Pages up to
+   300 events (GitHub's own cap on this endpoint) and labels the real date
+   span it got back instead of a hardcoded "90 days" that's wrong for
+   anyone who pushes often enough to fill 300 events in under a week. ---------- */
 const commitsStat = document.getElementById('stat-commits');
+const commitsLabel = document.getElementById('stat-commits-label');
 if (commitsStat) {
-  fetch('https://api.github.com/users/RudraDudhat2509/events/public?per_page=100')
-    .then((r) => { if (!r.ok) throw 0; return r.json(); })
-    .then((events) => {
-      const total = events.filter((e) => e.type === 'PushEvent').reduce((sum, e) => sum + (e.payload.size || 0), 0);
-      commitsStat.textContent = '0';
-      inView(commitsStat, () => {
-        animate(0, total, {
-          duration: 1.4,
-          ease: 'circOut',
-          onUpdate: (latest) => { commitsStat.textContent = Math.round(latest).toLocaleString('en-IN'); },
-        });
-      }, { amount: 0.8 });
-    })
-    .catch(() => { commitsStat.textContent = '–'; });
+  const pages = [1, 2, 3].map((p) =>
+    fetch(`https://api.github.com/users/RudraDudhat2509/events/public?per_page=100&page=${p}`)
+      .then((r) => (r.ok ? r.json() : []))
+      .catch(() => [])
+  );
+  Promise.all(pages).then((results) => {
+    const events = results.flat();
+    if (!events.length) throw 0;
+    const pushCount = events.filter((e) => e.type === 'PushEvent').length;
+    const oldest = new Date(events[events.length - 1].created_at);
+    const days = Math.max(1, Math.round((Date.now() - oldest) / 86400000));
+    if (commitsLabel) commitsLabel.textContent = `pushes to GitHub · last ${days} day${days === 1 ? '' : 's'} ↗`;
+    commitsStat.textContent = '0';
+    inView(commitsStat, () => {
+      animate(0, pushCount, {
+        duration: 1.4,
+        ease: 'circOut',
+        onUpdate: (latest) => { commitsStat.textContent = Math.round(latest).toLocaleString('en-IN'); },
+      });
+    }, { amount: 0.8 });
+  }).catch(() => { commitsStat.textContent = '–'; });
 }
 
 /* ---------- scroll progress bar ---------- */
