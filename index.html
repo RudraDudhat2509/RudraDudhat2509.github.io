@@ -278,6 +278,13 @@ a.plain:hover .pdot,a.plain:hover .or{opacity:.75}
 .ostats div{font-family:var(--display);font-weight:900;font-size:clamp(30px,3.4vw,48px);line-height:1;text-transform:uppercase}
 .ostats small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.12em;margin-top:6px}
 .oss .why{margin-top:26px;max-width:40em}
+.wall{display:flex;flex-wrap:wrap;gap:8px 14px;margin:36px 0 0;align-items:baseline}
+.wall span{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(28px,4.4vw,64px);line-height:.95}
+.wall .h{background:var(--ink);color:var(--orange-hi);padding:0 .14em}
+.wall .l{background:var(--hi);padding:0 .14em}
+.wall .t{color:transparent;-webkit-text-stroke:2px var(--ink)}
+.wall a{color:inherit;text-decoration:none}
+.wall a:hover{text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.1em}
 .ftop{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:32px}
 .ftop .sub{color:var(--ink);font-size:clamp(24px,2.4vw,32px)}
 .allpr{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-underline-offset:3px}
@@ -331,7 +338,7 @@ details.more[open] .so,details.more:not([open]) .sc{display:none}
 
 <nav><div class="in tag">
   <a class="logo" href="#top">Rudra Dudhat</a>
-  <div class="navl"><a href="#llm">The LLM</a><a href="#oss">OSS</a><a href="#speak">Speaking</a><a href="#rig">The PC</a><a href="blog.html">Lore</a><a href="notes.html">Notes</a><a href="#talk">Talk</a></div>
+  <div class="navl"><a href="#llm">The LLM</a><a href="#work">Work</a><a href="#oss">OSS</a><a href="#speak">Speaking</a><a href="#rig">The PC</a><a href="blog.html">Lore</a><a href="notes.html">Notes</a><a href="#talk">Talk</a></div>
 </div></nav>
 
 <header class="hero" id="top">
@@ -398,6 +405,34 @@ details.more[open] .so,details.more:not([open]) .sc{display:none}
   </div>
 </section>
 
+<div class="xband" aria-hidden="true">
+  <div class="mq a"><div class="track" data-dir="-1"><span>diffprompt <i>●</i> brok <i>●</i> cacheguard <i>●</i> OptiQuant <i>●</i> diffprompt <i>●</i> brok <i>●</i> cacheguard <i>●</i> OptiQuant <i>●</i> </span><span>diffprompt <i>●</i> brok <i>●</i> cacheguard <i>●</i> OptiQuant <i>●</i> diffprompt <i>●</i> brok <i>●</i> cacheguard <i>●</i> OptiQuant <i>●</i> </span></div></div>
+  <div class="mq b"><div class="track" data-dir="1"><span>Built <i>●</i> Measured <i>●</i> Kept honest <i>●</i> Built <i>●</i> Measured <i>●</i> Kept honest <i>●</i> Built <i>●</i> Measured <i>●</i> Kept honest <i>●</i> </span><span>Built <i>●</i> Measured <i>●</i> Kept honest <i>●</i> Built <i>●</i> Measured <i>●</i> Kept honest <i>●</i> Built <i>●</i> Measured <i>●</i> Kept honest <i>●</i> </span></div></div>
+</div>
+
+<section class="work" id="work">
+  <div class="in">
+    <span class="kick tag">Things that already work</span>
+    <h2 class="wh">Built, measured, <span>and kept honest</span><i class="pdot" style="width:.1em;height:.1em"></i></h2>
+    <article class="row" tabindex="0">
+      <h3>diffprompt</h3>
+      <div class="d"><span class="pill">On PyPI · v1.2.0</span><b>See what a prompt change broke</b>Runs both versions, judges the pairs, clusters the failures. On 90 labeled pairs the default gate caught 23 of 30 seeded regressions.<p class="lk"><a href="https://github.com/RudraDudhat2509/diffprompt" target="_blank" rel="noopener">GitHub</a> · <a href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener">PyPI</a></p></div>
+    </article>
+    <article class="row" tabindex="0">
+      <h3>brok</h3>
+      <div class="d"><span class="pill">MCP · no LLM in the core</span><b>Names the bottleneck, every time</b>Right on 21 of 21 designs checked by hand. GPT-4o-mini got 67% on the same set.<p class="lk"><a href="https://github.com/RudraDudhat2509/brok" target="_blank" rel="noopener">GitHub</a></p></div>
+    </article>
+    <article class="row" tabindex="0">
+      <h3>cacheguard</h3>
+      <div class="d"><span class="pill">Open benchmark</span><b>When a cache gives the wrong answer</b>About 9% of reused answers were wrong at the common 0.85 threshold. A judge on borderline matches cut wrong answers by 70%.<p class="lk"><a href="https://github.com/RudraDudhat2509/cacheguard" target="_blank" rel="noopener">GitHub</a></p></div>
+    </article>
+    <article class="row" tabindex="0">
+      <h3>OptiQuant</h3>
+      <div class="d"><span class="pill">Quant · backtest</span><b>My first look at markets</b>LightGBM and CatBoost ensemble with SHAP. Backtest only: 28.16% CAGR, 1.05 Sharpe.<p class="lk"><a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank" rel="noopener">GitHub</a></p></div>
+    </article>
+  </div>
+</section>
+
 <section class="oss" id="oss">
   <div class="in">
     <span class="kick tag">Open source · other people's code</span>
@@ -410,6 +445,8 @@ details.more[open] .so,details.more:not([open]) .sc{display:none}
       </div>
     </div>
     <p class="why">I started open source to get into LFX, and I got rejected. So I kept going, to learn how real projects are built and to meet people around the world. Along the way I learned to verify everything an LLM produces, because it can hallucinate.</p>
+
+    <div class="wall" aria-label="Projects with merged fixes"><span class="h"><a href="https://github.com/mlflow/mlflow/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">MLflow</a></span><span class="t"><a href="https://github.com/open-telemetry/opentelemetry-python/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">OpenTelemetry</a></span><span class="l"><a href="https://github.com/BerriAI/litellm/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">LiteLLM</a></span><span><a href="https://github.com/kedro-org/kedro/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Kedro</a></span><span class="h"><a href="https://github.com/Arize-ai/phoenix/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Arize Phoenix</a></span><span class="t"><a href="https://github.com/jaegertracing/jaeger/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Jaeger</a></span><span><a href="https://github.com/aws/sagemaker-python-sdk/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">SageMaker SDK</a></span><span class="l"><a href="https://github.com/podman-container-tools/podman/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Podman</a></span><span class="t"><a href="https://github.com/usestrix/strix/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Strix</a></span><span class="h"><a href="https://github.com/mesa/mesa/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Mesa</a></span><span><a href="https://github.com/mllam/neural-lam/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">neural-lam</a></span><span class="l"><a href="https://github.com/openvinotoolkit/openvino/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">OpenVINO</a></span><span class="t"><a href="https://github.com/kyverno/kyverno/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Kyverno</a></span><span class="h"><a href="https://github.com/Netflix/metaflow/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Metaflow</a></span><span><a href="https://github.com/mesa/mesa-examples/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">mesa-examples</a></span></div>
 
     <div class="ftop"><h3 class="sub">What I fixed</h3><a class="allpr" href="https://github.com/search?q=author%3ARudraDudhat2509+is%3Amerged+-user%3ARudraDudhat2509&type=pullrequests" target="_blank" rel="noopener">All merged PRs on GitHub ↗</a></div>
     <div class="fxs">
@@ -477,33 +514,6 @@ details.more[open] .so,details.more:not([open]) .sc{display:none}
       <div><span class="sub"><a href="https://github.com/OpenLake" target="_blank" rel="noopener">Domain Lead, AI/ML at OpenLake</a></span><p>I run hands-on AI/ML workshops and mentor students at IIT Bhilai's open source club.</p></div>
       <div><span class="sub"><a href="https://github.com/OpenLake/Student_Database_COSA/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Fixed our own club's holes</a></span><p>Found missing login rate limits and an IDOR in the club's student database app, where profile updates trusted a user ID sent by the client, and fixed both.</p></div>
     </div>
-  </div>
-</section>
-<div class="xband" aria-hidden="true">
-  <div class="mq a"><div class="track" data-dir="-1"><span>Hacktoberfest Hack Day <i>●</i> Hacktoberfest Hack Day <i>●</i> Hacktoberfest Hack Day <i>●</i> </span><span>Hacktoberfest Hack Day <i>●</i> Hacktoberfest Hack Day <i>●</i> Hacktoberfest Hack Day <i>●</i> </span></div></div>
-  <div class="mq b"><div class="track" data-dir="1"><span>200 people · 70 followers · First at IIT Bhilai <i>●</i> 200 people · 70 followers · First at IIT Bhilai <i>●</i> 200 people · 70 followers · First at IIT Bhilai <i>●</i> </span><span>200 people · 70 followers · First at IIT Bhilai <i>●</i> 200 people · 70 followers · First at IIT Bhilai <i>●</i> 200 people · 70 followers · First at IIT Bhilai <i>●</i> </span></div></div>
-</div>
-
-<section class="work" id="work">
-  <div class="in">
-    <span class="kick tag">Things that already work</span>
-    <h2 class="wh">Built, measured, <span>and kept honest</span><i class="pdot" style="width:.1em;height:.1em"></i></h2>
-    <article class="row" tabindex="0">
-      <h3>diffprompt</h3>
-      <div class="d"><span class="pill">On PyPI · v1.2.0</span><b>See what a prompt change broke</b>Runs both versions, judges the pairs, clusters the failures. On 90 labeled pairs the default gate caught 23 of 30 seeded regressions.<p class="lk"><a href="https://github.com/RudraDudhat2509/diffprompt" target="_blank" rel="noopener">GitHub</a> · <a href="https://pypi.org/project/diffprompt/" target="_blank" rel="noopener">PyPI</a></p></div>
-    </article>
-    <article class="row" tabindex="0">
-      <h3>brok</h3>
-      <div class="d"><span class="pill">MCP · no LLM in the core</span><b>Names the bottleneck, every time</b>Right on 21 of 21 designs checked by hand. GPT-4o-mini got 67% on the same set.<p class="lk"><a href="https://github.com/RudraDudhat2509/brok" target="_blank" rel="noopener">GitHub</a></p></div>
-    </article>
-    <article class="row" tabindex="0">
-      <h3>cacheguard</h3>
-      <div class="d"><span class="pill">Open benchmark</span><b>When a cache gives the wrong answer</b>About 9% of reused answers were wrong at the common 0.85 threshold. A judge on borderline matches cut wrong answers by 70%.<p class="lk"><a href="https://github.com/RudraDudhat2509/cacheguard" target="_blank" rel="noopener">GitHub</a></p></div>
-    </article>
-    <article class="row" tabindex="0">
-      <h3>OptiQuant</h3>
-      <div class="d"><span class="pill">Quant · backtest</span><b>My first look at markets</b>LightGBM and CatBoost ensemble with SHAP. Backtest only: 28.16% CAGR, 1.05 Sharpe.<p class="lk"><a href="https://github.com/RudraDudhat2509/OptiQuant" target="_blank" rel="noopener">GitHub</a></p></div>
-    </article>
   </div>
 </section>
 
