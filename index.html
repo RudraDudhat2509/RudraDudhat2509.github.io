@@ -22,7 +22,6 @@
   --grad:#FF8A4A;
   --cream:#F0E4CE;
   --hi:#FF8A4A;
-  --sand:#E3D2B0;
   --smoke:#2A231C;
   --dim:#A39682;
   --display:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;
@@ -153,7 +152,7 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
 .stp code i{font-style:normal;color:var(--hi)}
 
 /* SPEAKER */
-.speak{background:var(--sand);color:var(--ink);padding-block:90px 80px;overflow:clip;position:relative}
+.speak{padding-block:90px 80px;overflow:clip;position:relative}
 .speak .mega{font-size:clamp(52px,10.5vw,170px);line-height:.88;text-wrap:balance}
 .speak .mega .ln{display:block}
 .speak .mega .ln+.ln{margin-top:.12em}
@@ -203,23 +202,18 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
 .pcs{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px}
 .pcs div{font-family:var(--body);font-weight:600;font-size:16px}
 .pcs b{font-family:var(--display);font-weight:900;font-size:36px;display:block;line-height:1;color:var(--orange-lo)}
-.snap{margin:0;transform:rotate(-2deg);background:var(--ink);padding:10px 10px 14px;box-shadow:8px 8px 0 var(--hi);max-width:340px}
-.snap img{display:block;width:100%;height:auto}
-.snap figcaption{color:var(--cream);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:10px}
 .upd{margin-top:22px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
 
 /* OFF HOURS */
 .me{padding-block:84px 70px}
-.mgrid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:48px;align-items:center}
-.me .snap{box-shadow:8px 8px 0 var(--orange);transform:rotate(2deg)}
 .stick{display:flex;flex-wrap:wrap;gap:14px 12px;margin-top:26px}
 .stick span{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(24px,3vw,40px);line-height:1;padding:8px 16px;border:3px solid var(--ink);color:var(--ink)}
 .stick span:nth-child(3n+1){background:var(--hi);transform:rotate(-2deg)}
-.stick span:nth-child(3n+2){background:var(--sand);transform:rotate(1.5deg)}
-.stick span:nth-child(3n){background:var(--cream);transform:rotate(-1deg)}
+.stick span:nth-child(3n+2){background:var(--cream);transform:rotate(1.5deg)}
+.stick span:nth-child(3n){background:transparent;color:var(--cream);border-color:var(--cream);transform:rotate(-1deg)}
 
 /* CONTACT */
-.talk{background:var(--sand);color:var(--ink);padding-block:84px 48px;position:relative;overflow:clip}
+.talk{background:var(--cream);color:var(--ink);padding-block:84px 48px;position:relative;overflow:clip}
 .talk .mega{font-size:clamp(80px,17vw,250px)}
 .talk .mega .o{-webkit-text-stroke:3px var(--ink)}
 .ask{font-family:var(--body);font-weight:600;font-size:clamp(20px,2.5vw,32px);line-height:1.15;letter-spacing:-.01em;max-width:26em;margin:28px 0 30px}
@@ -277,9 +271,34 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
 .fr a{font-family:var(--body);font-weight:500;font-size:16px;color:var(--cream);text-decoration:none;overflow-wrap:anywhere}
 .fr a:hover{color:var(--hi)}
 .mail{text-decoration:none;display:inline-block}
+.quote p{margin:0;text-wrap:pretty}
+.quote p+p{margin-top:.55em}
+.tl a{color:inherit;text-underline-offset:3px}
+.tl a:hover{color:var(--hi)}
+a.pop{display:block;text-decoration:none}
+a.pop:hover{transform:rotate(-1deg) scale(1.02)}
+.mini .sub a{color:inherit;text-decoration:none}
+.mini .sub a:hover{color:var(--hi);text-decoration:underline;text-underline-offset:4px}
+a.now{display:block;color:var(--cream);text-decoration:none;transition:transform .2s,box-shadow .2s}
+a.now:hover{transform:rotate(.6deg);box-shadow:12px 12px 0 var(--hi)}
+.st{position:relative}
+.st .cv{position:absolute;inset:0;z-index:1}
+a.pf{display:block;color:inherit;text-decoration:none}
+a.pf:hover p{color:var(--cream)}
+a.pf:hover b span{color:var(--hi)}
+a.plain{color:inherit;text-decoration:none}
+a.plain:hover .pdot,a.plain:hover .or{opacity:.75}
+.wall a{color:inherit;text-decoration:none}
+.wall a:hover{text-decoration:underline;text-decoration-thickness:.07em;text-underline-offset:.1em}
+a.bug{color:inherit;text-decoration:none}
+.rig .now{align-self:start}
+.me{padding-block:96px 72px}
+.me .mega{font-size:clamp(80px,16vw,240px)}
+.me .stick{margin-top:44px;gap:20px 16px}
+.me .stick span{font-size:clamp(30px,4.8vw,76px);padding:10px 22px}
 @media (max-width:860px){
   .hero{padding-bottom:36px}
-  .heroRow,.fgrid,.row,.sgrid,.rgrid,.mgrid{grid-template-columns:minmax(0,1fr)}
+  .heroRow,.fgrid,.row,.sgrid,.rgrid{grid-template-columns:minmax(0,1fr)}
   .now{justify-self:start}
   .navl a:nth-child(n+3){display:none}
   .fr{grid-template-columns:100px 1fr}
@@ -288,7 +307,6 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
   .stp{grid-template-columns:minmax(0,1fr)}
   .stp .n{font-size:44px}
   .bug{grid-template-columns:minmax(0,1fr);gap:4px}
-  .snap{max-width:300px}
   .beats,.case,.mini{grid-template-columns:minmax(0,1fr)}
   .case{gap:40px}
   .ticks span:nth-child(2),.ticks span:nth-child(4){display:none}
@@ -315,11 +333,11 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
     </h1>
     <div class="heroRow">
       <div class="lc"><p class="facts tag">Rudra Dudhat · Navi Mumbai · IIT Bhilai '28</p><p class="lede">I'm learning to code again <b>from scratch</b>. I like proving people wrong, and I like being the youngest in the room.</p><div class="ctas"><a class="btn" href="#llm">Follow the build</a><a class="btn alt" href="#oss">How I fix bugs</a></div></div>
-      <div class="now" role="note">
+      <a class="now" id="nowcard" href="https://github.com/RudraDudhat2509/build-your-own-llm/commits" target="_blank" rel="noopener">
         <span class="tag"><b>now building</b></span>
         <span class="big">Transformer block + RoPE<span class="cursor"></span></span>
         <span>Tokenizer, autograd and attention are done and tested. This is the next piece.</span>
-      </div>
+      </a>
     </div>
   </div>
 </header>
@@ -339,11 +357,11 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
 
     <div class="fgrid">
       <ol class="stack" aria-label="Build stages">
-        <li class="st done"><span class="n">01</span><span class="nm">Tokenizer<small>byte-level BPE, trained from scratch</small></span><span class="s">Done</span></li>
-        <li class="st done"><span class="n">02</span><span class="nm">Autograd engine<small>backprop, checked against PyTorch</small></span><span class="s">Done</span></li>
-        <li class="st done"><span class="n">03</span><span class="nm">Attention<small>the core operation, tested</small></span><span class="s">Done</span></li>
-        <li class="st done"><span class="n">04</span><span class="nm">Char MLP<small>first model that trains end to end</small></span><span class="s">Done</span></li>
-        <li class="st now2"><span class="n">05</span><span class="nm">Transformer block + RoPE<small>writing this now</small></span><span class="s">Building</span></li>
+        <li class="st done"><span class="n">01</span><span class="nm">Tokenizer<small>byte-level BPE, trained from scratch</small></span><span class="s">Done</span><a class="cv" href="https://github.com/RudraDudhat2509/build-your-own-llm/tree/HEAD/bpe-tokenizer" target="_blank" rel="noopener" aria-label="Tokenizer code"></a></li>
+        <li class="st done"><span class="n">02</span><span class="nm">Autograd engine<small>backprop, checked against PyTorch</small></span><span class="s">Done</span><a class="cv" href="https://github.com/RudraDudhat2509/build-your-own-llm/tree/HEAD/autograd-engine" target="_blank" rel="noopener" aria-label="Autograd engine code"></a></li>
+        <li class="st done"><span class="n">03</span><span class="nm">Attention<small>the core operation, tested</small></span><span class="s">Done</span><a class="cv" href="https://github.com/RudraDudhat2509/build-your-own-llm/blob/HEAD/tiny-transformer/attention.py" target="_blank" rel="noopener" aria-label="Attention code"></a></li>
+        <li class="st done"><span class="n">04</span><span class="nm">Char MLP<small>first model that trains end to end</small></span><span class="s">Done</span><a class="cv" href="https://github.com/RudraDudhat2509/build-your-own-llm/blob/HEAD/tiny-transformer/charmlp.py" target="_blank" rel="noopener" aria-label="Char MLP code"></a></li>
+        <li class="st now2"><span class="n">05</span><span class="nm">Transformer block + RoPE<small>writing this now</small></span><span class="s">Building</span><a class="cv" href="https://github.com/RudraDudhat2509/build-your-own-llm/blob/HEAD/tiny-transformer/transformer.py" target="_blank" rel="noopener" aria-label="Transformer block code"></a></li>
         <li class="st next"><span class="n">06</span><span class="nm">KV-cache<small>make generation fast</small></span><span class="s">Next</span></li>
         <li class="st next"><span class="n">07</span><span class="nm">Quantization<small>make it small</small></span><span class="s">Next</span></li>
         <li class="st next"><span class="n">08</span><span class="nm">Parallelism<small>split it across devices</small></span><span class="s">Next</span></li>
@@ -352,9 +370,9 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
       </ol>
 
       <div class="proof">
-        <div class="pf"><b>200<span>/</span>200</b><p>random compute graphs where my gradients match PyTorch. Biggest difference: 7e-15.</p></div>
-        <div class="pf"><b>94<span>%</span></b><p>of GPT-2 tokenizer compression with a 5,000-token vocabulary (2.92 bytes per token, held-out Shakespeare).</p></div>
-        <div class="pf"><b>20</b><p>tests so far, 97 to 100% coverage.</p></div>
+        <a class="pf" href="https://github.com/RudraDudhat2509/build-your-own-llm/blob/HEAD/autograd-engine/test_value.py" target="_blank" rel="noopener"><b>200<span>/</span>200</b><p>random compute graphs where my gradients match PyTorch. Biggest difference: 7e-15.</p></a>
+        <a class="pf" href="https://github.com/RudraDudhat2509/build-your-own-llm/blob/HEAD/BENCHMARKS.md" target="_blank" rel="noopener"><b>94<span>%</span></b><p>of GPT-2 tokenizer compression with a 5,000-token vocabulary (2.92 bytes per token, held-out Shakespeare).</p></a>
+        <a class="pf" href="https://github.com/RudraDudhat2509/build-your-own-llm" target="_blank" rel="noopener"><b>20</b><p>tests so far, 97 to 100% coverage.</p></a>
       </div>
     </div>
 
@@ -373,28 +391,30 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
 <section class="oss" id="oss">
   <div class="in">
     <span class="kick tag">Open source · other people's code</span>
-    <h2 class="mega"><span id="mergedN">23</span> PRs<br><span class="or">merged</span><i class="pdot" style="--dotc:var(--orange-lo)"></i></h2>
+    <h2 class="mega"><a class="plain" href="https://github.com/search?q=author%3ARudraDudhat2509+is%3Amerged+-user%3ARudraDudhat2509&type=pullrequests" target="_blank" rel="noopener"><span id="mergedN">23</span> PRs<br><span class="or">merged</span><i class="pdot" style="--dotc:var(--orange-lo)"></i></a></h2>
     <div class="ostats">
       <div><span id="projN">15</span> projects<small>MERGED INTO, NONE OF THEM MINE</small></div>
       <div>291K stars<small>COMBINED, AS OF NOV 2026</small></div>
-      <div><span id="openN">26</span> open<small>STILL IN REVIEW</small></div>
+      <div><a class="plain" href="https://github.com/search?q=author%3ARudraDudhat2509+is%3Aopen+-user%3ARudraDudhat2509&type=pullrequests" target="_blank" rel="noopener"><span id="openN">26</span> open<small>STILL IN REVIEW</small></a></div>
     </div>
     <p class="why">I started open source to get into LFX, and I got rejected. So I kept going, to learn how real projects work and to connect with people around the world. It taught me to verify everything an LLM produces, because it can hallucinate.</p>
 
     <div class="wall" aria-label="Repos with merged fixes">
-      <span class="h">MLflow</span><span class="t">OpenTelemetry</span><span class="l">LiteLLM</span><span>Kedro</span><span class="h">Arize Phoenix</span><span class="t">Jaeger</span><span>SageMaker SDK</span><span class="l">Podman</span><span class="t">Strix</span><span class="h">Mesa</span><span>neural-lam</span><span class="l">OpenVINO</span><span class="t">Kyverno</span><span class="h">Metaflow</span>
+      <span class="h"><a href="https://github.com/mlflow/mlflow/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">MLflow</a></span><span class="t"><a href="https://github.com/open-telemetry/opentelemetry-python/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">OpenTelemetry</a></span><span class="l"><a href="https://github.com/BerriAI/litellm/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">LiteLLM</a></span><span><a href="https://github.com/kedro-org/kedro/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Kedro</a></span><span class="h"><a href="https://github.com/Arize-ai/phoenix/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Arize Phoenix</a></span><span class="t"><a href="https://github.com/jaegertracing/jaeger/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Jaeger</a></span><span><a href="https://github.com/aws/sagemaker-python-sdk/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">SageMaker SDK</a></span><span class="l"><a href="https://github.com/podman-container-tools/podman/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Podman</a></span><span class="t"><a href="https://github.com/usestrix/strix/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Strix</a></span><span class="h"><a href="https://github.com/mesa/mesa/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Mesa</a></span><span><a href="https://github.com/mllam/neural-lam/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">neural-lam</a></span><span class="l"><a href="https://github.com/openvinotoolkit/openvino/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">OpenVINO</a></span><span class="t"><a href="https://github.com/kyverno/kyverno/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Kyverno</a></span><span class="h"><a href="https://github.com/Netflix/metaflow/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Metaflow</a></span>
     </div>
 
     <div class="bugs">
-      <div class="bug"><b>OpenTelemetry</b><span>NaN values corrupted aggregated metrics, and unsorted histogram boundaries were accepted.</span></div>
-      <div class="bug"><b>MLflow</b><span>Agent span data was stored under the wrong keys.</span></div>
-      <div class="bug"><b>LiteLLM</b><span>The last deleted model was never evicted in multi-instance setups.</span></div>
-      <div class="bug"><b>Arize Phoenix</b><span>Evaluator timeouts were ignored when counting retries.</span></div>
-      <div class="bug"><b>Jaeger</b><span>Panicked on a nil predicate.</span></div>
-      <div class="bug"><b>SageMaker SDK</b><span>The stream reader hung when the output had no trailing newline.</span></div>
-      <div class="bug"><b>Podman</b><span>The VM ready check had no timeout.</span></div>
-      <div class="bug"><b>OpenVINO</b><span>A typo in the ovc converter's input-shape regex (<code style="font-family:var(--mono);font-size:.85em">)-9</code> instead of <code style="font-family:var(--mono);font-size:.85em">0-9</code>) silently dropped shapes.</span></div>
-      <div class="bug"><b>Kedro</b><span>Project and pipeline names that shadow Python keywords now fail up front, not later with a confusing import error.</span></div>
+      <a class="bug" href="https://github.com/open-telemetry/opentelemetry-python/pull/5336" target="_blank" rel="noopener"><b>OpenTelemetry</b><span>NaN values corrupted aggregated metrics.</span></a>
+      <a class="bug" href="https://github.com/open-telemetry/opentelemetry-python/pull/5340" target="_blank" rel="noopener"><b>OpenTelemetry</b><span>Unsorted histogram boundaries were accepted.</span></a>
+      <a class="bug" href="https://github.com/mlflow/mlflow/pull/24290" target="_blank" rel="noopener"><b>MLflow</b><span>Agent span data was stored under the wrong keys.</span></a>
+      <a class="bug" href="https://github.com/BerriAI/litellm/pull/28608" target="_blank" rel="noopener"><b>LiteLLM</b><span>The last deleted model was never evicted in multi-instance setups.</span></a>
+      <a class="bug" href="https://github.com/Arize-ai/phoenix/pull/13791" target="_blank" rel="noopener"><b>Arize Phoenix</b><span>Generator inputs were lost in create_dataset and add_examples_to_dataset.</span></a>
+      <a class="bug" href="https://github.com/jaegertracing/jaeger/pull/9709" target="_blank" rel="noopener"><b>Jaeger</b><span>Panicked on a nil predicate.</span></a>
+      <a class="bug" href="https://github.com/aws/sagemaker-python-sdk/pull/6279" target="_blank" rel="noopener"><b>SageMaker SDK</b><span>The stream reader hung when the output had no trailing newline.</span></a>
+      <a class="bug" href="https://github.com/podman-container-tools/podman/pull/29460" target="_blank" rel="noopener"><b>Podman</b><span>The VM ready check had no timeout.</span></a>
+      <a class="bug" href="https://github.com/openvinotoolkit/openvino/pull/37889" target="_blank" rel="noopener"><b>OpenVINO</b><span>A typo in the ovc converter's input-shape regex (<code style="font-family:var(--mono);font-size:.85em">)-9</code> instead of <code style="font-family:var(--mono);font-size:.85em">0-9</code>) silently dropped shapes.</span></a>
+      <a class="bug" href="https://github.com/kedro-org/kedro/pull/5608" target="_blank" rel="noopener"><b>Kedro</b><span>Project names that shadow Python keywords or stdlib modules now fail up front, not later with a confusing import error.</span></a>
+      <a class="bug" href="https://github.com/kedro-org/kedro/pull/5612" target="_blank" rel="noopener"><b>Kedro</b><span>Pipeline names that are Python keywords are rejected up front too.</span></a>
     </div>
 
     <h3 class="sub" style="margin-top:56px">The routine I run on every bug</h3>
@@ -416,31 +436,31 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
   <div class="in">
     <span class="kick tag">The other half of building</span>
     <h2 class="mega"><span class="ln"><span class="strike">I couldn't speak</span><i class="pdot"></i></span><span class="ln"><span class="o">Now I open the room</span><i class="pdot"></i></span></h2>
-    <p class="quote">It felt like <b>standing naked on a stage</b>. I would sit there embarrassed, watching other people express themselves freely. What changed was my <u>inner confidence</u>. I stopped caring what anyone else thought.</p>
+    <div class="quote"><p>I used to sit in the audience, <b>embarrassed</b>, watching other people speak and express themselves freely. I couldn't do it.</p><p>What changed was my <u>inner confidence</u>. I stopped caring what anyone else thought.</p><p>This year I ended up at the front of the room.</p></div>
 
     <div class="case">
       <div class="cl">
         <span class="tag cs">Case file · Hacktoberfest 2026</span>
         <h3 class="ct">Hacktoberfest<br>Hack Day</h3>
-        <p class="tl">IIT Bhilai · organizing lead and main speaker · MLH · OpenLake</p>
+        <p class="tl">IIT Bhilai · organizing lead and main speaker · <a href="https://mlh.io" target="_blank" rel="noopener">MLH</a> · <a href="https://github.com/OpenLake" target="_blank" rel="noopener">OpenLake</a></p>
         <div class="story">
-          <p><b>The setup</b>Nobody at IIT Bhilai had ever run a Hacktoberfest Hack Day. We were the first, and we had 2 to 3 weeks to plan the whole event.</p>
+          <p><b>The setup</b>Nobody at IIT Bhilai had run a Hacktoberfest Hack Day before. We were the first, and we got just 2 to 3 weeks to plan the whole thing.</p>
           <p><b>The challenge</b>Build an open source project with Gemma 4 that makes campus safer.</p>
-          <p><b>My part</b>I ran the demo and the talk, so about 200 people walked in and left able to build it.</p>
-          <p><b>The result</b>I tried to run the session as well as I could. I came out of it with around 70 new GitHub followers, and I loved that.</p>
+          <p><b>My part</b>I took the demo and the talk. My job was to get about 200 people ready to build it.</p>
+          <p><b>The result</b>I tried to run it as well as I could. I came out with around 70 new GitHub followers, and I loved that.</p>
         </div>
       </div>
       <div class="cr">
         <div class="st3"><b>200</b><span>people in the room</span></div>
         <div class="st3"><b>2-3</b><span>weeks to plan it</span></div>
         <div class="st3"><b>1st</b><span>Hack Day in IIT Bhilai's history</span></div>
-        <div class="pop"><span class="tag">The result</span><b>+70</b><span class="pl">GitHub followers from one room</span></div>
+        <a class="pop" href="https://github.com/RudraDudhat2509?tab=followers" target="_blank" rel="noopener"><span class="tag">The result</span><b>+70</b><span class="pl">GitHub followers from one room</span></a>
       </div>
     </div>
 
     <div class="mini">
-      <div><span class="sub">Domain Lead, AI/ML at OpenLake</span><p>I run hands-on AI/ML workshops and mentor students at IIT Bhilai's open source club.</p></div>
-      <div><span class="sub">Fixed our own club's holes</span><p>Found missing login rate limits and an IDOR in the club's student database app, where profile updates trusted a user ID sent by the client, and fixed both.</p></div>
+      <div><span class="sub"><a href="https://github.com/OpenLake" target="_blank" rel="noopener">Domain Lead, AI/ML at OpenLake</a></span><p>I run hands-on AI/ML workshops and mentor students at IIT Bhilai's open source club.</p></div>
+      <div><span class="sub"><a href="https://github.com/OpenLake/Student_Database_COSA/pulls?q=is%3Apr+author%3ARudraDudhat2509+is%3Amerged" target="_blank" rel="noopener">Fixed our own club's holes</a></span><p>Found missing login rate limits and an IDOR in the club's student database app, where profile updates trusted a user ID sent by the client, and fixed both.</p></div>
     </div>
   </div>
 </section>
@@ -500,31 +520,28 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
         <p class="why" style="margin-top:28px">I want it to game on. It is my escape from reality. It is also how I will learn the one thing I still do not know: inference and reasoning. This bar is my way of tracking each step on the way there.</p>
         <p class="upd">Updated 24 Nov 2026</p>
       </div>
-      <figure class="snap">
-        <img alt="Rudra at an Apple store, leaning over a Mac Pro" src="img/me-apple.jpg">
-        <figcaption>Stress-testing a Mac Pro I cannot afford (yet)</figcaption>
-      </figure>
+      <aside class="now" role="note">
+        <span class="tag"><b>first job for the gpu</b></span>
+        <span class="big">Inference and reasoning</span>
+        <span>The one thing I still do not know. This is what the PC is for.</span>
+      </aside>
     </div>
   </div>
 </section>
 
 <section class="me" id="me">
   <div class="in">
-    <div class="mgrid">
-      <figure class="snap">
-        <img alt="Rudra in a red number 23 jersey and sunglasses" src="img/me-jersey-crop.jpg">
-        <figcaption>Gameday fit · No. 23 · night mode</figcaption>
-      </figure>
-      <div>
-        <span class="kick tag">Off the clock</span>
-        <h2 class="mega" style="font-size:clamp(64px,11vw,160px)">Also<br><span class="or">a person</span><i class="pdot" style="width:.14em;height:.14em"></i></h2>
-        <div class="stick">
-          <span>NRG</span><span>Uncharted</span><span>2am Valorant</span><span>Late night drives</span><span>McD</span><span>PS5</span>
-        </div>
-      </div>
+    <span class="kick tag">Off the clock</span>
+    <h2 class="mega">Also<br><span class="or">a person</span><i class="pdot"></i></h2>
+    <div class="stick">
+      <span>NRG</span><span>Uncharted</span><span>2am Valorant</span><span>Late night drives</span><span>McD</span><span>PS5</span>
     </div>
   </div>
 </section>
+<div class="xband" aria-hidden="true">
+  <div class="mq a"><div class="track" data-dir="-1"><span>NRG <i>●</i> Uncharted <i>●</i> 2am Valorant <i>●</i> Late night drives <i>●</i> McD <i>●</i> PS5 <i>●</i> </span><span>NRG <i>●</i> Uncharted <i>●</i> 2am Valorant <i>●</i> Late night drives <i>●</i> McD <i>●</i> PS5 <i>●</i> </span></div></div>
+  <div class="mq b"><div class="track" data-dir="1"><span>Also a person <i>●</i> Keep building <i>●</i> Also a person <i>●</i> Keep building <i>●</i> </span><span>Also a person <i>●</i> Keep building <i>●</i> Also a person <i>●</i> Keep building <i>●</i> </span></div></div>
+</div>
 
 <section class="talk" id="talk">
   <div class="in">
@@ -626,6 +643,7 @@ nav .in{display:flex;justify-content:space-between;align-items:center;padding-bl
   var feed = document.getElementById('feed'), box = document.getElementById('commits');
   get('https://api.github.com/repos/RudraDudhat2509/build-your-own-llm/commits?per_page=5').then(function (cs) {
     if (!cs.length) throw 0;
+    document.getElementById('nowcard').href = cs[0].html_url;
     box.textContent = '';
     cs.forEach(function (c) {
       var row = document.createElement('div'); row.className = 'fr';
